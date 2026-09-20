@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ChevronRight, ChevronLeft, ArrowRight, Bookmark, X, Image as ImageIcon } from 'lucide-react';
 import DownloadStoryButton from './DownloadStoryButton';
 import { assetUrl } from '../lib/assetUrl';
@@ -18,6 +18,7 @@ export default function ReaderView({
     Math.min(Math.max(0, initialChapterIndex), lastChapter)
   );
   const [isIndexModalOpen, setIsIndexModalOpen] = useState(false);
+  const chapterTopRef = useRef(null);
 
   useEffect(() => {
     saveProgress({
@@ -27,6 +28,16 @@ export default function ReaderView({
       screen: 'reading',
     });
   }, [reading.id, currentChapterIdx, viewMode]);
+
+  useLayoutEffect(() => {
+    if (viewMode !== "chapters") return;
+    const node = chapterTopRef.current;
+    if (node) {
+      node.scrollIntoView({ behavior: "auto", block: "start" });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [currentChapterIdx, viewMode]);
 
   const currentChapter = reading.chapters[currentChapterIdx];
   const isLastChapter = currentChapterIdx === reading.chapters.length - 1;
@@ -45,13 +56,11 @@ export default function ReaderView({
   const handleNavigateChapter = (idx) => {
     setCurrentChapterIdx(idx);
     setIsIndexModalOpen(false);
-    if (viewMode === 'continuous') {
-      const el = document.getElementById(`capitulo-${reading.chapters[idx].id}`);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (viewMode === "continuous") {
+      requestAnimationFrame(() => {
+        const el = document.getElementById(`capitulo-${reading.chapters[idx].id}`);
+        if (el) el.scrollIntoView({ behavior: "auto", block: "start" });
+      });
     }
   };
 
@@ -91,7 +100,6 @@ export default function ReaderView({
                 onClick={() => {
                   setCurrentChapterIdx(0);
                   setViewMode('chapters');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 min-h-11"
               >
@@ -149,7 +157,7 @@ export default function ReaderView({
             })}
           </nav>
 
-          <article className="pt-8">
+          <article ref={chapterTopRef} className="pt-8 scroll-mt-28 sm:scroll-mt-32">
             <h2 className="text-xl sm:text-[1.85rem] font-semibold text-slate-900 dark:text-white mb-6 font-reading tracking-tight text-balance">
               {currentChapter.title}
             </h2>
@@ -184,7 +192,6 @@ export default function ReaderView({
             <button
               onClick={() => {
                 setCurrentChapterIdx((prev) => Math.max(0, prev - 1));
-                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               disabled={currentChapterIdx === 0}
               className="inline-flex items-center gap-1.5 min-h-11 px-3 text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
@@ -197,7 +204,6 @@ export default function ReaderView({
               <button
                 onClick={() => {
                   setCurrentChapterIdx((prev) => prev + 1);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className="inline-flex items-center gap-1.5 min-h-11 px-3 text-sm text-slate-900 dark:text-white hover:opacity-70 transition-opacity"
               >
@@ -224,7 +230,7 @@ export default function ReaderView({
             <article
               key={chapter.id}
               id={`capitulo-${chapter.id}`}
-              className="scroll-mt-24"
+              className="scroll-mt-28 sm:scroll-mt-32"
             >
               <p className="text-[11px] tracking-[0.16em] uppercase text-slate-400 mb-2">
                 Capítulo {idx + 1}
