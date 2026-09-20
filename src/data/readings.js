@@ -898,6 +898,7 @@ export const readings = [
     author: "Xavier Mena Paredes",
     genre: "Mito",
     status: "available",
+    isNew: true,
     cover: "/images/maiz_hambre.jpg",
     tags: ["maíz", "Saramama", "Amazonía", "Sierra", "chakra"],
     skills: ["Literal", "Vocabulario", "Inferencia", "Análisis", "Reflexión"],
@@ -1036,10 +1037,14 @@ export function getReadingById(id) {
   return readings.find((reading) => reading.id === id);
 }
 
+function byNewFirst(list) {
+  return [...list].sort((a, b) => Number(Boolean(b.isNew)) - Number(Boolean(a.isNew)));
+}
+
 export function getAvailableReadings() {
-  return readings.filter((reading) => reading.status === "available");
+  return byNewFirst(readings.filter((reading) => reading.status === "available"));
 }
 
 export function getCatalogReadings() {
-  return readings;
+  return byNewFirst(readings);
 }
