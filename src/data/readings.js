@@ -892,18 +892,143 @@ export const readings = [
   {
     id: "la-madre-del-maiz",
     title: "La madre del maíz",
-    subtitle: "Un relato de tradición andina y amazónica sobre el grano que alimenta",
-    estimatedMinutes: 13,
-    recommendedAge: "10-11 años",
+    subtitle: "Mito · Sierra y Amazonía",
+    estimatedMinutes: 16,
+    recommendedAge: "Básica superior",
     author: "Xavier Mena Paredes",
     genre: "Mito",
-    status: "coming-soon",
-    cover: null,
-    tags: ["maíz", "Amazonía", "Sierra", "alimento"],
-    skills: ["Vocabulario", "Análisis", "Reflexión"],
-    synopsis: "Antes de que hubiera mote, choclo o humita, alguien tuvo que aprender a sembrar. Un relato de origen sobre el maíz, tejido entre la Sierra y la Amazonía ecuatoriana.",
-    chapters: [],
-    quiz: []
+    status: "available",
+    cover: "/images/maiz_hambre.jpg",
+    tags: ["maíz", "Saramama", "Amazonía", "Sierra", "chakra"],
+    skills: ["Literal", "Vocabulario", "Inferencia", "Análisis", "Reflexión"],
+    synopsis: "Antes del mote, del choclo y de la humita, Tamia bajó de la Sierra y Sacha subió de la Amazonía. En la ceja de montaña encontraron a Saramama. El grano es madre: quien lo come entero se queda sin siembra.",
+    chapters: [
+      {
+        id: 1,
+        title: "Capítulo 1: El hambre",
+        image: {
+          src: "/images/maiz_hambre.jpg",
+          alt: "Tamia y Sacha, con canastos vacíos, en el filo entre las terrazas heladas de la Sierra y la selva amazónica",
+          caption: "Figura 1: Tamia bajó de la Sierra. Sacha subió de la Amazonía. Los canastos iban vacíos."
+        },
+        content: [
+          "Antes del mote, del choclo y de la humita, el hambre caminaba las dos vertientes. En la Sierra, la helada quemó las chacras. En la Amazonía, la creciente se llevó la yuca. No había sara. No había grano que guardar.",
+          "Tamia tenía dieciséis años y venía de las terrazas. El poncho no alcanzaba contra el frío. El canasto no pesaba. Sacha, de la misma edad, subía desde el bosque húmedo con la camisa sucia de barro y el canasto igual de hueco.",
+          "Se encontraron en la ceja de montaña: el filo donde termina el páramo y empieza la selva. A un lado, andenes blancos de escarcha. Al otro, nubes sobre los árboles. El sol se iba.",
+          "—En mi tierra ya no hay qué cocinar —dijo Tamia.",
+          "—En la mía tampoco —dijo Sacha. No se conocían. El hambre sí. Bajaron juntos hacia un hueco de tierra entre ambas aguas, buscando cualquier semilla que todavía no se hubiera comido."
+        ]
+      },
+      {
+        id: 2,
+        title: "Capítulo 2: Saramama",
+        image: {
+          src: "/images/maiz_saramama.jpg",
+          alt: "Saramama, con manto verde y oro, muestra una mazorca a Tamia y Sacha en la chakra de maíz",
+          caption: "Figura 2: Saramama sostuvo la mazorca. El grano, dijo, es madre: se cría, no se acaba de un bocado."
+        },
+        content: [
+          "En el fondo del filo había una chakra. Maíz alto, hojas como cuchillos, mazorcas amarillas. En medio estaba una mujer. El manto era verde y oro, como la planta. En las manos, una mazorca. No era una vecina. Era Saramama, la madre del maíz.",
+          "Tamia y Sacha se detuvieron. Los canastos temblaron.",
+          "—El sara no se encuentra —dijo Saramama—. Se cría. Yo soy la madre. El grano es hijo y es semilla. Si lo comen todo, no hay otra cosecha. Si lo siembran, hay choclo, hay mote, hay humita, hay chicha.",
+          "Les enseñó a abrir la tierra con el palo, a dejar tres granos por hoyo, a tapar sin golpear, a pedir agua sin ahogar. Les dio un puñado. No era comida de esa noche. Era siembra.",
+          "—La primera mazorca no se come —dijo—. Se guarda. Esa es la madre. Sin madre, el campo se queda huérfano."
+        ]
+      },
+      {
+        id: 3,
+        title: "Capítulo 3: Lo que se come entero",
+        image: {
+          src: "/images/maiz_robo.jpg",
+          alt: "Atik se traga y ensaca el grano de maíz mientras Tamia y Sacha intentan detenerlo; las plantas se secan",
+          caption: "Figura 3: Atik se comió la siembra. Las plantas se pusieron grises."
+        },
+        content: [
+          "Sembraron. El grano hinchó. Salieron las hojas. Tamia y Sacha turnaron el agua. Guardaron, como mandó Saramama, la mazorca madre aparte, envuelta.",
+          "Atik, un hombre de la chakra de abajo, vio el amarillo y no esperó. De noche, con una tea, vació el canasto de semilla en el saco y en la boca. Se comió lo que era para el hoyo. Tamia le agarró el brazo. Sacha le quitó un puñado. Atik no soltó el resto.",
+          "—El hambre no espera a la cosecha —dijo, con la boca llena.",
+          "Al amanecer las plantas nuevas estaban grises. Las hojas se doblaron. El campo, que había nacido en un día de madre, se secó como si la helada hubiera subido otra vez. Saramama no apareció. El grano que se come entero no vuelve a nacer.",
+          "Tamia deshizo el envoltorio. La mazorca madre seguía ahí. Sacha contó los granos que Atik no alcanzó. Alcanzaban para una siembra corta. Atik, con el saco, se había ido. El hambre le duró lo que dura un puñado."
+        ]
+      },
+      {
+        id: 4,
+        title: "Capítulo 4: La mazorca madre",
+        image: {
+          src: "/images/maiz_cosecha.jpg",
+          alt: "Tamia y Sacha arrodillados en la cosecha, guardan la mazorca morada madre junto al mote y las humitas",
+          caption: "Figura 4: Guardaron la mazorca madre. El resto fue choclo, mote, humita."
+        },
+        content: [
+          "Volvieron a abrir la tierra. Tres granos. Agua. Espera. Esta vez nadie metió la mano en el canasto de siembra. Cuando el choclo maduró, Tamia y Sacha cortaron para comer y apartaron la mazorca más llena, de grano morado, y la pusieron aparte: esa era Saramama, la que se queda para la próxima chakra.",
+          "Hirvieron mote. Envolvieron humita en hoja. El vapor olió a lo que el hambre no había conocido. Comieron. No acabaron la troje.",
+          "Saramama no volvió con el manto. No hizo falta: estaba en la mazorca guardada, en el hoyo, en el grano que no se traga entero. En la Sierra, Tamia llevó semilla a las terrazas. En la Amazonía, Sacha la llevó al claro. El mismo sara alimentó las dos vertientes.",
+          "Desde entonces el mito se cuenta así. Saramama es la madre del maíz. El grano se cría. La primera mazorca no se come. Quien se traga la siembra se queda con la boca llena un rato y con el campo vacío. Quien guarda la madre, al año siguiente tiene choclo, mote y humita."
+        ]
+      }
+    ],
+    quiz: [
+      {
+        id: "q1",
+        question: "¿Quién es Saramama en el mito?",
+        type: "literal",
+        options: [
+          { id: "a", text: "Una vecina de Tamia que vende mote en la feria.", isCorrect: false },
+          { id: "b", text: "La madre del maíz, que entrega el grano y enseña a criarlo.", isCorrect: true },
+          { id: "c", text: "Una diosa del hielo que quema las terrazas.", isCorrect: false },
+          { id: "d", text: "La hermana mayor de Sacha.", isCorrect: false }
+        ],
+        explanation: "Saramama se nombra y se muestra como madre del maíz: el grano se cría, no se encuentra por azar."
+      },
+      {
+        id: "q2",
+        question: "En el relato, «chakra» significa:",
+        type: "vocabulario",
+        options: [
+          { id: "a", text: "Una fiesta de la cosecha.", isCorrect: false },
+          { id: "b", text: "El canasto donde se guarda el mote.", isCorrect: false },
+          { id: "c", text: "La parcela de cultivo, el terreno que se siembra.", isCorrect: true },
+          { id: "d", text: "La helada de la Sierra.", isCorrect: false }
+        ],
+        explanation: "La chakra es el terreno de siembra: ahí aparece Saramama y ahí se seca el maíz cuando Atik se come la semilla."
+      },
+      {
+        id: "q3",
+        question: "¿Por qué se secan las plantas después de la noche de Atik?",
+        type: "inferencial",
+        options: [
+          { id: "a", text: "Porque Saramama manda una helada para castigar a Tamia.", isCorrect: false },
+          { id: "b", text: "Porque Atik se comió el grano que debía volver a la tierra, y sin siembra no hay planta.", isCorrect: true },
+          { id: "c", text: "Porque Sacha no trajo agua de la Amazonía.", isCorrect: false },
+          { id: "d", text: "Porque la mazorca madre estaba podrida.", isCorrect: false }
+        ],
+        explanation: "Atik vacía en la boca y en el saco lo que era para el hoyo. El mito lo dice claro: el grano que se come entero no vuelve a nacer."
+      },
+      {
+        id: "q4",
+        question: "¿Qué opone el mito entre Atik y Tamia y Sacha?",
+        type: "analisis",
+        options: [
+          { id: "a", text: "Atik siembra de noche; ellos siembran de día.", isCorrect: false },
+          { id: "b", text: "Atik es de la Sierra y ellos de la Costa.", isCorrect: false },
+          { id: "c", text: "Atik se traga la semilla para hoy; ellos guardan la madre para que haya cosecha después.", isCorrect: true },
+          { id: "d", text: "Atik cocina humita; ellos solo beben chicha.", isCorrect: false }
+        ],
+        explanation: "El hambre de Atik acaba el grano. Tamia y Sacha apartan la mazorca madre: el mito contrapone el bocado inmediato y la crianza."
+      },
+      {
+        id: "q5",
+        question: "Según el mito, ¿qué es «guardar la mazorca madre»?",
+        type: "reflexion",
+        options: [
+          { id: "a", text: "Dejar semilla para volver a sembrar: el maíz se trata como madre, no como un alimento que se acaba de una vez.", isCorrect: true },
+          { id: "b", text: "Esconder el choclo para no compartirlo con la Amazonía.", isCorrect: false },
+          { id: "c", text: "Ofrecer toda la cosecha a Atik para que no vuelva.", isCorrect: false },
+          { id: "d", text: "No comer nunca mote ni humita.", isCorrect: false }
+        ],
+        explanation: "Saramama manda no comer la primera mazorca. Guardarla es reconocer que el grano es madre: se cría, se respeta, se vuelve a poner en la tierra."
+      }
+    ]
   }
 ];
 
