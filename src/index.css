@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-slate-800 bg-slate-50;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* Clases de apoyo para modo proyección y lectura */
+.reading-text {
+  text-wrap: pretty;
+  line-height: 1.85;
+}
+
+/* Modo proyector con alto contraste */
+.projector-mode {
+  letter-spacing: 0.015em;
+}
+
+/* Animaciones suaves */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s ease-out forwards;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
