@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import QuizView from "../components/QuizView";
 import { getReadingById } from "../data/readings";
 import { useSettings } from "../context/SettingsContext";
+import { getReadingProgress } from "../lib/readingProgress";
 
 export default function QuizPage() {
   const { readingId } = useParams();
@@ -24,12 +25,22 @@ export default function QuizPage() {
     );
   }
 
+  const saved = getReadingProgress(reading.id);
+  const resumeQuiz = saved?.screen === "quiz";
+  const lastQuestion = Math.max(0, reading.quiz.length - 1);
+  const savedAnswers = resumeQuiz && Array.isArray(saved?.quizAnswers) ? saved.quizAnswers : [];
+  const initialQuestionIndex = resumeQuiz
+    ? Math.min(Math.max(savedAnswers.length, Number(saved?.quizIndex) || 0), lastQuestion)
+    : 0;
+
   return (
     <QuizView
       key={reading.id}
       reading={reading}
       fontSize={fontSize}
       isProjectorMode={isProjectorMode}
+      initialQuestionIndex={initialQuestionIndex}
+      initialAnswers={savedAnswers}
       onBackToReading={() => {
         navigate(`/lectura/${reading.id}`);
         window.scrollTo({ top: 0, behavior: "smooth" });

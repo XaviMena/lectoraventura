@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronRight, ChevronLeft, ArrowRight, Bookmark, X, Image as ImageIcon } from 'lucide-react';
 import DownloadStoryButton from './DownloadStoryButton';
 import { assetUrl } from '../lib/assetUrl';
+import { saveProgress } from '../lib/readingProgress';
 
 export default function ReaderView({
   reading,
   onGoToQuiz,
   fontSize,
-  isProjectorMode
+  isProjectorMode,
+  initialChapterIndex = 0,
+  initialViewMode = 'chapters',
 }) {
-  const [viewMode, setViewMode] = useState('chapters'); // 'chapters' | 'continuous'
-  const [currentChapterIdx, setCurrentChapterIdx] = useState(0);
+  const lastChapter = Math.max(0, reading.chapters.length - 1);
+  const [viewMode, setViewMode] = useState(initialViewMode === 'continuous' ? 'continuous' : 'chapters');
+  const [currentChapterIdx, setCurrentChapterIdx] = useState(() =>
+    Math.min(Math.max(0, initialChapterIndex), lastChapter)
+  );
   const [isIndexModalOpen, setIsIndexModalOpen] = useState(false);
+
+  useEffect(() => {
+    saveProgress({
+      readingId: reading.id,
+      chapterIndex: currentChapterIdx,
+      viewMode,
+      screen: 'reading',
+    });
+  }, [reading.id, currentChapterIdx, viewMode]);
 
   const currentChapter = reading.chapters[currentChapterIdx];
   const isLastChapter = currentChapterIdx === reading.chapters.length - 1;
@@ -69,7 +84,20 @@ export default function ReaderView({
             <span className="mx-2 text-slate-300 dark:text-slate-600">·</span>
             {reading.chapters.length} capítulos
           </p>
-          <div className="flex items-center gap-4 text-sm">
+          <div className="flex items-center gap-3 sm:gap-4 text-sm">
+            {currentChapterIdx > 0 && (
+              <button
+                type="button"
+                onClick={() => {
+                  setCurrentChapterIdx(0);
+                  setViewMode('chapters');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 min-h-11"
+              >
+                Desde el inicio
+              </button>
+            )}
             <button
               type="button"
               onClick={() => setViewMode('chapters')}

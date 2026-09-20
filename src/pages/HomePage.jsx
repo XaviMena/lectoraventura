@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen, MonitorPlay } from "lucide-react";
 import ReadingCard from "../components/library/ReadingCard";
-import { getAvailableReadings } from "../data/readings";
+import ContinueCard from "../components/library/ContinueCard";
+import { getAvailableReadings, getReadingById } from "../data/readings";
 import { readingJourney, site } from "../data/site";
+import { getContinueState } from "../lib/readingProgress";
 
 export default function HomePage() {
-  const featured = getAvailableReadings()[0];
+  const available = getAvailableReadings();
+  const continueItem = useMemo(() => getContinueState(getReadingById), []);
 
   return (
     <div className="w-full">
@@ -23,13 +26,23 @@ export default function HomePage() {
               {site.tagline} Aquí el cuento se proyecta en el aula, se lee con calma y se comprende con preguntas de comprensión.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
-              <Link
-                to="/biblioteca"
-                className="inline-flex items-center justify-center gap-2 min-h-12 px-6 py-3 rounded-2xl font-extrabold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/25"
-              >
-                Ir a la biblioteca
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+              {continueItem ? (
+                <Link
+                  to={continueItem.href}
+                  className="inline-flex items-center justify-center gap-2 min-h-12 px-6 py-3 rounded-2xl font-extrabold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/25"
+                >
+                  Seguir leyendo
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              ) : (
+                <Link
+                  to="/biblioteca"
+                  className="inline-flex items-center justify-center gap-2 min-h-12 px-6 py-3 rounded-2xl font-extrabold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/25"
+                >
+                  Ir a la biblioteca
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              )}
               <Link
                 to="/aula"
                 className="inline-flex items-center justify-center gap-2 min-h-12 px-6 py-3 rounded-2xl font-bold bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700"
@@ -60,25 +73,40 @@ export default function HomePage() {
         </div>
       </section>
 
+      {continueItem && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+          <ContinueCard item={continueItem} />
+        </section>
+      )}
+
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="flex items-end justify-between gap-4 mb-6">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Lectura destacada</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Lecturas listas</h2>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-              Empieza por aquí. Más cuentos se irán sumando a la biblioteca.
+              Elige un cuento. Si ya empezaste uno, puedes retomarlo arriba.
             </p>
           </div>
           <Link to="/biblioteca" className="hidden sm:inline-flex text-sm font-extrabold text-blue-600 hover:text-blue-700">
             Ver todas
           </Link>
         </div>
-        {featured ? (
-          <div className="max-w-xl">
-            <ReadingCard reading={featured} featured />
+        {available.length ? (
+          <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+            {available.map((reading) => (
+              <ReadingCard key={reading.id} reading={reading} />
+            ))}
           </div>
         ) : (
           <p className="text-slate-500">Aún no hay lecturas publicadas.</p>
         )}
+        <Link
+          to="/biblioteca"
+          className="sm:hidden inline-flex items-center gap-1 mt-6 text-sm font-extrabold text-blue-600"
+        >
+          Ver todas
+          <ArrowRight className="w-4 h-4" />
+        </Link>
       </section>
 
       <section className="border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/40">

@@ -2,11 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Clock, BookOpen, Sparkles, ArrowRight } from "lucide-react";
 import { assetUrl } from "../../lib/assetUrl";
+import { getReadingProgress } from "../../lib/readingProgress";
 
 export default function ReadingCard({ reading, featured = false }) {
   const isAvailable = reading.status === "available";
   const chapterCount = reading.chapters?.length || 0;
   const quizCount = reading.quiz?.length || 0;
+  const saved = isAvailable ? getReadingProgress(reading.id) : null;
+  const inQuiz = saved?.screen === "quiz";
+  const chapterIndex = Math.min(
+    Math.max(0, Number(saved?.chapterIndex) || 0),
+    Math.max(0, chapterCount - 1)
+  );
+  const hasProgress = Boolean(saved) && (inQuiz || chapterIndex > 0);
+  const href = inQuiz ? `/lectura/${reading.id}/evaluacion` : `/lectura/${reading.id}`;
 
   const body = (
     <article
@@ -65,7 +74,11 @@ export default function ReadingCard({ reading, featured = false }) {
 
         {isAvailable ? (
           <span className="mt-1 inline-flex items-center gap-1.5 text-sm font-extrabold text-blue-600 dark:text-blue-400">
-            Abrir lectura
+            {inQuiz
+              ? "Continuar evaluación"
+              : hasProgress
+                ? `Continuar · capítulo ${chapterIndex + 1}`
+                : "Abrir lectura"}
             <ArrowRight className="w-4 h-4" />
           </span>
         ) : (
@@ -80,7 +93,7 @@ export default function ReadingCard({ reading, featured = false }) {
   }
 
   return (
-    <Link to={`/lectura/${reading.id}`} className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-3xl">
+    <Link to={href} className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-3xl">
       {body}
     </Link>
   );

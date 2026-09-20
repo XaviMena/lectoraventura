@@ -1,14 +1,23 @@
-import React from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import ReaderView from "../components/ReaderView";
 import { getReadingById } from "../data/readings";
 import { useSettings } from "../context/SettingsContext";
+import { getReadingProgress, restartProgress } from "../lib/readingProgress";
 
 export default function ReadingPage() {
   const { readingId } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { fontSize, isProjectorMode } = useSettings();
   const reading = getReadingById(readingId);
+  const restart = searchParams.get("desde") === "inicio";
+
+  useEffect(() => {
+    if (!reading || reading.status !== "available" || !restart) return;
+    restartProgress(reading.id);
+    navigate(`/lectura/${reading.id}`, { replace: true });
+  }, [reading, restart, navigate]);
 
   if (!reading) {
     return (
@@ -35,12 +44,18 @@ export default function ReadingPage() {
     );
   }
 
+  const saved = restart ? null : getReadingProgress(reading.id);
+  const lastChapter = Math.max(0, reading.chapters.length - 1);
+  const initialChapterIndex = Math.min(Math.max(0, Number(saved?.chapterIndex) || 0), lastChapter);
+
   return (
     <ReaderView
-      key={reading.id}
+      key={`${reading.id}-${restart ? "inicio" : "seguir"}`}
       reading={reading}
       fontSize={fontSize}
       isProjectorMode={isProjectorMode}
+      initialChapterIndex={initialChapterIndex}
+      initialViewMode={saved?.viewMode}
       onGoToQuiz={() => {
         navigate(`/lectura/${reading.id}/evaluacion`);
         window.scrollTo({ top: 0, behavior: "smooth" });

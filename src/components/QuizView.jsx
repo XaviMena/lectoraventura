@@ -1,21 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import confetti from 'canvas-confetti';
 import { CheckCircle, XCircle, Award, RotateCcw, BookOpen, ChevronRight, HelpCircle, Sparkles } from 'lucide-react';
+import { saveProgress } from '../lib/readingProgress';
 
 export default function QuizView({
   reading,
   onBackToReading,
   fontSize,
-  isProjectorMode
+  isProjectorMode,
+  initialQuestionIndex = 0,
+  initialAnswers = [],
 }) {
-  const [currentQIdx, setCurrentQIdx] = useState(0);
+  const questions = reading.quiz;
+  const [currentQIdx, setCurrentQIdx] = useState(() =>
+    Math.min(Math.max(0, initialQuestionIndex), Math.max(0, questions.length - 1))
+  );
   const [selectedOptionId, setSelectedOptionId] = useState(null);
   const [isAnswerSubmitted, setIsAnswerSubmitted] = useState(false);
-  const [answersHistory, setAnswersHistory] = useState([]); // { qId, selectedId, isCorrect }
+  const [answersHistory, setAnswersHistory] = useState(() =>
+    Array.isArray(initialAnswers) ? initialAnswers : []
+  );
   const [isFinished, setIsFinished] = useState(false);
 
-  const questions = reading.quiz;
   const currentQ = questions[currentQIdx];
+
+  useEffect(() => {
+    if (isFinished) {
+      saveProgress({
+        readingId: reading.id,
+        screen: "reading",
+        chapterIndex: Math.max(0, reading.chapters.length - 1),
+        quizIndex: 0,
+      });
+      return;
+    }
+    saveProgress({
+      readingId: reading.id,
+      screen: "quiz",
+      quizIndex: currentQIdx,
+      quizAnswers: answersHistory,
+    });
+  }, [reading.id, reading.chapters.length, currentQIdx, isFinished, answersHistory]);
 
   const handleSelectOption = (optionId) => {
     if (isAnswerSubmitted) return; // Ya respondió esta pregunta
