@@ -10,7 +10,7 @@ export default function ClassroomPage() {
         <p className="text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
           Para el aula
         </p>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-reading">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-reading text-balance">
           Cómo usar LectorAventura en clase
         </h1>
         <p className="mt-3 text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
@@ -77,7 +77,7 @@ export default function ClassroomPage() {
         </div>
         <Link
           to="/biblioteca"
-          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl font-extrabold text-white bg-blue-600 hover:bg-blue-700"
+          className="inline-flex items-center justify-center gap-2 min-h-12 px-5 py-3 rounded-2xl font-extrabold text-white bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
         >
           Ir a lecturas
           <ArrowRight className="w-4 h-4" />

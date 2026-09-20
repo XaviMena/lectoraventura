@@ -34,14 +34,14 @@ export default function ProjectorControls({
   };
 
   const iconBtn = (active) =>
-    `p-1.5 rounded-md transition-colors ${
+    `inline-flex items-center justify-center min-h-11 min-w-11 sm:min-h-0 sm:min-w-0 p-2.5 sm:p-1.5 rounded-md transition-colors ${
       active
         ? "text-slate-900 dark:text-white"
         : "text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
     }`;
 
   return (
-    <div className="flex items-center gap-0.5 text-slate-400">
+    <div className="flex flex-wrap items-center gap-0.5 text-slate-400">
       <button
         type="button"
         onClick={decreaseFont}
@@ -77,7 +77,7 @@ export default function ProjectorControls({
 
       <span className="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1.5" />
 
-      <button type="button" onClick={toggleFullscreen} title="Pantalla completa" className={iconBtn(false)} aria-label="Pantalla completa">
+      <button type="button" onClick={toggleFullscreen} title="Pantalla completa" className={`${iconBtn(false)} hidden sm:inline-flex`} aria-label="Pantalla completa">
         <Maximize2 className="w-4 h-4" />
       </button>
       <button

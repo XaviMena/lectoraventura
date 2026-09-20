@@ -16,23 +16,23 @@ export default function HomePage() {
             <p className="text-[11px] tracking-[0.18em] uppercase text-slate-400 mb-4">
               {site.subject}
             </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white font-reading text-balance leading-[1.1]">
+            <h1 className="text-[1.85rem] sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white font-reading text-balance leading-[1.15]">
               Un sitio para animar a leer, capítulo a capítulo
             </h1>
             <p className="mt-5 text-lg text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
               {site.tagline} Aquí el cuento se proyecta en el aula, se lee con calma y se comprende con preguntas de comprensión.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
               <Link
                 to="/biblioteca"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-extrabold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/25"
+                className="inline-flex items-center justify-center gap-2 min-h-12 px-6 py-3 rounded-2xl font-extrabold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/25"
               >
                 Ir a la biblioteca
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/aula"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-bold bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700"
+                className="inline-flex items-center justify-center gap-2 min-h-12 px-6 py-3 rounded-2xl font-bold bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700"
               >
                 Guía para el aula
               </Link>

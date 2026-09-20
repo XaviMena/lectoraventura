@@ -15,7 +15,7 @@ export default function AboutPage() {
       <p className="text-[11px] tracking-[0.18em] uppercase text-slate-400 mb-3">
         {site.subject}
       </p>
-      <h1 className="text-3xl sm:text-[2.35rem] font-semibold tracking-tight text-slate-900 dark:text-white font-reading leading-tight">
+      <h1 className="text-2xl sm:text-[2.35rem] font-semibold tracking-tight text-slate-900 dark:text-white font-reading leading-tight text-balance">
         Acerca de {site.name}
       </h1>
       <p className="mt-4 text-[17px] text-slate-600 dark:text-slate-300 leading-relaxed">

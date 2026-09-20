@@ -30,7 +30,7 @@ export default function DownloadStoryButton({ reading, className = "", variant =
         disabled={busy}
         className={
           quiet
-            ? "inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white disabled:opacity-60 transition-colors"
+            ? "inline-flex items-center gap-1.5 min-h-11 px-2 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white disabled:opacity-60 transition-colors"
             : "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold bg-amber-600 text-white hover:bg-amber-500 disabled:opacity-60 shadow-sm shadow-amber-700/20 transition-colors"
         }
       >

@@ -10,7 +10,7 @@ export default function AppLayout() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-200 flex flex-col ${themeClass} ${
+      className={`min-h-dvh transition-colors duration-200 flex flex-col ${themeClass} ${
         isProjectorMode ? "projector-mode" : ""
       }`}
       data-theme={colorTheme}

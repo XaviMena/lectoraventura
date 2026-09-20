@@ -4,7 +4,7 @@ import { site, navItems } from "../../data/site";
 
 export default function Footer() {
   return (
-    <footer className="mt-auto border-t border-slate-200 dark:border-slate-800 py-8 text-xs text-slate-500 dark:text-slate-400">
+    <footer className="mt-auto border-t border-slate-200 dark:border-slate-800 py-8 pb-[max(2rem,env(safe-area-inset-bottom))] text-xs text-slate-500 dark:text-slate-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-sm text-slate-700 dark:text-slate-200">

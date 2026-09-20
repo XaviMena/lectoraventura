@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { BookOpen, Menu, X } from "lucide-react";
 import ProjectorControls from "../ProjectorControls";
@@ -19,16 +19,27 @@ export default function Navbar() {
   const isReadingRoute = location.pathname.startsWith("/lectura/");
   const readingBase = location.pathname.replace(/\/evaluacion$/, "");
 
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
   return (
-    <header className="sticky top-0 z-30 w-full bg-white/90 dark:bg-slate-950/90 backdrop-blur border-b border-slate-200/80 dark:border-slate-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-6">
-        <NavLink to="/" className="flex items-center gap-2.5 min-w-0" onClick={() => setIsMenuOpen(false)}>
+    <header className="sticky top-0 z-30 w-full bg-white/90 dark:bg-slate-950/90 backdrop-blur border-b border-slate-200/80 dark:border-slate-800 pt-[env(safe-area-inset-top)]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3 sm:gap-6">
+        <NavLink to="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0" onClick={() => setIsMenuOpen(false)}>
           <BookOpen className="w-5 h-5 text-slate-800 dark:text-slate-100 shrink-0" strokeWidth={1.75} />
           <div className="min-w-0 leading-tight">
             <p className="font-semibold text-[15px] tracking-tight text-slate-900 dark:text-white">
               {site.name}
             </p>
-            <p className="text-[11px] tracking-[0.12em] uppercase text-slate-400 dark:text-slate-500 truncate">
+            <p className="text-[11px] tracking-[0.12em] uppercase text-slate-400 dark:text-slate-500 truncate max-w-[11rem] sm:max-w-none">
               {site.subject}
             </p>
           </div>
@@ -48,7 +59,7 @@ export default function Navbar() {
           </div>
           <button
             type="button"
-            className="md:hidden p-2 text-slate-500 hover:text-slate-900 dark:hover:text-white"
+            className="md:hidden inline-flex items-center justify-center min-h-11 min-w-11 -mr-1 text-slate-500 hover:text-slate-900 dark:hover:text-white"
             onClick={() => setIsMenuOpen((open) => !open)}
             aria-expanded={isMenuOpen}
             aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
@@ -59,14 +70,16 @@ export default function Navbar() {
       </div>
 
       {isMenuOpen && (
-        <div className="md:hidden border-t border-slate-200/80 dark:border-slate-800 px-4 py-4 space-y-4">
-          <nav className="flex flex-col gap-3" aria-label="Menú móvil">
+        <div className="md:hidden border-t border-slate-200/80 dark:border-slate-800 px-4 py-4 space-y-5 max-h-[calc(100dvh-3.5rem-env(safe-area-inset-top))] overflow-y-auto pb-[max(1rem,env(safe-area-inset-bottom))]">
+          <nav className="flex flex-col" aria-label="Menú móvil">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 end={item.to === "/"}
-                className={linkClass}
+                className={({ isActive }) =>
+                  `${linkClass({ isActive })} py-3 text-base border-b border-slate-100 dark:border-slate-800`
+                }
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.label}
@@ -79,17 +92,19 @@ export default function Navbar() {
 
       {isReadingRoute && (
         <div className="border-t border-slate-100 dark:border-slate-800">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 h-10 flex items-center gap-4 text-sm">
-            <NavLink to="/biblioteca" className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 min-h-10 flex items-center gap-1 sm:gap-4 text-sm overflow-x-auto scrollbar-none">
+            <NavLink to="/biblioteca" className="shrink-0 px-3 py-2.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
               Biblioteca
             </NavLink>
             <NavLink
               to={readingBase}
               end
               className={({ isActive }) =>
-                isActive && !location.pathname.endsWith("/evaluacion")
-                  ? "text-slate-900 dark:text-white"
-                  : "text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                `shrink-0 px-3 py-2.5 ${
+                  isActive && !location.pathname.endsWith("/evaluacion")
+                    ? "text-slate-900 dark:text-white"
+                    : "text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                }`
               }
             >
               Lectura
@@ -97,9 +112,11 @@ export default function Navbar() {
             <NavLink
               to={`${readingBase}/evaluacion`}
               className={({ isActive }) =>
-                isActive
-                  ? "text-slate-900 dark:text-white"
-                  : "text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                `shrink-0 px-3 py-2.5 ${
+                  isActive
+                    ? "text-slate-900 dark:text-white"
+                    : "text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                }`
               }
             >
               Evaluación

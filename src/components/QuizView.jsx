@@ -85,14 +85,14 @@ export default function QuizView({
   const fontSizes = {
     base: 'text-lg',
     lg: 'text-xl',
-    xl: 'text-2xl',
-    '2xl': 'text-3xl',
-    '3xl': 'text-4xl'
+    xl: 'text-xl sm:text-2xl',
+    '2xl': 'text-2xl sm:text-3xl',
+    '3xl': 'text-2xl sm:text-4xl'
   };
   const qFont = fontSizes[fontSize] || fontSizes.xl;
 
   return (
-    <div className={`w-full max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10 ${
+    <div className={`w-full max-w-3xl mx-auto px-4 sm:px-6 py-5 sm:py-10 pb-8 ${
       isProjectorMode ? 'max-w-4xl' : ''
     }`}>
       
@@ -117,7 +117,7 @@ export default function QuizView({
           </div>
 
           {/* Tarjeta de Pregunta */}
-          <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-700 shadow-md">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-10 border border-slate-200 dark:border-slate-700 shadow-md">
             
             {/* Categoría de la pregunta */}
             <div className="mb-4">
@@ -158,7 +158,7 @@ export default function QuizView({
                     key={opt.id}
                     onClick={() => handleSelectOption(opt.id)}
                     disabled={isAnswerSubmitted}
-                    className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition-all flex items-start gap-4 ${btnStyle}`}
+                    className={`w-full text-left p-3.5 sm:p-5 rounded-2xl border-2 transition-all flex items-start gap-3 sm:gap-4 min-h-14 ${btnStyle}`}
                   >
                     <span className={`w-8 h-8 rounded-xl font-bold flex items-center justify-center shrink-0 text-sm ${
                       isSelected
@@ -167,7 +167,7 @@ export default function QuizView({
                     }`}>
                       {opt.id.toUpperCase()}
                     </span>
-                    <span className="text-base sm:text-lg font-medium leading-snug pt-0.5">
+                    <span className="text-[15px] sm:text-lg font-medium leading-snug pt-0.5">
                       {opt.text}
                     </span>
                   </button>
@@ -202,16 +202,16 @@ export default function QuizView({
                 <button
                   onClick={handleConfirmAnswer}
                   disabled={!selectedOptionId}
-                  className="px-6 sm:px-8 py-3.5 rounded-2xl font-extrabold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-md shadow-blue-500/25 transition-all"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-2xl font-extrabold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-md shadow-blue-500/25 transition-all min-h-12"
                 >
-                  Comprobar Respuesta
+                  Comprobar
                 </button>
               ) : (
                 <button
                   onClick={handleNextQuestion}
-                  className="flex items-center gap-2 px-7 sm:px-9 py-3.5 rounded-2xl font-extrabold text-white bg-emerald-600 hover:bg-emerald-500 shadow-md shadow-emerald-500/25 transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 sm:px-9 py-3.5 rounded-2xl font-extrabold text-white bg-emerald-600 hover:bg-emerald-500 shadow-md shadow-emerald-500/25 transition-all min-h-12"
                 >
-                  <span>{currentQIdx < questions.length - 1 ? 'Siguiente Pregunta' : 'Ver Resultados Finales'}</span>
+                  <span>{currentQIdx < questions.length - 1 ? 'Siguiente' : 'Ver resultados'}</span>
                   <ChevronRight className="w-5 h-5" />
                 </button>
               )}
@@ -221,14 +221,14 @@ export default function QuizView({
         </div>
       ) : (
         /* PANTALLA DE RESULTADOS FINALES */
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-700 shadow-xl text-center space-y-8 animate-fade-in">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl sm:rounded-3xl p-5 sm:p-10 border border-slate-200 dark:border-slate-700 shadow-xl text-center space-y-8 animate-fade-in">
           
           <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-amber-400 to-amber-600 flex items-center justify-center text-white shadow-xl shadow-amber-500/30">
             <Award className="w-10 h-10" />
           </div>
 
           <div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-2">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-2 text-balance">
               {percentage === 100 && '¡Misión Cumplida, Gran Detective!'}
               {percentage >= 80 && percentage < 100 && '¡Excelente Comprensión Lectora!'}
               {percentage >= 60 && percentage < 80 && '¡Buen Trabajo en Equipo!'}
@@ -277,20 +277,20 @@ export default function QuizView({
           </div>
 
           {/* Botones de Acción */}
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 pt-4">
             <button
               onClick={handleRestartQuiz}
-              className="flex items-center gap-2 px-6 py-3 rounded-2xl font-bold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600 transition-all"
+              className="inline-flex items-center justify-center gap-2 min-h-12 px-6 py-3 rounded-2xl font-bold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600 transition-all"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>Reintentar Evaluación</span>
+              <span>Reintentar</span>
             </button>
             <button
               onClick={onBackToReading}
-              className="flex items-center gap-2 px-7 py-3 rounded-2xl font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/25 transition-all"
+              className="inline-flex items-center justify-center gap-2 min-h-12 px-7 py-3 rounded-2xl font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/25 transition-all"
             >
               <BookOpen className="w-4 h-4" />
-              <span>Volver a la Lectura</span>
+              <span>Volver a la lectura</span>
             </button>
           </div>
 

@@ -20,7 +20,7 @@ export default function LibraryPage() {
         <p className="text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
           Biblioteca
         </p>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-reading">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-reading">
           Elige una lectura
         </h1>
         <p className="mt-3 text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -34,7 +34,7 @@ export default function LibraryPage() {
             key={item}
             type="button"
             onClick={() => setGenre(item)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-colors ${
+            className={`px-3.5 py-2.5 min-h-11 rounded-xl text-xs font-bold border transition-colors ${
               genre === item
                 ? "bg-blue-600 text-white border-blue-600"
                 : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-blue-300"
