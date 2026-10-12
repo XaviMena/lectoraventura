@@ -209,6 +209,14 @@ export async function downloadStoryPdf(reading) {
     y += 6.2;
   });
 
+  if (reading.author) {
+    y += 2;
+    doc.setFont("times", "normal");
+    doc.setFontSize(12);
+    doc.text(forPdf(reading.author), PAGE.w / 2, y, { align: "center" });
+    y += 6;
+  }
+
   y += 6;
   ornament(doc, y);
   y += 12;

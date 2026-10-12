@@ -60,6 +60,9 @@ export default function ReadingCard({ reading, featured = false }) {
         <h3 className="text-xl font-extrabold text-slate-900 dark:text-white font-reading leading-snug">
           {reading.title}
         </h3>
+        {reading.author && (
+          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">{reading.author}</p>
+        )}
         <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
           {reading.synopsis}
         </p>

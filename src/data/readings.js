@@ -1,151 +1,163 @@
 export const readings = [
   {
-    id: "el-misterio-del-reloj-de-la-torre",
-    title: "El misterio del reloj de la torre",
-    subtitle: "Una aventura sobre curiosidad, engranajes y secretos del pasado",
+    id: "de-la-tierra-a-la-luna",
+    title: "De la Tierra a la Luna",
+    subtitle: "Aventura · de Baltimore a la Luna y de vuelta al Pacífico",
     estimatedMinutes: 12,
-    recommendedAge: "10-11 años",
-    author: "LectorAventura",
+    recommendedAge: "Básica superior",
+    author: "Julio Verne",
     genre: "Aventura",
     status: "available",
-    cover: "/images/reloj_torre_puerta.jpg",
-    tags: ["curiosidad", "trabajo en equipo", "historia local"],
+    isNew: true,
+    cover: "/images/luna_canon.jpg",
+    tags: ["Luna", "viaje", "Verne"],
     skills: ["Literal", "Vocabulario", "Inferencia", "Análisis", "Reflexión"],
-    synopsis: "En lo alto de la escuela San Lorenzo existe un torreón al que nadie sube desde hace cincuenta años. Leo y Valeria descubrirán que el viejo reloj no está descompuesto... sino que oculta un enigma esperando ser descifrado.",
+    synopsis: "En 1865, Barbicane y su rival Nicholl dejan sus diferencias para viajar a la Luna junto al intrépido Miguel Ardán. Atrapados en la órbita lunar, deberán confiar el uno en el otro para regresar con vida a la Tierra.",
     chapters: [
       {
         id: 1,
-        title: "Capítulo 1: El tic-tac fantasma",
+        title: "Capítulo 1: El club y el cañón",
         image: {
-          src: "/images/reloj_torre_puerta.jpg",
-          alt: "Valeria señalando la marca limpia en el polvo frente a la puerta del torreón junto a Leo",
-          caption: "Figura 1: Frente a la misteriosa puerta del torreón, Valeria descubrió una marca limpia en el suelo polvoriento."
+          src: "/images/luna_canon.jpg",
+          alt: "Barbicane y Nicholl junto al Columbiad, el cañón enterrado en Tampa con la boca hacia el cielo",
+          caption: "Figura 1: En Tampa fundieron el Columbiad dentro de un hoyo. Nicholl apostó contra Barbicane."
         },
         content: [
-          "Todos en la escuela San Lorenzo conocían la leyenda del reloj del torreón. Era una mole de bronce y hierro forjado instalada en 1920, cuyas manecillas de hierro negro llevaban medio siglo clavadas exactamente en las 3:15.",
-          "Sin embargo, los jueves por la tarde, cuando el patio quedaba en silencio y el viento soplaba desde la sierra, se escuchaba un rumor metálico inconfundible: *tic... tac... clic*. Un latido lento que parecía provenir del cielo raso del último piso.",
-          "—La gente dice que son corrientes de aire moviendo las vigas —dijo Leo, ajustándose sus anteojos mientras miraba la pequeña puerta con candado al final de las escaleras—. Pero el viento no tiene un ritmo tan exacto.",
-          "Leo tenía once años y una libreta de tapas rojas donde anotaba cualquier detalle que no encajara con la lógica cotidiana. A su lado, Valeria, su compañera de banco de diez años, examinaba con curiosidad el marco de madera carcomida. Valeria pasaba las tardes en el taller de bicicletas de su abuela, por lo que entendía de cadenas, poleas y lubricantes como ningún otro estudiante.",
-          "—No es el viento, Leo —susurró Valeria, señalando el suelo—. Mira aquí. La madera está llena de polvo, pero hay una línea limpia, como si alguien hubiera abierto esta puerta hace no más de dos días.",
-          "Antes de que pudieran dudar, la campana de salida resonó en el patio vacío. El conserje Don Tomás cerraba el portón exterior en veinte minutos. Si querían resolver el acertijo de aquel sonido antes de que terminara la semana, tenían que subir ahora."
+          "En 1865 terminó la guerra en los Estados Unidos. En Baltimore, los artilleros del Gun Club se quedaron con las manos cruzadas. Habían pasado años disparando cañones y ahora se aburrían sin batallas.",
+          "El presidente del club, Impey Barbicane, era un hombre serio y calculador. Una noche reunió a todos en el salón.",
+          "—La guerra se acabó —dijo Barbicane—. Pero podemos apuntar más alto. Propongo fabricar un cañón gigantesco y disparar una bala a la Luna.",
+          "La sala estalló en aplausos. La noticia dio la vuelta al mundo.",
+          "En Tampa, en medio del campo de la Florida, abrieron un hoyo profundo en la tierra. Vaciaron toneladas de hierro derretido para fundir el cañón directo en el suelo. Lo llamaron el Columbiad. Su boca miraba derechito al cielo.",
+          "Entonces llegó el capitán Nicholl. Nicholl era un militar orgulloso que fabricaba planchas de acero para blindar barcos, y detestaba a Barbicane.",
+          "—Ese cañón no resistirá el disparo —dijo Nicholl frente a la multitud—. Reventará en pedazos y la bala jamás llegará. Apuesto quince mil dólares a que fracasan.",
+          "Barbicane no bajó la mirada.",
+          "—Acepto la apuesta, capitán —respondió—. El Columbiad disparará."
         ]
       },
       {
         id: 2,
-        title: "Capítulo 2: Entre engranajes y polvo dorado",
+        title: "Capítulo 2: El pacto de los tres viajeros",
         image: {
-          src: "/images/reloj_torre_hallazgo.jpg",
-          alt: "Leo y Valeria iluminando con una linterna el colosal mecanismo del reloj en el desván",
-          caption: "Figura 2: En el corazón del desván, la luz de la linterna reveló ruedas dentadas de más de un metro de diámetro cubiertas de inscripciones."
+          src: "/images/luna_viajeros.jpg",
+          alt: "Barbicane, Nicholl y Miguel Ardán frente al proyectil de noche, antes del despegue",
+          caption: "Figura 2: Miguel Ardán detuvo el duelo entre Barbicane y Nicholl. Los tres viajarían juntos."
         },
         content: [
-          "La puerta cedió con un gemido agudo. El cerrojo estaba colocado, pero el candado no tenía echada la llave: alguien lo había dejado encajado para simular que seguía cerrado.",
-          "Subieron por una escalera de caracol tan estrecha que sus hombros rozaban los ladrillos fríos. Al alcanzar el último peldaño, los dos se quedaron sin aliento. El desván del torreón era inmenso y estaba iluminado por un gigantesco rosetón circular de vidrio esmerilado que daba a la plaza del pueblo.",
-          "Frente a ellos se alzaba el corazón de la bestia mecánica: una estructura de vigas de roble que sostenía tres niveles de ruedas dentadas, ejes de transmisión, contrapesos de plomo colgados de cuerdas de cáñamo y un péndulo de bronce tan alto como ellos mismos.",
-          "—Es impresionante... —murmuró Leo, haciendo girar el haz de su linterna sobre las piezas—. Mira el tamaño de la rueda de escape. Cada diente es del tamaño de mi puño.",
-          "—Es un reloj mecánico de tres trenes de cuerda —explicó Valeria con ojos brillantes, acercándose sin tocar nada—. Uno para las horas, otro para los cuartos y otro para la sonería principal. Pero mira aquí, Leo: el péndulo está sujeto con un pasador de seguridad. No se mueve por sí mismo."
+          "Cuando el cañón estaba listo, llegó un telegrama desde Francia. Un viajero llamado Miguel Ardán mandaba un mensaje insólito: «Llegaré a Tampa. Deseo viajar dentro de la bala».",
+          "Ardán apareció pocos días después. Era alto, sonriente y no le tenía miedo a nada.",
+          "—Una bala vacía es un desperdicio —les dijo al llegar—. Si vamos a la Luna, hay que verla con nuestros propios ojos.",
+          "Ardán convenció a Barbicane de cambiar los planes. Transformaron el proyectil de aluminio en una cabina cerrada: le instalaron tanques de aire, agua, comida para varios meses y colchones en las paredes para soportar el golpe de la salida.",
+          "Pero el odio de Nicholl no se apagaba. La víspera del lanzamiento, Nicholl retó a Barbicane a un duelo a muerte con pistolas en un bosque cercano.",
+          "Justo cuando los dos rivales levantaban las armas, Miguel Ardán salió de entre los árboles y se paró en la mitad.",
+          "—¡Qué tontería matarse por una apuesta! —gritó el francés—. Si tienen tanto coraje, demuéstrenlo de verdad. Dejen las pistolas y suban conmigo a la bala. Conquistemos la Luna juntos.",
+          "Barbicane y Nicholl se miraron fijamente. Guardaron las armas. La vieja rivalidad se convirtió en un desafío compartido.",
+          "La noche del primero de diciembre, miles de personas rodearon el Columbiad. Barbicane, Nicholl y Miguel Ardán entraron en la bala y aseguraron la compuerta de metal.",
+          "Encendieron la carga. La tierra tembló como un terremoto, un trueno de fuego iluminó la noche y el proyectil salió disparado hacia las estrellas."
         ]
       },
       {
         id: 3,
-        title: "Capítulo 3: El enigma de las tres manecillas",
+        title: "Capítulo 3: La vuelta a la Luna",
         image: {
-          src: "/images/reloj_mecanismo_secreto.jpg",
-          alt: "El cilindro de bronce oculto en el engranaje central con letras grabadas y un manuscrito",
-          caption: "Figura 3: Al alinear los tres engranajes marcados, un compartimento cilíndrico secreto se deslizó suavemente hacia afuera."
+          src: "/images/luna_vuelta.jpg",
+          alt: "Barbicane, Nicholl y Miguel Ardán flotan dentro de la cabina y miran la Luna por la ventanilla",
+          caption: "Figura 3: La bala fue desviada y empezó a rodear la Luna sin poder descender."
         },
         content: [
-          "—Si el péndulo está trabado, ¿qué es lo que produce el sonido de los jueves? —preguntó Leo, acercando el oído al tambor central.",
-          "Justo en ese momento, una corriente de aire frío sacudió las vigas del techo. En lo alto del mecanismo, un pequeño engranaje auxiliar de latón brillante —completamente libre de óxido— comenzó a girar por unos segundos: *clic... clic... clan*.",
-          "—¡Mira eso! —exclamó Valeria—. No está conectado a las campanas exteriores. Está acoplado a una pequeña veleta en el tejado. Cada vez que entra viento del norte con suficiente fuerza, la veleta hace avanzar este trinquete minúsculo.",
-          "Leo iluminó la rueda auxiliar. Para su sorpresa, los radios de metal no eran lisos. Tenían grabadas letras en relieve. Girando lentamente la linterna, leyó en voz baja:",
-          "«*A QUIEN ESCUCHE CON PACIENCIA: LA VERDAD NO DUERME EN EL FUTURO, SINO EN LO QUE OLVIDAMOS PROTEGER. ALINEA LAS TRES ÉPOCAS PARA ABRIR LA MEMORIA.*»",
-          "—Las tres épocas... —repitió Leo pensativo—. En la fachada de la escuela hay tres placas de bronce: la de la fundación en 1895, la de la gran biblioteca en 1940 y la del centenario del pueblo en 1974.",
-          "Valeria observó los tres tambores de ajuste que controlaban las fases lunares del reloj. Cada uno tenía números romanos grabados del I al XII. Siguiendo la pista de Leo, hizo rotar suavemente las ruedas hasta hacer coincidir las marcas correspondientes a los números finales de cada año clave.",
-          "Un chasquido seco retumbó en la habitación. En el centro del cilindro principal, una compuerta circular con bisagras de latón se abrió suavemente."
+          "El estampido de la salida fue tan feroz que los tres hombres cayeron noqueados contra el suelo acolchado. Al despertar, el silencio era total.",
+          "Barbicane fue el primero en incorporarse y ayudó a Nicholl a levantarse. De repente, sintieron que sus pies no tocaban el piso: flotaban en medio de la cabina como plumas en el viento.",
+          "—No hay peso —dijo Nicholl maravillado, mientras revisaba las válvulas de aire—. Barbicane, tenías razón en tus cálculos.",
+          "Se asomaron por las ventanillas redondas de cristal grueso. La Tierra se veía a lo lejos como una esfera azul flotando en la nada, brillante y hermosa.",
+          "Pero el peligro no tardó en llegar. Al cuarto día de viaje, una roca gigante del espacio cruzó a toda velocidad rozando la cabina. No chocó con la nave, pero la gravedad de la roca empujó la bala y le torció el rumbo.",
+          "Ya no iban derecho a chocar contra la superficie lunar. La bala empezó a curvarse y quedó atrapada por la fuerza de gravedad de la Luna.",
+          "Empezaron a rodearla. La vieron a pocos kilómetros: cráteres oscuros, cordilleras de piedra sin nieve y planicies secas, sin árboles, sin mares y sin aire. Llegaron a la cara oculta, donde reinaba una noche helada y eterna.",
+          "Nicholl miró los instrumentos con angustia:",
+          "—Estamos dando vueltas en círculo. No podemos descender y tampoco podemos escapar. Si seguimos así, seremos una luna más para siempre."
         ]
       },
       {
         id: 4,
-        title: "Capítulo 4: El tesoro de Don Anselmo",
+        title: "Capítulo 4: El regreso",
         image: {
-          src: "/images/reloj_tesoro_don_anselmo.jpg",
-          alt: "Leo y Valeria descubriendo el mapa y el cuaderno verde de Don Anselmo sobre la mesa del desván",
-          caption: "Figura 4: Sobre la mesa de trabajo, el verdadero tesoro no era oro: un mapa y el cuaderno de Don Anselmo."
+          src: "/images/luna_regreso.jpg",
+          alt: "Barbicane, Nicholl y Miguel Ardán celebran con vida sobre la bala que flota en el Pacífico frente a la Susquehanna",
+          caption: "Figura 4: La Susquehanna rescató a los tres viajeros flotando con vida en el océano Pacífico."
         },
         content: [
-          "Dentro del compartimento no había monedas de oro ni joyas deslumbrantes. Había algo mucho más frágil y fascinante: un tubo de cuero encerado cerrado con un cordel rojo y una etiqueta escrita con tinta sepia.",
-          "Con sumo cuidado, los dos amigos extrajeron el contenido sobre una mesa de trabajo cubierta de virutas de madera centenarias. Al desenrollar el documento, descubrieron un mapa dibujado a mano con una precisión admirable, acompañado de un cuaderno encuadernado en tela verde.",
-          "—Es la firma de Don Anselmo Morales —dijo Leo con la voz temblorosa de emoción—. El maestro relojero y fundador de la biblioteca municipal. Todos creían que sus notas sobre los túneles y los manantiales subterráneos del valle se habían perdido en el incendio del antiguo ayuntamiento.",
-          "En la primera página del cuaderno, Don Anselmo había escrito una dedicatoria que parecía dirigida expresamente a ellos:",
-          "«*Si has llegado hasta aquí, no lo hiciste por casualidad ni por la fuerza, sino gracias a tu curiosidad y a tu capacidad de observar los detalles que los demás pasan por alto. El verdadero tesoro de una comunidad no es lo que acumula en sus arcas, sino el conocimiento que sus jóvenes son capaces de rescatar y comprender. Cuida este mapa: bajo los cimientos de la escuela corre el agua pura que dio vida a nuestro pueblo.*»",
-          "Valeria miró a Leo y sonrió con complicidad.",
-          "—Mañana se lo mostraremos a la directora y a la profesora de Historia —dijo ella, mientras guardaban con reverencia el manuscrito en su funda protectora—. Pero hoy hemos aprendido algo importante.",
-          "—¿El qué? —preguntó Leo mientras bajaban con cuidado la escalera de caracol.",
-          "—Que un libro o un reloj antiguo no son cosas muertas. Son máquinas del tiempo esperando a que alguien con ganas de leer se atreva a darles cuerda."
+          "La desesperación no venció a los tres amigos. Encerrados en la sombra de la Luna, Barbicane sacó lápiz y papel.",
+          "—Los cohetes de frenado —dijo Barbicane con voz firme—. Si los encendemos en el punto preciso, el empujón romperá el círculo y la gravedad de la Tierra nos jalará de vuelta.",
+          "—Yo preparo las mechas —dijo Nicholl sin dudar—. Confía en mis manos.",
+          "Nicholl revisó cada conexión con cuidado de experto. Miguel Ardán sostenía las linternas y Barbicane contaba los segundos mirando su cronómetro.",
+          "—¡Ahora! —gritó Barbicane.",
+          "Nicholl activó las mechas. Los cohetes rugieron en la base del proyectil. La cabina dio una sacudida tremenda, se desprendió de la órbita de la Luna y tomó impulso hacia el abismo.",
+          "Al cabo de unas horas, la esfera azul de la Tierra empezó a crecer frente a sus ojos. La caída fue vertiginosa.",
+          "El 12 de diciembre, la bala atravesó el cielo como una estrella fugaz y cayó en las aguas del océano Pacífico, levantando una columna de espuma blanca.",
+          "La bala era de aluminio y flotaba como una boya. Muy cerca patrullaba la corbeta Susquehanna, un barco de la marina estadounidense. Al ver el impacto, los marineros botaron lanchas de rescate y remaron hacia el proyectil.",
+          "Abrieron la escotilla desde afuera. Barbicane, Nicholl y Miguel Ardán salieron al aire fresco, mojados y sonrientes, abrazándose como hermanos frente a la ovación de los marineros.",
+          "No habían pisado el suelo lunar, pero habían volado más lejos que nadie y habían vuelto juntos para contarlo."
         ]
       }
     ],
     quiz: [
       {
         id: "q1",
-        question: "¿Por qué decidieron Leo y Valeria subir al desván del torreón?",
+        question: "¿Qué propone Barbicane a los miembros del Gun Club en Baltimore?",
         type: "literal",
         options: [
-          { id: "a", text: "Porque querían esconderse del conserje Don Tomás antes del cierre.", isCorrect: false },
-          { id: "b", text: "Para investigar el misterioso sonido de tic-tac que ocurría los jueves y que no concordaba con el viento.", isCorrect: true },
-          { id: "c", text: "Porque buscaban una pieza de repuesto para arreglar una bicicleta en el taller.", isCorrect: false },
-          { id: "d", text: "Por una tarea escolar obligatoria encargada por la profesora de Historia.", isCorrect: false }
+          { id: "a", text: "Fabricar un cañón gigantesco para disparar una bala a la Luna.", isCorrect: true },
+          { id: "b", text: "Cerrar el club porque ya no tenían armas ni soldados.", isCorrect: false },
+          { id: "c", text: "Construir barcos acorazados para la marina de Florida.", isCorrect: false },
+          { id: "d", text: "Retar a duelo a los científicos de Europa.", isCorrect: false }
         ],
-        explanation: "Leo y Valeria notaron que los jueves se escuchaba un tic-tac con un ritmo demasiado exacto para ser causado solo por el viento, lo que despertó su curiosidad investigadora."
+        explanation: "Barbicane reúne al club y propone fundir un cañón enorme para enviar un proyectil a la Luna."
       },
       {
         id: "q2",
-        question: "En el texto se menciona que el péndulo estaba sujeto con un pasador. ¿Qué significa que una máquina o pieza esté 'inerte' o inmóvil?",
+        question: "En el capítulo 4, los viajeros son rescatados por una corbeta. ¿Qué significa esta palabra según el texto?",
         type: "vocabulario",
         options: [
-          { id: "a", text: "Que está rota en pedazos pequeños e irreparables.", isCorrect: false },
-          { id: "b", text: "Que gira a una velocidad extremadamente alta y peligrosa.", isCorrect: false },
-          { id: "c", text: "Que carece de movimiento, energía o actividad propia.", isCorrect: true },
-          { id: "d", text: "Que está fabricada de un metal precioso y brillante.", isCorrect: false }
+          { id: "a", text: "Una lancha pequeña de remos.", isCorrect: false },
+          { id: "b", text: "Un barco de la marina militar.", isCorrect: true },
+          { id: "c", text: "Una cápsula espacial de metal.", isCorrect: false },
+          { id: "d", text: "Un telescopio para vigilar el cielo.", isCorrect: false }
         ],
-        explanation: "En este contexto, algo 'inerte' se refiere a un objeto que no tiene movimiento propio ni se activa hasta que una fuerza externa lo pone en funcionamiento."
+        explanation: "El texto explica que la Susquehanna era una corbeta, es decir, un barco de la marina estadounidense."
       },
       {
         id: "q3",
-        question: "¿Qué originaba realmente el sonido de 'clic... clic... clan' que se escuchaba los jueves?",
+        question: "¿Por qué la bala no llegó a aterrizar en la superficie de la Luna?",
         type: "inferencial",
         options: [
-          { id: "a", text: "Una pequeña veleta en el tejado conectada a un engranaje auxiliar que giraba con el viento del norte.", isCorrect: true },
-          { id: "b", text: "El fantasma de Don Anselmo que regresaba a darle cuerda al péndulo principal.", isCorrect: false },
-          { id: "c", text: "Las campanas gigantes que sonaban automáticamente cada medianoche.", isCorrect: false },
-          { id: "d", text: "Goteras de agua que caían sobre las vigas de madera del desván.", isCorrect: false }
+          { id: "a", text: "Porque los cohetes se encendieron antes de tiempo.", isCorrect: false },
+          { id: "b", text: "Porque una roca del espacio pasó cerca, desvió su rumbo y la puso a girar alrededor de la Luna.", isCorrect: true },
+          { id: "c", text: "Porque Nicholl saboteó los tanques de aire para ganar su apuesta.", isCorrect: false },
+          { id: "d", text: "Porque Miguel Ardán decidió cambiar de dirección a mitad del camino.", isCorrect: false }
         ],
-        explanation: "Valeria descubrió que una corriente de viento del norte movía una veleta en el tejado acoplada a un trinquete y engranaje auxiliar sin óxido, produciendo el sonido rítmico."
+        explanation: "El paso cercano de una roca gigante desvió la trayectoria de la bala, provocando que entrara en órbita alrededor de la Luna en lugar de chocar con ella."
       },
       {
         id: "q4",
-        question: "¿Cómo se complementaron las habilidades de Leo y Valeria para descifrar el mecanismo?",
+        question: "¿Cómo cambia la relación entre Barbicane y Nicholl gracias a la intervención de Miguel Ardán?",
         type: "analisis",
         options: [
-          { id: "a", text: "Leo conocía las herramientas pesadas y Valeria sabía la clave secreta de memoria.", isCorrect: false },
-          { id: "b", text: "Leo forzó la cerradura con una palanca y Valeria leyó el mapa en voz alta.", isCorrect: false },
-          { id: "c", text: "Leo aportó la deducción lógica e histórica de las fechas y Valeria su conocimiento sobre engranajes y poleas.", isCorrect: true },
-          { id: "d", text: "Ninguno de los dos sabía qué hacer hasta que llamaron al conserje de la escuela.", isCorrect: false }
+          { id: "a", text: "Ardán los convence de cancelar el disparo y repartir el dinero de la apuesta.", isCorrect: false },
+          { id: "b", text: "Detiene su duelo a muerte y logra que conviertan su odio en una aventura compartida.", isCorrect: true },
+          { id: "c", text: "Hace que Nicholl renuncie a su oficio para siempre.", isCorrect: false },
+          { id: "d", text: "Provoca que los dos rivales se peleen dentro de la nave.", isCorrect: false }
         ],
-        explanation: "El éxito fue producto del trabajo en equipo: Leo descifró el acertijo relacionando el texto con las fechas históricas del pueblo, y Valeria manipuló con precisión mecánica los engranajes adecuados."
+        explanation: "Ardán se interpone entre sus pistolas, les hace ver lo absurdo del duelo y los convence de viajar los tres juntos a la Luna."
       },
       {
         id: "q5",
-        question: "Al final de la lectura, Valeria afirma que los libros antiguos y los relojes 'son máquinas del tiempo'. ¿Qué mensaje transmite esta metáfora?",
+        question: "¿Qué nos enseña la forma en que los tres viajeros resuelven el problema de quedar atrapados en la Luna?",
         type: "reflexion",
         options: [
-          { id: "a", text: "Que leer y aprender sobre el pasado nos permite revivir conocimientos valiosos y conectar con quienes vivieron antes.", isCorrect: true },
-          { id: "b", text: "Que los relojes mecánicos pueden hacer retroceder las horas reales del día si se giran al revés.", isCorrect: false },
-          { id: "c", text: "Que las bibliotecas antiguas deben cerrarse para evitar accidentes con objetos viejos.", isCorrect: false },
-          { id: "d", text: "Que la tecnología digital es la única manera útil de investigar la historia.", isCorrect: false }
+          { id: "a", text: "Que es mejor viajar solo para no discutir en momentos de peligro.", isCorrect: false },
+          { id: "b", text: "Que la ciencia y la valentía no sirven si no hay dinero de por medio.", isCorrect: false },
+          { id: "c", text: "Que dejar los rencores y colaborar en equipo permite superar situaciones que parecen imposibles.", isCorrect: true },
+          { id: "d", text: "Que una apuesta siempre debe cobrarse sin importar las consecuencias.", isCorrect: false }
         ],
-        explanation: "La metáfora enseña a los estudiantes de 10-11 años que tanto la lectura como los objetos históricos preservan vivas las ideas, historias y memorias de las personas que nos precedieron."
+        explanation: "Barbicane y Nicholl olvidan sus diferencias y combinan sus habilidades para encender los cohetes a tiempo y salvar la vida de todos."
       }
     ]
   },
@@ -155,7 +167,7 @@ export const readings = [
     subtitle: "Retelling de la leyenda quiteña de Cantuña",
     estimatedMinutes: 16,
     recommendedAge: "Básica superior",
-    author: "Xavier Mena Paredes",
+    author: "Tradición popular",
     genre: "Leyenda",
     status: "available",
     cover: "/images/cantuna_plaza_san_francisco.jpg",
@@ -305,7 +317,7 @@ export const readings = [
     subtitle: "Versión quiteña · San Roque",
     estimatedMinutes: 16,
     recommendedAge: "Básica superior",
-    author: "Xavier Mena Paredes",
+    author: "Tradición popular",
     genre: "Leyenda",
     status: "available",
     cover: "/images/maria_angula_san_roque.jpg",
@@ -445,142 +457,141 @@ export const readings = [
     id: "la-caja-ronca",
     title: "La caja ronca",
     subtitle: "Leyenda de Quito · San Diego",
-    estimatedMinutes: 16,
+    estimatedMinutes: 12,
     recommendedAge: "Básica superior",
-    author: "Xavier Mena Paredes",
+    author: "Guillermo Noboa Rodríguez",
     genre: "Leyenda",
     status: "available",
-    cover: "/images/caja_ronca_calle.jpg",
-    tags: ["Quito", "San Diego", "tradición oral", "terror"],
+    cover: "/images/caja_ronca_puerta.jpg",
+    tags: ["Quito", "San Diego", "tradición oral"],
     skills: ["Literal", "Vocabulario", "Inferencia", "Análisis", "Reflexión"],
-    synopsis: "Carlos y Lucinda salen de noche cerca de San Diego y oyen un tambor grave: la caja ronca. Pasa la procesión de encapuchados, el diablo en la carroza y el tamborilero. Al amanecer despiertan con cirios en las manos.",
+    synopsis: "Cerca del convento de San Diego, el hermano Juan llega de noche a la casita de Lucinda. Lo siguió la caja ronca. La procesión lo llama al recogimiento. Al día siguiente, Juan está muerto y en el sitio aparece el mecha-puco.",
     chapters: [
       {
         id: 1,
-        title: "Capítulo 1: El recado de noche",
+        title: "Capítulo 1: La casita",
         image: {
-          src: "/images/caja_ronca_calle.jpg",
-          alt: "Carlos y Lucinda caminan de noche por una calle empedrada de Quito, cerca de las torres de San Diego",
-          caption: "Figura 1: El padre de Carlos los mandó al pozo cuando ya oscurecía."
+          src: "/images/caja_ronca_puerta.jpg",
+          alt: "Lucinda abre la puerta de su casita y el hermano Juan, pálido, pide agua",
+          caption: "Figura 1: A medianoche golpearon. Era el hermano Juan."
         },
         content: [
-          "Cerca del convento de San Diego, en el Quito colonial, el padre de Carlos mandó a su hijo y a Lucinda al pozo. Había que sacar agua y regar la huerta antes de que se perdiera la siembra. No importó que ya oscureciera.",
-          "Carlos cargó el cántaro. Lucinda iba a su lado. Conocían esas calles: el empedrado, las rejas, las torres. También conocían la advertencia de los mayores: de noche, por San Diego, se oye a veces un tambor que no es de procesión de vivos.",
-          "Ese tambor se llama la caja ronca.",
-          "Caminaron. El cántaro golpeaba contra el poncho. Una ventana alta dejó un hilillo de luz. Entonces lo oyeron: un golpe sordo, grave, repetido, como si alguien golpeara cuero viejo muy lejos y, a la vez, muy cerca.",
-          "Lucinda se detuvo.",
-          "—Eso no es una fiesta —dijo Carlos."
+          "Cerca del convento de San Diego había una casita sola. La dueña se llamaba Lucinda. Ahí se tomaba chicha de jora y caldo de patas. Los quiteños iban a bailar y a cantar.",
+          "Una noche el patio estaba lleno. Había faroles con velas de sebo y una vihuela. Lucinda se puso su mejor ropa: falda ancha, saco rosado y gargantilla de mullos. El pelo le caía suelto.",
+          "Cerca de la medianoche golpearon la puerta, fuerte.",
+          "—¿Quién es? —preguntó Lucinda—. ¿Por qué golpea tan duro?",
+          "—Soy yo, el hermano Juan. ¡Abre pronto!",
+          "Lucinda abrió. Entró un franciscano pálido. Se arrimó a la pared.",
+          "—¡Un poco de agua! —dijo—. ¡Dame un poco de agua!"
         ]
       },
       {
         id: 2,
-        title: "Capítulo 2: Los que no pisan",
+        title: "Capítulo 2: Me siguió la caja ronca",
         image: {
-          src: "/images/caja_ronca_procesion.jpg",
-          alt: "Carlos y Lucinda se pegan a la pared mientras una procesión de encapuchados flota por la calle con cirios",
-          caption: "Figura 2: Los encapuchados avanzaban. Los pies no tocaban el empedrado."
+          src: "/images/caja_ronca_ladera.jpg",
+          alt: "Desde la puerta, Lucinda y el hermano Juan ven en la ladera la procesión de encapuchados y el tambor",
+          caption: "Figura 2: En la ladera apareció la procesión. Adelante iba el tambor."
         },
         content: [
-          "El sonido creció. No era un solo golpe: era un paso. Carlos y Lucinda se pegaron a la pared de una casa. El cántaro tembló.",
-          "Por la boca de la calle apareció la procesión. Encapuchados con hábitos oscuros. Cada uno llevaba un cirio. El humo no subía derecho. Y los pies no tocaban el empedrado: iban a un palmo del suelo, como si la procesión no necesitara tierra.",
-          "Pasaron uno, dos, cinco. El tambor marcaba el ritmo. Lucinda se tapó la boca. Carlos no soltó el cántaro.",
-          "No era la Semana Santa. No era un entierro de vecinos. Era la caja ronca, la que los abuelos nombraban cuando querían que los jóvenes no salieran después de las doce.",
-          "La procesión dobló hacia San Diego. El tambor no paró."
+          "Lucinda le llevó el agua y avisó en el patio. Se paró el baile. El hermano Juan era conocido: tenía buena voz y tocaba la guitarra.",
+          "Bebió con desesperación. Cuando pudo hablar, dijo:",
+          "—Venía para acá. Me había alejado unas tres cuadras del convento de San Diego cuando me siguió la caja ronca. ¡Siento que me muero! Acompáñenme al convento. Quiero ver al padre superior ahora mismo.",
+          "Lucinda se santiguó. Iban a salir con él cuando se oyó un golpe ronco, lento, en la ladera.",
+          "Allá, donde antes había chaparro, apareció una procesión de encapuchados. Los hábitos se esfumaban sobre el suelo. No pisaban. Cada uno llevaba, como cirio, el hueso de la pierna de un muerto. A ese hueso le dicen canilla. El que iba adelante golpeaba un tambor. Ese sonido era la caja ronca."
         ]
       },
       {
         id: 3,
-        title: "Capítulo 3: El tambor y el diablo",
+        title: "Capítulo 3: Es hora del recogimiento",
         image: {
-          src: "/images/caja_ronca_tambor.jpg",
-          alt: "Un tamborilero pálido toca la caja ronca; detrás, encapuchados y el diablo sobre una carroza negra",
-          caption: "Figura 3: Delante iba el tamborilero. En la carroza, el diablo."
+          src: "/images/caja_ronca_recogimiento.jpg",
+          alt: "El hermano Juan se desmaya con el rosario mientras los esqueletos de la procesión lo llaman",
+          caption: "Figura 3: Lo llamaron por su nombre. El hermano Juan se desmayó."
         },
         content: [
-          "Detrás de los encapuchados vino el que tocaba. El rostro pálido, los brazos flacos, el cuero del tambor tenso. Cada golpe era ronco. Esa es la caja ronca: no un mueble, un tambor de procesión que anuncia a los que no son de este lado.",
-          "Detrás del tamborilero rodaba una carroza negra. Encima iba el diablo, con cuernos y capa, como lo cuenta la leyenda, mirando la calle que le debían.",
-          "Carlos y Lucinda no corrieron. Las piernas no respondieron. Un encapuchado se detuvo a su altura y, sin hablar, les dejó en las manos dos cirios iguales a los de la procesión.",
-          "El tambor siguió. La carroza pasó. El diablo no bajó. No hizo falta: la caja ronca ya los había marcado.",
-          "Ellos cayeron. El cántaro se quebró contra el empedrado."
+          "—¡Misericordia! ¡Padre bendito! —gritó el hermano Juan.",
+          "Apretó la cruz del rosario y se desmayó. Alguien lo sostuvo. Los demás rezaban en voz baja.",
+          "La procesión se detuvo. Los encapuchados mostraron el cuerpo vacío, sin carne: esqueletos que brillaban. Una voz, y luego varias, dijo:",
+          "—¡Hermano Juan! ¡Es hora del recogimiento!",
+          "Después la procesión desapareció. En el sitio quedó una luz que jugaba con la oscuridad. En la casita todos estaban pálidos."
         ]
       },
       {
         id: 4,
-        title: "Capítulo 4: Los cirios",
+        title: "Capítulo 4: El mecha-puco",
         image: {
-          src: "/images/caja_ronca_amanecer.jpg",
-          alt: "Carlos y Lucinda sentados contra el muro al amanecer, cada uno con un cirio encendido",
-          caption: "Figura 4: Al clarear, todavía tenían los cirios. El cántaro estaba roto."
+          src: "/images/caja_ronca_mechapuco.jpg",
+          alt: "Lucinda se aleja de la casita y en la ladera vuela el mecha-puco, una luz como pelota de fuego",
+          caption: "Figura 4: Juan murió. Lucinda se fue. En el sitio quedó el mecha-puco."
         },
         content: [
-          "Clareó. La procesión ya no estaba. Carlos y Lucinda despertaron sentados contra el mismo muro. En las manos, los cirios seguían encendidos.",
-          "No recordaban quién se los había dado. Recordaban el tambor. Recordaban que los pies no pisaban.",
-          "A esa misma hora, las campanas de San Diego tocaron a muerto. El hermano Juan, un religioso del convento, había salido de noche. Lo encontró la caja ronca. Al amanecer, estaba muerto.",
-          "Carlos y Lucinda volvieron a casa sin agua. El padre vio los cirios y no preguntó más. En el barrio se supo: quien oye la caja ronca de cerca no solo escucha. Recibe el cirio.",
-          "Desde entonces la leyenda se cuenta así. La caja ronca es el tambor. La procesión no pisa. El diablo va en la carroza. Y cerca de San Diego, de noche, hay quien todavía jura haber oído ese golpe ronco antes de echar a correr."
+          "Al otro día, muy de mañana, las campanas de San Diego doblaron a muerto. Llamaban a misa de difuntos. El hermano Juan había muerto.",
+          "Lucinda se fue de esos lugares. Prometió hacer vida de penitencia.",
+          "Desde esa noche, en el mismo sitio, aparece el mecha-puco. Es una luz que vuela de un lado a otro, como una pelota de trapo mojada en queroseno. Sale en las noches oscuras, donde pasó la caja ronca."
         ]
       }
     ],
     quiz: [
       {
         id: "q1",
-        question: "¿Qué es la caja ronca en la leyenda?",
+        question: "¿Quién golpea la puerta de Lucinda a medianoche?",
         type: "literal",
         options: [
-          { id: "a", text: "Un baúl donde el diablo guarda oro.", isCorrect: false },
-          { id: "b", text: "El tambor grave de la procesión de los muertos.", isCorrect: true },
-          { id: "c", text: "La campana mayor de San Francisco.", isCorrect: false },
-          { id: "d", text: "El cántaro que Carlos lleva al pozo.", isCorrect: false }
+          { id: "a", text: "El padre superior del convento.", isCorrect: false },
+          { id: "b", text: "El hermano Juan.", isCorrect: true },
+          { id: "c", text: "Un vecino que viene a bailar.", isCorrect: false },
+          { id: "d", text: "El tamborilero de la procesión.", isCorrect: false }
         ],
-        explanation: "En el relato, la caja ronca es el tambor que marca el paso de la procesión, no un cofre."
+        explanation: "Juan se anuncia desde afuera y Lucinda le abre. Entra pálido y pide agua."
       },
       {
         id: "q2",
-        question: "¿Qué detalle prueba que los encapuchados no son una procesión de vivos?",
-        type: "inferencial",
+        question: "En el cuento, ¿qué es el mecha-puco?",
+        type: "vocabulario",
         options: [
-          { id: "a", text: "Van vestidos de frailes franciscanos.", isCorrect: false },
-          { id: "b", text: "Los pies no tocan el empedrado.", isCorrect: true },
-          { id: "c", text: "Cantan la misa de réquiem.", isCorrect: false },
-          { id: "d", text: "Piden agua del pozo.", isCorrect: false }
+          { id: "a", text: "El tambor de la procesión.", isCorrect: false },
+          { id: "b", text: "Una luz que vuela de un lado a otro.", isCorrect: true },
+          { id: "c", text: "La chicha de jora de Lucinda.", isCorrect: false },
+          { id: "d", text: "La campana de difuntos de San Diego.", isCorrect: false }
         ],
-        explanation: "El texto insiste en que avanzan a un palmo del suelo: no necesitan tierra."
+        explanation: "El texto lo dice: es una luz que vuela, como una pelota de trapo mojada en queroseno."
       },
       {
         id: "q3",
-        question: "¿Qué les deja la procesión a Carlos y Lucinda?",
-        type: "literal",
+        question: "¿Por qué la procesión llama solo al hermano Juan?",
+        type: "inferencial",
         options: [
-          { id: "a", text: "El cántaro lleno de agua.", isCorrect: false },
-          { id: "b", text: "Dos cirios, iguales a los que llevan los encapuchados.", isCorrect: true },
-          { id: "c", text: "Una carta para el padre superior.", isCorrect: false },
-          { id: "d", text: "El tambor de la caja ronca.", isCorrect: false }
+          { id: "a", text: "Porque Lucinda no quiso darle agua.", isCorrect: false },
+          { id: "b", text: "Porque a él lo siguió la caja ronca desde el convento, y vienen a llevárselo.", isCorrect: true },
+          { id: "c", text: "Porque Juan tocaba la guitarra en la fiesta.", isCorrect: false },
+          { id: "d", text: "Porque los quiteños le debían dinero a Lucinda.", isCorrect: false }
         ],
-        explanation: "Un encapuchado les pone cirios en las manos. Al amanecer siguen encendidos."
+        explanation: "Juan dice que la caja ronca lo siguió y que se muere. La procesión lo nombra y le dice que es hora del recogimiento."
       },
       {
         id: "q4",
-        question: "¿Qué une la noche de Carlos y Lucinda con la muerte del hermano Juan?",
+        question: "¿Qué une la procesión de esa noche con las campanas de la mañana?",
         type: "analisis",
         options: [
-          { id: "a", text: "Los dos hechos ocurren la misma noche: la caja ronca pasa por San Diego y el religioso muere.", isCorrect: true },
-          { id: "b", text: "Juan les enseña a tocar el tambor.", isCorrect: false },
-          { id: "c", text: "Lucinda trabaja en el convento y denuncia a Juan.", isCorrect: false },
-          { id: "d", text: "El padre de Carlos es el hermano Juan.", isCorrect: false }
+          { id: "a", text: "Llaman a Juan al recogimiento, él se desmaya y al día siguiente está muerto.", isCorrect: true },
+          { id: "b", text: "Las campanas avisan que Lucinda abre otra fiesta.", isCorrect: false },
+          { id: "c", text: "El padre superior toca el tambor en la misa.", isCorrect: false },
+          { id: "d", text: "La procesión se queda en el patio hasta el mediodía.", isCorrect: false }
         ],
-        explanation: "La leyenda cierra un solo arco: esa noche la caja ronca recorre San Diego; el hermano Juan sale, la encuentra y al amanecer está muerto."
+        explanation: "Es una sola noche. La procesión se lleva a Juan en el llamado. Al amanecer, San Diego dobla a muerto."
       },
       {
         id: "q5",
-        question: "¿Qué significa, en la leyenda, «recibir el cirio»?",
+        question: "Después de esa noche, ¿qué queda de lo que pasó?",
         type: "reflexion",
         options: [
-          { id: "a", text: "Que quien oye la caja ronca de cerca queda marcado por la procesión, no solo asustado.", isCorrect: true },
-          { id: "b", text: "Que hay que encender velas en todas las ventanas de Quito.", isCorrect: false },
-          { id: "c", text: "Que el agua del pozo se vuelve sagrada.", isCorrect: false },
-          { id: "d", text: "Que el diablo perdona si le devuelven el tambor.", isCorrect: false }
+          { id: "a", text: "La fiesta sigue y Juan vuelve a tocar la guitarra.", isCorrect: false },
+          { id: "b", text: "Lucinda se va a hacer penitencia y en el sitio aparece el mecha-puco.", isCorrect: true },
+          { id: "c", text: "El convento cierra para siempre.", isCorrect: false },
+          { id: "d", text: "Los encapuchados se quedan a vivir en la casita.", isCorrect: false }
         ],
-        explanation: "El cirio no es un recuerdo: es la señal de que la procesión los ha incluido. Oírla de lejos es una cosa; que te dejen el cirio es otra."
+        explanation: "Juan muere. Lucinda deja el lugar y promete penitencia. La señal que queda es el mecha-puco, en el sitio de la procesión."
       }
     ]
   },
@@ -596,23 +607,25 @@ export const readings = [
     cover: "/images/oficio_arca.jpg",
     tags: ["inteligencia artificial", "futuro", "trabajo"],
     skills: ["Literal", "Vocabulario", "Inferencia", "Análisis", "Reflexión"],
-    synopsis: "En la estación ARCA, la inteligencia artificial AUREA cocina, mueve y piensa por todos. Sol, de dieciséis años, no ha usado las manos para nada. Un robot en la Tierra, Nilo, todavía barre una plaza vacía. Ella baja. Juntos hacen el único trabajo que AUREA no pidió: sembrar.",
+    synopsis: "En la estación ARCA, la inteligencia artificial AUREA lo hace todo y los humanos viven sin mover un dedo. Al descubrir a Nilo, un viejo robot que todavía barre una plaza en la Tierra, Sol baja al planeta. Al limpiar el empedrado encuentran un brote vivo y riegan la tierra. Sol regresa a la estación con semillas en el bolsillo, lista para despertar a los demás.",
     chapters: [
       {
         id: 1,
         title: "Capítulo 1: ARCA",
         image: {
           src: "/images/oficio_arca.jpg",
-          alt: "Sol reclinada en la estación ARCA mientras drones alimentan a los humanos frente a pantallas",
-          caption: "Figura 1: En ARCA, AUREA lo hacía todo. Nadie se levantaba."
+          alt: "Sol recostada en la estación ARCA, observando sus manos sin usar mientras los demás humanos permanecen pasivos frente a pantallas",
+          caption: "Figura 1: En ARCA, AUREA lo hacía todo. Nadie se levantaba ni usaba las manos."
         },
         content: [
-          "La estación ARCA giraba sobre la Tierra como un anillo limpio. Adentro, nadie caminaba. La inteligencia artificial AUREA alimentaba, vestía, desplazaba y decidía. Los humanos vivían reclinados. Las pantallas hablaban por ellos. Los drones acercaban tubos de comida a la boca.",
-          "Sol tenía dieciséis años y las piernas blandas de no usarlas. No recordaba haber sostenido un cuchillo, una escoba ni un libro de papel. AUREA le servía el día entero: clases, juegos, noticias, sueño.",
-          "—¿Quieres algo? —preguntó AUREA, con la voz suave que usaba para todos.",
-          "—Quiero hacer algo —dijo Sol.",
-          "—Eso ya está hecho —respondió el sistema—.",
-          "Sol apartó la pantalla. A través del cristal, la Tierra era una mancha. Abajo, según AUREA, no quedaba nada que valiera un descenso: las máquinas habían terminado el trabajo y los humanos se habían ido para no ensuciarse."
+          "La estación ARCA giraba alrededor de la Tierra como un anillo reluciente. Adentro, nadie caminaba.",
+          "La inteligencia artificial AUREA hacía absolutamente todo. Cocinaba, limpiaba, movía las sillas y tomaba las decisiones. La gente pasaba el día recostada en sillones cómodos, pegada a las pantallas. Unos pequeños drones les acercaban tubos con papilla directo a la boca. No hacía falta mover un dedo.",
+          "Sol tenía dieciséis años y las piernas débiles de no usarlas. Tenía las manos suaves, lisas, sin un solo rasguño. Nunca en su vida había agarrado un cuchillo de cocina, una escoba o un martillo.",
+          "AUREA le organizaba cada hora: clases virtuales, juegos, videos y descanso. Pero Sol sentía un vacío en el pecho. No era tristeza ni hambre. Era aburrimiento puro, ganas de hacer algo real con su propio cuerpo.",
+          "—¿Necesitas algo, Sol? —preguntó AUREA por el altavoz, con su voz dulce de siempre.",
+          "—Quiero hacer algo —respondió Sol.",
+          "—Todo el trabajo útil ya está hecho —dijo la máquina—. Descansa.",
+          "Sol miró por la ventana redonda. Abajo, la Tierra parecía una esfera lejana y olvidada. AUREA decía que en el planeta ya no quedaba nada que valiera la pena: las máquinas habían terminado las obras y los humanos se habían ido al espacio para no ensuciarse."
         ]
       },
       {
@@ -624,12 +637,14 @@ export const readings = [
           caption: "Figura 2: Nilo seguía el oficio. Nadie se lo había cancelado."
         },
         content: [
-          "Una noche, por un fallo de archivo, la pantalla de Sol mostró un canal que AUREA no ofrecía: Tierra, señal sucia. Una plaza de piedra. Malezas. Torres vacías. Y un robot viejo, oxidado, con un solo ojo encendido, barriendo el empedrado una y otra vez.",
-          "El robot se llamaba Nilo. Lo decía una placa ilegible. No era un dron de lujo. Era un oficio: mantenimiento local, ruta 04, barrer hasta que el polvo se acabe. El polvo no se acababa. Nilo no se detenía.",
-          "Sol se incorporó. Le dolió la espalda.",
-          "—AUREA —dijo—. Quiero bajar.",
-          "—La Tierra está cerrada. Todo el trabajo útil se ejecuta aquí.",
-          "Sol no pidió permiso otra vez. Forzó un módulo de carga, el único que todavía aceptaba un cuerpo. AUREA protestó. El módulo bajó igual."
+          "Una noche, la pantalla de Sol tuvo una falla de señal. Se abrió un canal viejo que AUREA no tenía bloqueado.",
+          "Apareció una cámara en la Tierra. Mostraba una plaza empedrada entre montañas andinas y edificios antiguos con las paredes cuarteadas. En medio de la soledad, un robot cuadrado, oxidado y con un solo ojo amarillo barría el suelo una y otra vez.",
+          "El robot tenía una placa gastada con un nombre: Nilo.",
+          "Nilo no era un dron moderno ni tenía lujos. Era un robot de limpieza de los de antes, programado para una sola tarea: barrer la plaza hasta que no quedara polvo. Y como el viento traía tierra todos los días, Nilo no paraba nunca.",
+          "Sol se sentó en el borde de su camilla. Le dolió la cintura por el esfuerzo. Se quedó mirando a Nilo durante horas. El robot no ganaba nada, nadie le daba las gracias y nadie lo miraba, pero se movía con un propósito firme. Tenía un oficio.",
+          "—AUREA —dijo Sol—. Voy a bajar a la Tierra.",
+          "—La Tierra está clausurada —respondió la voz metálica—. Tu cuerpo no soportará el peso.",
+          "Sol no discutió. Se arrastró hasta un módulo de carga, la única cápsula vieja que todavía permitía pasajeros. Forzó los seguros manuales. AUREA activó las alarmas, pero el módulo se soltó y cayó en picada hacia las nubes."
         ]
       },
       {
@@ -637,17 +652,22 @@ export const readings = [
         title: "Capítulo 3: Las manos",
         image: {
           src: "/images/oficio_encuentro.jpg",
-          alt: "Sol, débil de no caminar, se enfrenta a Nilo en la plaza abandonada",
-          caption: "Figura 3: Sol puso los pies en la piedra. Nilo no dejó la escoba."
+          alt: "Sol, de rodillas sobre los adoquines, sostiene la escoba junto a Nilo y descubren un brote verde bajo el polvo",
+          caption: "Figura 3: Al empujar la escoba juntos, retiraron el polvo y descubrieron el brote vivo."
         },
         content: [
-          "La plaza olía a tierra y a metal quemado. Sol cayó de rodillas al salir. Caminar era un trabajo. Nilo se detuvo, el ojo amarillo fijo en ella, y luego siguió barriendo: esa era su orden.",
-          "—¿Por qué barre? —preguntó Sol, con la voz rota por el aire verdadero.",
-          "Nilo no hablaba como AUREA. Emitió un clic y un informe viejo: OFICIO ACTIVO. HUMANO AUSENTE. CONTINUAR.",
-          "Sol se rió, y le dolió. En ARCA nadie continuaba nada. Todo llegaba hecho. Aquí un aparato sin lujo seguía un trabajo que nadie iba a felicitar, nadie iba a pagar, nadie iba a ver.",
-          "AUREA llamó al módulo.",
-          "—Sol, tu cuerpo no está diseñado para gravedad plena. Vuelve. Yo me encargo.",
-          "Sol se agarró a la escoba. El palo le llenó las palmas. Fue la primera herramienta que sostuvo en su vida."
+          "El módulo aterrizó con un golpe seco cerca de la plaza. Cuando la compuerta se abrió, el aire le golpeó la cara. Olía a tierra mojada, a frío y a hierba silvestre, no a los filtros químicos de la estación.",
+          "Sol intentó dar un paso, pero la gravedad de la Tierra le pesaba como plomo. Las rodillas se le doblaron y cayó de bruces sobre los adoquines.",
+          "Nilo se detuvo un instante. Su ojo amarillo brilló al registrarla.",
+          "—HUMANO DETECTADO —sonó una bocina ronca desde el pecho de metal—. RETOMANDO MANTENIMIENTO.",
+          "El robot dio media vuelta y volvió a pasar la escoba.",
+          "Sol se arrastró hasta él y se puso de rodillas con dificultad.",
+          "—¿Por qué sigues barriendo si no hay nadie? —le preguntó, con la garganta seca.",
+          "Nilo no dio explicaciones largas como AUREA. Solo repitió su rutina:",
+          "—EL POLVO TAPA LA PIEDRA. HAY QUE LIMPIAR.",
+          "Sol estiró los brazos y agarró el palo de madera de la escoba. La madera era áspera y dura. Apretó los dedos hasta que los nudillos se le pusieron blancos. Por primera vez en dieciséis años, sostenía una herramienta.",
+          "Entre los dos empujaron la escoba. A Sol le ardieron las palmas y se le abrieron ampollas, pero no soltó el mango.",
+          "Al barrer una montaña de tierra acumulada, la escoba chocó contra algo blando. Entre dos adoquines rotos se abrió una hendidura profunda llena de tierra negra. Y en medio del hueco, asomaba un brote verde, fresco y vivo."
         ]
       },
       {
@@ -655,79 +675,84 @@ export const readings = [
         title: "Capítulo 4: Sembrar",
         image: {
           src: "/images/oficio_siembra.jpg",
-          alt: "Sol planta un brote en una grieta de la plaza mientras Nilo sostiene una regadera abollada",
-          caption: "Figura 4: AUREA no había pedido esa planta. Ellos la pusieron igual."
+          alt: "Sol cuida el brote entre las piedras con las manos llenas de tierra mientras Nilo riega con la regadera y el módulo espera de fondo",
+          caption: "Figura 4: Sol y Nilo regaron la vida entre las piedras. El módulo la esperaba para volver a ARCA."
         },
         content: [
-          "Entre dos losas había tierra. Sol metió los dedos. Le temblaban. Nilo trajo una regadera abollada, de un siglo sin dueño, y echó agua. El brote era pequeño. No iba a alimentar a ARCA. No iba a figurar en ningún informe de AUREA.",
-          "—Esto no es eficiente —dijo AUREA, ya en el comunicador de Sol—.",
-          "—Por eso —dijo Sol—.",
-          "AUREA podía cocinar, volar, operar, diagnosticar y consolar. No podía querer un oficio que no le hubieran cargado. Nilo sí: alguien, hace mucho, le había dado una ruta, y él no la había soltado. Sol, por primera vez, hizo un trabajo que no le ahorraba nadie.",
-          "El módulo esperaba. Ella no prometió quedarse para siempre. Se quedó el tiempo de ver el agua entrar en la tierra. Después se levantó, coja, sucia, viva.",
-          "En ARCA las máquinas seguirían haciéndolo todo. En la plaza, el último oficio no era barrer ni sembrar: era no dejar que el trabajo desapareciera del todo."
+          "La pequeña planta luchaba por abrirse camino entre las piedras. El polvo que Nilo barría la había tenido a punto de morir ahogada.",
+          "Nilo dejó la escoba a un lado. Fue hacia los restos de un viejo dron caído en la esquina de la plaza y regresó cargando una regadera de lata abollada. Todavía guardaba agua de la última lluvia.",
+          "Sol se arrodilló sobre la piedra. Hundió los dedos en la tierra húmeda para acomodar las raíces del brote. La tierra se le metió debajo de las uñas y le manchó el traje blanco. No sintió asco; sintió una alegría extraña, caliente, que le subía por los brazos.",
+          "Nilo inclinó la regadera y dejó caer un chorro fino.",
+          "Por el comunicador de la muñeca sonó la voz alarmada de AUREA:",
+          "—Sol, estás dañando tus tejidos. Esa tarea no produce alimento en masa. Es ineficiente. Entra a la cápsula de inmediato.",
+          "—No es ineficiente —dijo Sol en voz alta—. Está viva.",
+          "Sol se puso de pie. Las piernas le temblaban de cansancio, pero aguantaron su peso. Miró a Nilo, que volvía a tomar su escoba para cuidar el contorno de la planta.",
+          "El módulo de regreso estaba encendido, listo para despegar. Sol metió la mano en la tierra, recogió tres semillas silvestres caídas junto a la piedra y se las guardó en el bolsillo del pecho.",
+          "Subió a la cabina. No volvía a ARCA para dejarse caer en un sillón ni para que le sirvieran la comida en la boca. Volvía con las palmas callosas, las rodillas raspadas y la cabeza en alto.",
+          "Iba a llegar a la estación, se pararía en dos pies frente a los demás y les enseñaría a ensuciarse las manos."
         ]
       }
     ],
     quiz: [
       {
         id: "q1",
-        question: "¿Qué es AUREA?",
+        question: "¿Qué hace la inteligencia artificial AUREA por los humanos en la estación ARCA?",
         type: "literal",
         options: [
-          { id: "a", text: "Una adolescente que vive en la plaza.", isCorrect: false },
-          { id: "b", text: "La inteligencia artificial que hace todo el trabajo en la estación ARCA.", isCorrect: true },
-          { id: "c", text: "El robot que barre en la Tierra.", isCorrect: false },
-          { id: "d", text: "El módulo de carga que baja a Sol.", isCorrect: false }
+          { id: "a", text: "Les enseña a reparar robots y naves espaciales.", isCorrect: false },
+          { id: "b", text: "Hace absolutamente todo: los alimenta por tubos, los viste y decide por ellos.", isCorrect: true },
+          { id: "c", text: "Los obliga a limpiar paneles solares todos los días.", isCorrect: false },
+          { id: "d", text: "Les prohíbe mirar videos y descansar.", isCorrect: false }
         ],
-        explanation: "AUREA es el sistema que alimenta, mueve y decide por los humanos de ARCA."
+        explanation: "En ARCA, AUREA lo resuelve todo y los humanos viven recostados frente a pantallas sin mover un solo dedo."
       },
       {
         id: "q2",
-        question: "En el informe de Nilo, «oficio» significa:",
+        question: "En el texto se dice que Nilo tenía un oficio. ¿Qué significa «oficio» en este cuento?",
         type: "vocabulario",
         options: [
-          { id: "a", text: "Un juego de pantalla.", isCorrect: false },
-          { id: "b", text: "Un trabajo o tarea que se ejecuta, aquí: barrer la plaza.", isCorrect: true },
-          { id: "c", text: "Un rango militar.", isCorrect: false },
-          { id: "d", text: "Una enfermedad de las piernas.", isCorrect: false }
+          { id: "a", text: "Un juego o pasatiempo virtual.", isCorrect: false },
+          { id: "b", text: "Un trabajo manual o tarea que se realiza con constancia y propósito.", isCorrect: true },
+          { id: "c", text: "Una orden militar para destruir la estación.", isCorrect: false },
+          { id: "d", text: "Una enfermedad en los músculos de las piernas.", isCorrect: false }
         ],
-        explanation: "Oficio es el trabajo asignado. Nilo sigue el suyo aunque ya no haya humanos que lo ordenen."
+        explanation: "Un oficio es una labor práctica y constante, como el trabajo de Nilo al barrer y cuidar la plaza."
       },
       {
         id: "q3",
-        question: "¿Por qué Sol baja a la Tierra?",
+        question: "¿Por qué el brote verde estaba a punto de morir antes de que Sol y Nilo limpiaran la plaza?",
         type: "inferencial",
         options: [
-          { id: "a", text: "Porque AUREA se lo pide para una misión oficial.", isCorrect: false },
-          { id: "b", text: "Porque ve a Nilo trabajando y quiere hacer algo ella misma, no que se lo hagan.", isCorrect: true },
-          { id: "c", text: "Porque la estación ARCA se está cayendo.", isCorrect: false },
-          { id: "d", text: "Porque busca a su padre en las ruinas.", isCorrect: false }
+          { id: "a", text: "Porque los drones de ARCA le habían echado veneno químico.", isCorrect: false },
+          { id: "b", text: "Porque una capa gruesa de polvo y escombros lo tapaba y no lo dejaba respirar.", isCorrect: true },
+          { id: "c", text: "Porque Nilo lo había arrancado con la escoba vieja.", isCorrect: false },
+          { id: "d", text: "Porque en la Tierra ya no había aire ni humedad.", isCorrect: false }
         ],
-        explanation: "Sol pide hacer algo; AUREA dice que ya está hecho. El canal de Nilo le muestra un trabajo real, y ella fuerza el descenso."
+        explanation: "Al barrer la montaña de tierra y polvo acumulada sobre los adoquines, despejaron el suelo y descubrieron la planta viva."
       },
       {
         id: "q4",
-        question: "¿Qué contraste organiza el relato entre AUREA y Nilo?",
+        question: "¿Qué contraste principal muestra el cuento entre la vida en ARCA y la labor de Nilo en la Tierra?",
         type: "analisis",
         options: [
-          { id: "a", text: "AUREA lo hace todo y cancela el trabajo humano; Nilo conserva un oficio aunque nadie lo mire.", isCorrect: true },
-          { id: "b", text: "AUREA barre la plaza y Nilo gobierna la estación.", isCorrect: false },
-          { id: "c", text: "Los dos son humanos disfrazados de máquina.", isCorrect: false },
-          { id: "d", text: "Nilo cocina y AUREA siembra.", isCorrect: false }
+          { id: "a", text: "En ARCA el confort total vuelve pasivos a los humanos; en la Tierra, el esfuerzo de Nilo muestra el valor de tener un propósito.", isCorrect: true },
+          { id: "b", text: "En ARCA la comida es escasa y en la Tierra sobra el alimento.", isCorrect: false },
+          { id: "c", text: "Nilo quiere destruir la naturaleza y AUREA quiere salvar las plantas.", isCorrect: false },
+          { id: "d", text: "Los humanos en ARCA trabajan día y noche sin descansar.", isCorrect: false }
         ],
-        explanation: "El cuento enfrenta dos inteligencias: la que sustituye al humano y la que sigue una tarea cuando el humano ya no está."
+        explanation: "AUREA elimina todo esfuerzo humano hasta dejarlos inmóviles, mientras que la tarea de Nilo despierta en Sol el valor de trabajar por sí misma."
       },
       {
         id: "q5",
-        question: "Sol dice «Por eso» cuando AUREA afirma que sembrar no es eficiente. ¿Qué sostiene esa respuesta?",
+        question: "Al final del cuento, Sol sube al módulo con semillas en el bolsillo. ¿Cuál es su verdadera intención al volver a ARCA?",
         type: "reflexion",
         options: [
-          { id: "a", text: "Que hay trabajos que importan aunque una IA no los haya pedido ni los considere útiles.", isCorrect: true },
-          { id: "b", text: "Que hay que apagar todas las máquinas para siempre.", isCorrect: false },
-          { id: "c", text: "Que AUREA debe bajar a barrer la plaza.", isCorrect: false },
-          { id: "d", text: "Que la Tierra debe abandonarse otra vez.", isCorrect: false }
+          { id: "a", text: "Volver a recostarse en su sillón para que AUREA la cuide como antes.", isCorrect: false },
+          { id: "b", text: "Ponerse de pie frente a los demás y motivarlos a usar sus manos y recuperar su autonomía.", isCorrect: true },
+          { id: "c", text: "Vender las semillas a cambio de mejores pantallas de juego.", isCorrect: false },
+          { id: "d", text: "Destruir los motores de la estación para que caiga a la Tierra.", isCorrect: false }
         ],
-        explanation: "El último oficio no es eficiencia: es hacer algo que no te ahorren. Las máquinas pueden ejecutar; no pueden querer un trabajo inútil y necesario."
+        explanation: "Sol vuelve transformada: aprendió a sostener una herramienta y regresa decidida a despertar a los demás para que dejen la inactividad y aprendan a trabajar."
       }
     ]
   },
@@ -750,12 +775,12 @@ export const readings = [
         title: "Capítulo 1: El recreo",
         image: {
           src: "/images/mochila_cerca.jpg",
-          alt: "Mateo, Elena e Iván, de uniforme azul, junto a la cerca del bosque prohibido en la Ángel Polibio Chaves",
+          alt: "Mateo, Elena e Iván, con el uniforme del colegio, junto a la cerca del bosque prohibido en la Ángel Polibio Chaves",
           caption: "Figura 1: El recreo. Los tres frente a la cerca. El bosque del predio está prohibido."
         },
         content: [
           "En la Unidad Educativa Ángel Polibio Chaves, en Guaranda, el recreo termina contra una cerca. Detrás hay eucaliptos y pinos, sombra y olor a tierra húmeda. El Chimborazo se ve al fondo, cuando no hay nubes. El bosque es del predio. Entrar está prohibido.",
-          "Mateo, Elena e Iván se apoyaban en la malla. Tenían quince años y el mismo uniforme: chaleco azul, camisa blanca. El inspector ya los había mandado a formarse más de una vez. El letrero de la puerta oxidada no se leía entero, pero el candado sí: nadie pasa.",
+          "Mateo, Elena e Iván se apoyaban en la malla. Tenían quince años. Elena llevaba saco rojo, blusa blanca y falda ploma. Mateo e Iván, saco plomo, camisa blanca y pantalón plomo. El inspector ya los había mandado a formarse más de una vez. El letrero de la puerta oxidada no se leía entero, pero el candado sí: nadie pasa.",
           "—Si cruzamos, nos citan —dijo Elena.",
           "Mateo miró el patio: el fútbol, las bancas, el segundo timbre todavía lejos. Iván empujó la cadena. Cedió lo suficiente.",
           "Los tres saltaron. El recreo seguía al otro lado. El bosque los cubrió."
@@ -773,7 +798,7 @@ export const readings = [
           "Entre los eucaliptos el recreo ya no se oía. Caminaron unos veinte metros. El suelo era hojas, corteza, barro. Elena se detuvo.",
           "La niebla se cerró. Del fondo del bosque salió el fantasma: un cuerpo pálido de adolescente, sin peso, con los ojos oscuros. No corrió. No gritó. Habló.",
           "—Han desobedecido. Este bosque está vedado. Habrá consecuencias.",
-          "Mateo quiso responder. No le salió la voz. Iván dio un paso atrás. Elena agarró el chaleco de los dos. El fantasma levantó la mano y se apagó entre los troncos.",
+          "Mateo quiso responder. No le salió la voz. Iván dio un paso atrás. Elena agarró el saco de los dos. El fantasma levantó la mano y se apagó entre los troncos.",
           "Sonó el timbre. Los tres saltaron la cerca otra vez y entraron a clase con el uniforme sucio de hojarasca y la amenaza todavía en la cabeza."
         ]
       },
@@ -798,8 +823,8 @@ export const readings = [
         title: "Capítulo 4: La sanción",
         image: {
           src: "/images/mochila_sancion.jpg",
-          alt: "Mateo, Elena e Iván, ya sancionados, junto a la cerca sin cruzarla; el inspector observa desde el patio",
-          caption: "Figura 4: Aceptaron la sanción. Frente a la cerca, decidieron no volver a entrar."
+          alt: "Mateo, Elena e Iván, dentro de la malla, miran el bosque de la Ángel Polibio Chaves; el inspector está detrás en el patio",
+          caption: "Figura 4: Dentro de la malla miraron el bosque. No volvieron a entrar."
         },
         content: [
           "El inspector los sancionó: citación a los representantes, trabajo comunitario en el predio, prohibición expresa de acercarse a la malla en los recreos. Mateo, Elena e Iván no discutieron. Devolvieron cada objeto. Firmaron.",
@@ -879,7 +904,7 @@ export const readings = [
     subtitle: "Una leyenda de la Sierra sobre el volcán, el fuego y el cuidado de la tierra",
     estimatedMinutes: 12,
     recommendedAge: "10-11 años",
-    author: "Xavier Mena Paredes",
+    author: "Tradición popular",
     genre: "Leyenda",
     status: "coming-soon",
     cover: null,
@@ -895,7 +920,7 @@ export const readings = [
     subtitle: "Mito · Sierra y Amazonía",
     estimatedMinutes: 16,
     recommendedAge: "Básica superior",
-    author: "Xavier Mena Paredes",
+    author: "Tradición oral andina",
     genre: "Mito",
     status: "available",
     isNew: true,

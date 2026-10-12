@@ -73,6 +73,7 @@ export default function ReaderView({
         <div className="flex items-start justify-between gap-3 mb-5">
           <p className="text-[11px] tracking-[0.18em] uppercase text-slate-400 dark:text-slate-500">
             {reading.genre}
+            {reading.author ? ` · ${reading.author}` : ""}
           </p>
           <DownloadStoryButton reading={reading} />
         </div>

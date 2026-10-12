@@ -1,33 +1,30 @@
-# LectorAventura — reglas de cuentos
+# LectorAventura — cuentos
 
-Al iniciar **cualquier lectura nueva** (leyenda, aventura o mito), aplicar esto sin preguntar y sin suavizar.
+Xavier Mena Paredes define cada historia: de qué trata, qué versión se cuenta y qué se queda. No inventar trama, moraleja ni escenas que él no haya pedido.
 
-## Público
+Si el cuento o la historia traen violencia o muerte, se cuentan. No se cortan ni se suavizan: quitarlos daña el relato.
 
-Básica superior (adolescentes). Registro preciso, no infantil. Nada de explicar la leyenda como si el lector no pudiera oír “diablo”, “alma” o “tripas”.
+## Prosa
 
-## Lenguaje — sin guardrails
+- Básica superior. Español del Ecuador, el que se entiende en clase.
+- Frases cortas. Palabras de todos los días.
+- Sin léxico rebuscado ni de España (anteojos, ayuntamiento, rosetón, trinquete, tinta sepia).
+- Un término de oficio se entiende por la escena, no con una definición de diccionario.
+- *El misterio del reloj de la torre* es el ejemplo de un texto aburrido y difícil. No se imita.
 
-- Un solo hilo narrativo. No “unos dicen / otros dicen / hay quien afirma”.
-- Usar las palabras medulares de la tradición: **diablo, diablillos, alma, tripas, caja ronca, encapuchados**, etc. No sustituirlas por eufemismos.
-- No disculparse en el texto (“no es un villano de cine”, “no hace falta describir el acto”, “no es un simple susto”).
-- No corregir al lector (“no era una niña”, “no es un cuento para distraerse”).
-- Contar el pacto, la profanación o el horror como los cuenta el pueblo. Una versión, un desenlace.
+## Antes de escribir
 
-## Gráficos — sin guardrails infantiles
-
-- Estilo **novela gráfica / leyenda urbana para adolescentes**: proporciones realistas, luz cinematográfica, atmósfera.
-- No cuento infantil: nada de caras redondas, diablillos “tiernos”, colores pastel de libro de 8 años.
-- Personajes adolescentes o adultos según el relato. Anclar al lugar real (Quito, San Roque, San Diego, San Francisco).
-- El miedo se ve: procesión, umbral, cementerio, tambor. Sin gore explícito de despiece; sí la escena que la leyenda exige.
+1. Esperar la historia que él indique. No elegir la versión por cuenta propia.
+2. Presentar un bosquejo de cuatro capítulos y esperar su visto bueno. Sin bosquejo aprobado no hay texto, preguntas ni imágenes.
+3. El capítulo 4 es el final. El conflicto queda cerrado. No se corta el cuento a la mitad.
+4. El autor no se pone solo. Si la obra es de otra persona, `author` lleva ese nombre. «Xavier Mena Paredes» entra en `author` solo cuando él lo diga de forma expresa. El pie de página y Acerca de lo nombran como responsable del sitio, no como autor de cada relato.
 
 ## Cómo incorporar una lectura
 
-1. Investigar la tradición y elegir **una** versión.
-2. Generar 4 ilustraciones 16:9 (portada = cap. 1). Personaje canónico primero; el resto con `image_edit`.
-3. Guardar en `public/images/`.
-4. Añadir el objeto en `src/data/readings.js`.
-5. `genre` solo: **Aventura**, **Leyenda**, **Mito** o **Ciencia ficción**. El lugar va en `subtitle`.
-6. `author`: Xavier Mena Paredes. `status`: `available`.
-7. Cuatro capítulos + cinco preguntas (literal, vocabulario, inferencia, análisis, reflexión).
-8. PDF: el generador de `src/lib/storyPdf.js` sirve para todas; no hacer un script por título.
+1. Generar 4 ilustraciones 16:9, una por capítulo, cada una única y representativa de ese capítulo. La portada es la del capítulo 1. Personajes canónicos primero; el resto con `image_edit`.
+2. Guardar en `public/images/`.
+3. Añadir el objeto en `src/data/readings.js`.
+4. `genre` solo: **Aventura**, **Leyenda**, **Mito** o **Ciencia ficción**. El lugar va en `subtitle`.
+5. `status`: `available`.
+6. Cuatro capítulos + cinco preguntas (literal, vocabulario, inferencia, análisis, reflexión).
+7. PDF: el generador de `src/lib/storyPdf.js` sirve para todas; no hacer un script por título.
