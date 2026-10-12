@@ -1055,6 +1055,163 @@ export const readings = [
         explanation: "Saramama manda no comer la primera mazorca. Guardarla es reconocer que el grano es madre: se cría, se respeta, se vuelve a poner en la tierra."
       }
     ]
+  },
+  {
+    id: "el-minuto-prohibido",
+    title: "El minuto prohibido",
+    subtitle: "Ciencia ficción · de Guaranda a Quito en 1908",
+    estimatedMinutes: 14,
+    recommendedAge: "Básica superior",
+    author: "Xavier Mena Paredes",
+    genre: "Ciencia ficción",
+    status: "available",
+    isNew: true,
+    cover: "/images/minuto_regla.jpg",
+    tags: ["viaje en el tiempo", "tren de Alfaro", "Chimbacalle", "física", "Ángel Polibio Chaves"],
+    skills: ["Literal", "Vocabulario", "Inferencia", "Análisis", "Reflexión"],
+    synopsis: "En el laboratorio de la Ángel Polibio Chaves, el profesor explica que superar la luz retrocede el tiempo y duplica a quien viaja. Manuel y Luis arman un vehículo con inteligencia artificial y parten al 25 de junio de 1908 para ver la llegada del tren de Alfaro a Chimbacalle sin cruzarse consigo mismos. Para volver sanos y salvos, deberán burlar el cálculo automático y entrar al aula cuando ya no quede nadie.",
+    chapters: [
+      {
+        id: 1,
+        title: "Capítulo 1: La regla en la pizarra",
+        image: {
+          src: "/images/minuto_regla.jpg",
+          alt: "El profesor de física explica en la pizarra las 10:59 y las 11:00 frente a Manuel y Luis en el laboratorio de la Ángel Polibio Chaves en Guaranda",
+          caption: "Figura 1: En la pizarra verde quedó la regla: viajar más rápido que la luz te regresa al minuto anterior."
+        },
+        content: [
+          "El laboratorio de física de la Unidad Educativa Ángel Polibio Chaves, en Guaranda, olía a tiza y a cables guardados. En la pizarra verde, el profesor trazó una línea recta y escribió dos horas: 10:59 y 11:00.",
+          "—Nada en el universo viaja más rápido que la luz —dijo el profesor, golpeando la tiza contra el pizarrón—. Pero imaginen que alguien lo logra. Si un vehículo sale de este cuarto a las once en punto a esa velocidad, el tiempo no avanza: retrocede. No llega al futuro. Aparece a las diez y cincuenta y nueve.",
+          "Manuel y Luis escuchaban sentados en el mesón del fondo.",
+          "—¿Y qué pasa si aterriza aquí mismo, profe? —preguntó Luis.",
+          "—Ese es el peligro real —respondió el profesor con seriedad—. A las diez y cincuenta y nueve ustedes todavía no han salido. Estarían parados junto a la puerta, esperando la hora de partir. Si el vehículo entra un minuto antes, los que regresan se verían cara a cara con los que no han salido. La misma cara, el mismo uniforme del colegio, el mismo minuto. Dos cuerpos iguales no pueden ocupar el mismo espacio. Jamás deben volver a un tiempo donde ya existen.",
+          "Sonó el timbre del recreo. Todos salieron corriendo al patio, pero Manuel y Luis se quedaron mirando los números en la pizarra."
+        ]
+      },
+      {
+        id: 2,
+        title: "Capítulo 2: El motor y las once en punto",
+        image: {
+          src: "/images/minuto_partida.jpg",
+          alt: "Manuel y Luis dentro del vehículo experimental en el laboratorio de Guaranda, con esquemas de inteligencia artificial en una laptop y el reloj marcando las 11:00",
+          caption: "Figura 2: Con circuitos y modelos de inteligencia artificial, sincronizaron la partida a las once en punto."
+        },
+        content: [
+          "Por las tardes, el laboratorio quedaba en silencio. Manuel y Luis consiguieron permiso para usar el taller. Conectaron una computadora y usaron un programa de inteligencia artificial para ordenar los circuitos. El sistema calculaba el paso de corriente y corregía los errores de las bobinas que habían armado con alambre y piezas de radios viejas.",
+          "En tres semanas terminaron el vehículo. Era una cabina de metal liviano, con dos asientos y una pantalla llena de números luminosos.",
+          "—No podemos viajar a ayer ni a la semana pasada —dijo Manuel, mientras ajustaba una tuerca del tablero—. Si aparecemos en Guaranda hace tres días, nos topamos con nosotros mismos caminando por la calle y rompemos la regla del profesor.",
+          "—Tenemos que ir a un año donde ninguno de los dos existía —respondió Luis, tecleando en el teclado.",
+          "Eligieron una fecha clave de la historia del país: 25 de junio de 1908.",
+          "Subieron a la cabina y trancaron la puerta. El reloj digital del vehículo se sincronizó con el reloj redondo de la pared del laboratorio. El segundero corrió: diez y cincuenta y nueve con cincuenta segundos... cincuenta y cinco... cincuenta y ocho...",
+          "A las 11:00 en punto, Manuel bajó la palanca.",
+          "El motor soltó un zumbido seco. El aire del aula vibró y una luz blanca cubrió los vidrios. En un segundo, el vehículo desapareció del colegio. El laboratorio quedó en completo silencio y completamente vacío."
+        ]
+      },
+      {
+        id: 3,
+        title: "Capítulo 3: El tren en Chimbacalle",
+        image: {
+          src: "/images/minuto_chimbacalle.jpg",
+          alt: "La locomotora número ocho llega a Chimbacalle entre humo y multitud en 1908, con Eloy Alfaro saludando y los dos estudiantes observando tras los cajones",
+          caption: "Figura 3: En Chimbacalle vieron llegar la locomotora de Alfaro. En 1908 no existían y nadie los duplicaba."
+        },
+        content: [
+          "El aire se llenó de golpe de humo espeso y olor a carbón quemado.",
+          "El vehículo aterrizó entre dos bodegas de madera, en la estación de Chimbacalle, al sur de Quito. Era la mañana del 25 de junio de 1908. Afuera sonaban cohetes, bandas de pueblo y gritos de fiesta. Cientos de personas con sombreros de paño, ponchos de lana y vestidos antiguos corrían hacia los andenes.",
+          "Manuel y Luis abrieron la ventanilla con cuidado.",
+          "A lo lejos, una columna de vapor blanco subió al cielo. Sobre los rieles avanzó despacio una enorme locomotora negra con el número ocho pintado al frente. El silbato de vapor sonó con tanta fuerza que hizo retumbar la tierra. Era el primer tren que llegaba desde la Costa hasta la Sierra, uniendo a Guayaquil con Quito.",
+          "En la plataforma del vagón principal se asomó un hombre de bigote blanco, mirada firme y traje formal: el general Eloy Alfaro. La gente se sacó los sombreros y gritó viva al tren y viva al Viejo Luchador.",
+          "—Es verdad —susurró Luis, con los ojos muy abiertos—. Estamos en 1908.",
+          "—Y la regla se cumple —dijo Manuel—. Aquí no hay otros dos como nosotros. Nadie nos conoce.",
+          "En ese momento, una luz roja parpadeó en el tablero. La batería de retorno comenzó a pitar: la energía bajaba rápido. Tenían poco tiempo para regresar o se quedarían varados en el siglo pasado."
+        ]
+      },
+      {
+        id: 4,
+        title: "Capítulo 4: La hora de vuelta",
+        image: {
+          src: "/images/minuto_regreso.jpg",
+          alt: "Manuel y Luis celebran aliviados en el laboratorio de la Ángel Polibio Chaves tras volver a las 11:05 con el cuarto vacío",
+          caption: "Figura 4: Regresaron a las 11:05 con el aula vacía. El viaje se cerró sin duplicarse."
+        },
+        content: [
+          "Cerraron la ventanilla y Luis activó el botón de regreso.",
+          "En la pantalla del tablero apareció la imagen del laboratorio en Guaranda. El sistema de la máquina había invertido la velocidad y programó la llegada automática para las 10:59.",
+          "Por el visor se veía con claridad el laboratorio: allí estaban ellos dos, de espaldas, con el uniforme del colegio, acomodando los cables del vehículo un minuto antes de partir.",
+          "Luis levantó la mano para aplastar el botón de inicio.",
+          "—¡Espera, no aplastes! —gritó Manuel, frenándole el brazo—. ¡Mira la pantalla!",
+          "Luis miró los números y se quedó tieso. Si saltaban a las 10:59, aterrizarían encima de sus propios cuerpos antes del viaje.",
+          "—A las diez y cincuenta y nueve todavía estamos ahí parados —dijo Luis con la voz temblorosa.",
+          "Manuel tomó el teclado y borró la hora propuesta. Tecleó una hora nueva: 11:05.",
+          "—A las once y cinco el laboratorio ya está desierto. Ya salimos —dijo Manuel.",
+          "Aplastaron el botón al mismo tiempo.",
+          "Un golpe seco sacudió la cabina. Las luces del tablero se apagaron y la nave tocó piso firme. Abrieron la compuerta despacio: el aire olía otra vez a tiza y a cables. La pizarra verde seguía rayada. El reloj de pared marcaba las 11:05.",
+          "El cuarto estaba vacío. Estaban solo ellos dos: un solo Manuel y un solo Luis. Vieron la llegada del tren de Alfaro y la regla no se rompió."
+        ]
+      }
+    ],
+    quiz: [
+      {
+        id: "q1",
+        question: "¿A qué fecha y lugar histórico viajan Manuel y Luis para evitar encontrarse consigo mismos?",
+        type: "literal",
+        options: [
+          { id: "a", text: "Al 25 de junio de 1908, en la estación de Chimbacalle en Quito.", isCorrect: true },
+          { id: "b", text: "Al 10 de agosto de 1809, en la Plaza Grande de Quito.", isCorrect: false },
+          { id: "c", text: "Al 24 de mayo de 1822, en las faldas del volcán Pichincha.", isCorrect: false },
+          { id: "d", text: "Al 15 de mayo de 1920, en el centro de Guaranda.", isCorrect: false }
+        ],
+        explanation: "Los muchachos eligen el 25 de junio de 1908 en Chimbacalle porque en esa fecha ninguno de los dos existía."
+      },
+      {
+        id: "q2",
+        question: "En el capítulo 3, el texto dice que la multitud dio vítores y gritó viva a Eloy Alfaro. ¿Qué significa la palabra vítores?",
+        type: "vocabulario",
+        options: [
+          { id: "a", text: "Gritos de enojo y reclamo de los pasajeros.", isCorrect: false },
+          { id: "b", text: "Aplausos y aclamaciones de alegría o apoyo.", isCorrect: true },
+          { id: "c", text: "Silbidos de advertencia para despejar los rieles.", isCorrect: false },
+          { id: "d", text: "Órdenes militares dadas por la escolta.", isCorrect: false }
+        ],
+        explanation: "Un vítor es una exclamación de aplauso y alegría con la que un grupo celebra a una persona o acontecimiento."
+      },
+      {
+        id: "q3",
+        question: "¿Por qué la máquina de regreso calculó automáticamente las 10:59 como hora de retorno?",
+        type: "inferencia",
+        options: [
+          { id: "a", text: "Porque el reloj del laboratorio se había dañado durante la partida.", isCorrect: false },
+          { id: "b", text: "Porque la batería no tenía suficiente carga para avanzar en el tiempo.", isCorrect: false },
+          { id: "c", text: "Porque el cálculo de velocidad inversa retrocedía un minuto respecto a la salida de las 11:00.", isCorrect: true },
+          { id: "d", text: "Porque Manuel había programado esa hora antes de salir del colegio.", isCorrect: false }
+        ],
+        explanation: "Como explicó el profesor, superar la velocidad de la luz dobla el tiempo hacia atrás, por lo que el cálculo inverso arrojaba las 10:59."
+      },
+      {
+        id: "q4",
+        question: "¿Qué habría ocurrido si Luis aplastaba el botón sin que Manuel le avisara?",
+        type: "analisis",
+        options: [
+          { id: "a", text: "Habrían llegado a las 11:05 sin ningún contratiempo en el colegio.", isCorrect: false },
+          { id: "b", text: "Se habrían quedado varados para siempre en la estación de Chimbacalle.", isCorrect: false },
+          { id: "c", text: "Habrían aparecido en el laboratorio a las 10:59, chocando con ellos mismos antes de partir.", isCorrect: true },
+          { id: "d", text: "La máquina habría aparecido en otra ciudad del Ecuador.", isCorrect: false }
+        ],
+        explanation: "El peligro advertido por el profesor era coincidir en el mismo cuarto y minuto con su propia versión que aún no había partido."
+      },
+      {
+        id: "q5",
+        question: "¿Qué enseñanza deja la decisión de Manuel al detener a su compañero y revisar los datos antes de actuar?",
+        type: "reflexion",
+        options: [
+          { id: "a", text: "Que es mejor dejar que las máquinas tomen todas las decisiones técnicas.", isCorrect: false },
+          { id: "b", text: "Que detenerse a pensar y aplicar lo aprendido evita errores graves provocados por el apuro.", isCorrect: true },
+          { id: "c", text: "Que las advertencias de los profesores no son necesarias cuando hay tecnología.", isCorrect: false },
+          { id: "d", text: "Que viajar al pasado no tiene ningún riesgo si se hace con amigos.", isCorrect: false }
+        ],
+        explanation: "La prudencia de Manuel y recordar la regla del profesor evitaron un desenlace fatal por actuar con precipitación."
+      }
+    ]
   }
 ];
 
