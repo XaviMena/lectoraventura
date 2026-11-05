@@ -1219,7 +1219,7 @@ export const readings = [
     subtitle: "Leyenda de Guayaquil · El Bajo",
     estimatedMinutes: 10,
     recommendedAge: "Básica superior",
-    author: "Modesto Chávez Franco",
+    author: "Modesto Chávez Franco · Aporte de Camila García",
     genre: "Leyenda",
     status: "available",
     isNew: true,
