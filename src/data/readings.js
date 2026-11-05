@@ -1212,6 +1212,152 @@ export const readings = [
         explanation: "La prudencia de Manuel y recordar la regla del profesor evitaron un desenlace fatal por actuar con precipitación."
       }
     ]
+  },
+  {
+    id: "la-dama-tapada",
+    title: "La Dama Tapada",
+    subtitle: "Leyenda de Guayaquil · El Bajo",
+    estimatedMinutes: 10,
+    recommendedAge: "Básica superior",
+    author: "Modesto Chávez Franco",
+    genre: "Leyenda",
+    status: "available",
+    isNew: true,
+    cover: "/images/dama_tapada_esquina.jpg",
+    tags: ["Guayaquil", "El Bajo", "tradición oral"],
+    skills: ["Literal", "Vocabulario", "Inferencia", "Análisis", "Reflexión"],
+    synopsis: "En el Guayaquil de 1700, un muchacho farrero persigue de noche a una mujer elegante atraído por su perfume a flores. Al llegar al pantano del Bajo, ella se levanta el velo y el espanto cobra su precio.",
+    chapters: [
+      {
+        id: 1,
+        title: "Capítulo 1: El perfume en la esquina",
+        image: {
+          src: "/images/dama_tapada_esquina.jpg",
+          alt: "En una calle oscura del Guayaquil colonial, Jaime observa de espaldas a la misteriosa mujer vestida de seda negra y mantilla",
+          caption: "Figura 1: A las dos de la mañana, un aroma dulce a flores anunció a la mujer tapada."
+        },
+        content: [
+          "En el Guayaquil de 1700 no había luz eléctrica. De noche las calles quedaban botadas, oscuras y llenas de charcos de lodo.",
+          "Jaime era un muchacho farrero, mujeriego y confiado. Decía en las esquinas que a él nadie lo asustaba.",
+          "A las dos de la mañana salió de una cantina cerca del río. Venía mareado por el aguardiente, tambaleándose y silbando fuerte en medio de la soledad.",
+          "Al doblar una esquina, el viento caliente del estero cambió de golpe. Ya no olía a fango ni a pescado: un perfume dulce y penetrante a nardos y flores frescas le llenó la nariz.",
+          "Jaime se detuvo. Unos pasos más adelante vio a una mujer de espaldas. Era alta, esbelta y llevaba un vestido negro de seda fina. Una mantilla oscura le cubría la cabeza y le tapaba la cara por completo."
+        ]
+      },
+      {
+        id: 2,
+        title: "Capítulo 2: La caminata sin fin",
+        image: {
+          src: "/images/dama_tapada_persecucion.jpg",
+          alt: "Jaime corre desesperado por el lodo pasando la iglesia de Santo Domingo sin poder alcanzar a la dama",
+          caption: "Figura 2: Jaime corrió tras ella, pero la mujer flotaba siempre a la misma distancia."
+        },
+        content: [
+          "Jaime sonrió. Se creyó sabido. Pensó que era alguna vecina bonita que salía a buscarlo a escondidas.",
+          "—¡Buenas noches, prenda linda! —le gritó—. ¡No camine tan rápido que me canso!",
+          "La mujer no respondió ni viró a ver. Siguió su camino con un andar suave, como si flotara sobre las piedras y el lodo.",
+          "Jaime apuró el paso para ponerse a su lado, pero no pudo. Trotó, corrió, y la mujer seguía exactamente a la misma distancia, a cuatro pasos de su nariz.",
+          "El perfume lo llevaba como amarrado de una soga. Sin darse cuenta, Jaime se metió por callejones oscuros, cruzó la calle Junín y pasó frente a la iglesia de Santo Domingo. La ciudad se fue acabando. Las casas de madera quedaron atrás y el camino se volvió un tierrero solitario que bajaba directo a los pantanos del sector del Bajo."
+        ]
+      },
+      {
+        id: 3,
+        title: "Capítulo 3: La cara bajo el velo",
+        image: {
+          src: "/images/dama_tapada_calavera.jpg",
+          alt: "La Dama Tapada se levanta el velo mostrando una calavera putrefacta mientras Jaime cae aterrado en el cementerio",
+          caption: "Figura 3: La mujer alzó el velo negro y reveló una calavera putrefacta."
+        },
+        content: [
+          "Llegaron a un rincón apartado, cerca del cementerio viejo. Entre los matorrales y el fango, la mujer se detuvo en seco.",
+          "El silencio era pesado. Solo se oía la respiración agitada de Jaime.",
+          "—Al fin te paras, morena —dijo el muchacho entre risas, estirando la mano para tocarle el hombro—. Déjame ver esa cara tan linda.",
+          "En ese segundo, el aire se pudrió. El olor a flores desapareció de golpe y lo tapó una peste insoportable a carne descompuesta y a ataúd abierto. A Jaime se le revolvió el estómago.",
+          "La mujer se dio la vuelta despacio. Con dos manos huesudas se levantó el velo negro.",
+          "Debajo no había ojos ni labios. Era una calavera pelada, con pedazos de piel podrida colgando y cuencas oscuras que botaban una sombra helada.",
+          "La criatura peló los dientes y le soltó una voz seca que le taladró los oídos:",
+          "—Ya me ves cómo soy… Ahora, si quieres seguirme, ¡sígueme!"
+        ]
+      },
+      {
+        id: 4,
+        title: "Capítulo 4: El muerto del pantano",
+        image: {
+          src: "/images/dama_tapada_muerto.jpg",
+          alt: "Al amanecer en el pantano del Bajo, dos campesinos con una mula encuentran el cadáver rígido de Jaime",
+          caption: "Figura 4: Al clarear el día, los campesinos hallaron el cuerpo de Jaime en el fango."
+        },
+        content: [
+          "El grito de Jaime se le atragantó en la garganta.",
+          "El terror le reventó el pecho. El corazón le latió tan rápido y tan fuerte que sintió un golpe seco adentro. Cayó de espaldas al fango, retorciéndose, con el cuerpo tieso y echando espuma blanca por la boca. En pocos segundos se quedó quieto, con los ojos desorbitados y la boca abierta hacia la noche.",
+          "La Dama Tapada dio media vuelta y se desvaneció entre la niebla del pantano como si nunca hubiera existido.",
+          "Al clarear el día, unos campesinos que traían plátanos y leche en mulas encontraron el cadáver entre el monte. Nadie le había robado la plata ni la ropa. Tenía la cara congelada en una mueca de espanto puro.",
+          "La noticia corrió como pólvora por los muelles y las boticas de Guayaquil. Todos supieron qué le había pasado. Los farreros de la ciudad aprendieron la lección: a medianoche, si el viento huele a nardos y pasa una mujer con velo, es mejor dar media vuelta y correr."
+        ]
+      }
+    ],
+    quiz: [
+      {
+        id: "q1",
+        question: "¿Qué prenda ocultaba por completo la cara de la misteriosa mujer?",
+        type: "literal",
+        options: [
+          { id: "a", text: "Un sombrero ancho de paja toquilla.", isCorrect: false },
+          { id: "b", text: "Una mantilla o velo oscuro.", isCorrect: true },
+          { id: "c", text: "Una máscara de yeso colonial.", isCorrect: false },
+          { id: "d", text: "Un pañuelo rojo de seda.", isCorrect: false }
+        ],
+        explanation: "El relato señala que una mantilla oscura le cubría la cabeza y le tapaba la cara por completo."
+      },
+      {
+        id: "q2",
+        question: "En el texto se menciona que Jaime era un muchacho «farrero». ¿Qué significa esta palabra según el relato?",
+        type: "vocabulario",
+        options: [
+          { id: "a", text: "Que trabajaba como sereno vigilando las calles.", isCorrect: false },
+          { id: "b", text: "Que le gustaba salir de fiesta, beber y trasnochar.", isCorrect: true },
+          { id: "c", text: "Que fabricaba faroles de vela para la iglesia.", isCorrect: false },
+          { id: "d", text: "Que era comerciante de telas finas en el puerto.", isCorrect: false }
+        ],
+        explanation: "El término describe a quien acostumbra ir de fiesta, beber y pasar la noche fuera de casa."
+      },
+      {
+        id: "q3",
+        question: "¿Por qué Jaime nunca logró ponerse al lado de la mujer aunque corrió tras ella?",
+        type: "inferencial",
+        options: [
+          { id: "a", text: "Porque las calles de Guayaquil estaban demasiado oscuras para ver el camino.", isCorrect: false },
+          { id: "b", text: "Porque la mujer era un espíritu que flotaba y controlaba la distancia a su antojo.", isCorrect: true },
+          { id: "c", text: "Porque el muchacho tropezó varias veces con las piedras de la calle Junín.", isCorrect: false },
+          { id: "d", text: "Porque la mujer tenía caballos esperándola en la esquina de Santo Domingo.", isCorrect: false }
+        ],
+        explanation: "La mujer avanzaba de manera sobrenatural, flotando sobre el lodo y manteniendo siempre la misma distancia fija de cuatro pasos."
+      },
+      {
+        id: "q4",
+        question: "¿Cómo cambia el olor de la mujer en el capítulo 3 y qué revela este cambio en la historia?",
+        type: "analisis",
+        options: [
+          { id: "a", text: "Pasa de olor a nardos a olor a fango del río para avisar que ya llegaron al estero.", isCorrect: false },
+          { id: "b", text: "Pasa de un perfume dulce a una peste a tumba abierta, revelando el engaño y la presencia de la muerte.", isCorrect: true },
+          { id: "c", text: "Se convierte en olor a pólvora porque se escucha un disparo en el cementerio.", isCorrect: false },
+          { id: "d", text: "Desaparece todo olor para indicar que Jaime perdió los sentidos por el licor.", isCorrect: false }
+        ],
+        explanation: "La metamorfosis del perfume floral en hedor a descomposición delata que la seducción inicial era una trampa mortal de un ente del más allá."
+      },
+      {
+        id: "q5",
+        question: "Al final del relato, ¿qué consecuencia deja la muerte de Jaime en los farreros de Guayaquil?",
+        type: "reflexion",
+        options: [
+          { id: "a", text: "Deciden salir armados con cuchillos y linternas para cazar al espectro.", isCorrect: false },
+          { id: "b", text: "Cierran las cantinas del puerto para siempre.", isCorrect: false },
+          { id: "c", text: "Aprenden a respetar la noche y a no dejarse tentar por falsas apariencias.", isCorrect: true },
+          { id: "d", text: "Piden al sacerdote de Santo Domingo que demuela el cementerio viejo.", isCorrect: false }
+        ],
+        explanation: "El fatal destino de Jaime sirve de lección para los noctámbulos sobre los peligros de la vanidad y la imprudencia en la noche solitaria."
+      }
+    ]
   }
 ];
 
