@@ -159,7 +159,7 @@ export default function QuizView({
       <div className={isProjectorMode ? "flex-1 min-h-0 overflow-y-auto reading-scroll" : ""}>
         <div
           className={`w-full mx-auto px-4 sm:px-6 ${
-            isProjectorMode ? "max-w-4xl py-8 sm:py-12 pb-44" : "max-w-3xl py-5 sm:py-10 pb-8"
+            isProjectorMode ? "max-w-4xl py-8 sm:py-12 pb-16" : "max-w-3xl py-5 sm:py-10 pb-8"
           }`}
         >
           {!isFinished ? (

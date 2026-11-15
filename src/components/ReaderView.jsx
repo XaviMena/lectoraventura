@@ -381,7 +381,7 @@ export default function ReaderView({
         <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[43fr_57fr] overflow-hidden">
           {/* COLUMNA IZQUIERDA FIJA: Ilustración quieta para observar en clase */}
           <aside
-            className={`flex flex-col justify-between p-4 sm:p-6 lg:p-8 lg:pb-16 border-b lg:border-b-0 lg:border-r overflow-hidden ${panelBg}`}
+            className={`flex flex-col justify-between p-4 sm:p-6 lg:p-8 border-b lg:border-b-0 lg:border-r overflow-hidden ${panelBg}`}
           >
             <div className="flex items-center justify-between gap-2">
               <p className={`text-xs font-bold uppercase tracking-wider truncate ${accentText}`}>
@@ -560,7 +560,7 @@ export default function ReaderView({
 
             <div
               ref={scrollPaneRef}
-              className="h-full overflow-y-auto reading-scroll px-6 sm:px-10 xl:px-14 pt-14 sm:pt-16 pb-44"
+              className="h-full overflow-y-auto reading-scroll px-6 sm:px-10 xl:px-14 pt-14 sm:pt-16 pb-20"
             >
               <div className="max-w-[44ch] mx-auto">
                 <h2

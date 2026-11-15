@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  GripVertical,
-  Minimize2,
   Play,
   Pause,
   Crosshair,
@@ -13,6 +11,8 @@ import {
   Pin,
   PinOff,
   Sparkles,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
 import { FONT_OPTIONS, useSettings } from "../context/SettingsContext";
 
@@ -40,19 +40,13 @@ export default function ProjectorDock({
     fontFamily,
     setFontFamily,
     setIsProjectorMode,
-    isDockMinimized,
-    setIsDockMinimized,
     isDockPinned,
     setIsDockPinned,
-    dockPosition,
-    setDockPosition,
   } = useSettings();
 
-  const dockRef = useRef(null);
+  const drawerRef = useRef(null);
   const hideTimerRef = useRef(null);
-  const [dragPos, setDragPos] = useState(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isHoveredReveal, setIsHoveredReveal] = useState(false);
+  const [isTempVisible, setIsTempVisible] = useState(false);
 
   const minPx = 22;
   const maxPx = 44;
@@ -64,112 +58,33 @@ export default function ProjectorDock({
     }
   };
 
-  const revealDock = () => {
+  const revealTemporarily = () => {
     clearHideTimer();
-    setIsHoveredReveal(true);
+    setIsTempVisible(true);
   };
 
-  const scheduleHideDock = (delay = 1700) => {
+  const scheduleHide = (delay = 1400) => {
     clearHideTimer();
-    if (isDockPinned || isDragging) return;
+    if (isDockPinned) return;
     hideTimerRef.current = setTimeout(() => {
       const active = document.activeElement;
-      if (dockRef.current && active && dockRef.current.contains(active) && active.tagName === "SELECT") {
+      if (drawerRef.current && active && drawerRef.current.contains(active) && active.tagName === "SELECT") {
         return;
       }
-      setIsHoveredReveal(false);
+      setIsTempVisible(false);
     }, delay);
   };
 
   useEffect(() => () => clearHideTimer(), []);
 
-  const clampPosition = (x, y) => {
-    const el = dockRef.current;
-    const width = el ? el.offsetWidth : 340;
-    const height = el ? el.offsetHeight : 80;
-    const margin = 8;
-    const maxX = Math.max(margin, window.innerWidth - width - margin);
-    const maxY = Math.max(margin, window.innerHeight - height - margin);
-    return {
-      x: Math.min(maxX, Math.max(margin, x)),
-      y: Math.min(maxY, Math.max(margin, y)),
-    };
-  };
-
-  useEffect(() => {
-    if (!dockPosition) return;
-    const handleResize = () => {
-      const clamped = clampPosition(dockPosition.x, dockPosition.y);
-      if (clamped.x !== dockPosition.x || clamped.y !== dockPosition.y) {
-        setDockPosition(clamped);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [dockPosition, setDockPosition]);
-
-  useEffect(() => {
-    if (!dockPosition) return;
-    const id = requestAnimationFrame(() => {
-      const clamped = clampPosition(dockPosition.x, dockPosition.y);
-      if (clamped.x !== dockPosition.x || clamped.y !== dockPosition.y) {
-        setDockPosition(clamped);
-      }
-    });
-    return () => cancelAnimationFrame(id);
-  }, [isDockMinimized]);
-
-  const handlePointerDown = (e) => {
-    if (e.button !== undefined && e.button !== 0 && e.pointerType === "mouse") return;
-    const el = dockRef.current;
-    if (!el) return;
-    e.preventDefault();
-    revealDock();
-
-    const rect = el.getBoundingClientRect();
-    const startX = e.clientX;
-    const startY = e.clientY;
-    const originX = rect.left;
-    const originY = rect.top;
-
-    let currentPos = clampPosition(originX, originY);
-    setIsDragging(true);
-    setDragPos(currentPos);
-
-    const onMove = (ev) => {
-      const nextX = originX + (ev.clientX - startX);
-      const nextY = originY + (ev.clientY - startY);
-      currentPos = clampPosition(nextX, nextY);
-      setDragPos(currentPos);
-    };
-
-    const onUp = () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", onUp);
-      window.removeEventListener("pointercancel", onUp);
-      setIsDragging(false);
-      setDragPos(null);
-      setDockPosition(currentPos);
-    };
-
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", onUp);
-    window.addEventListener("pointercancel", onUp);
-  };
-
-  const activePos = dragPos || dockPosition;
-  const positionStyle = activePos
-    ? { left: `${activePos.x}px`, top: `${activePos.y}px` }
-    : { left: "14px", bottom: "14px" };
-
-  const isVisible = isDockPinned || isHoveredReveal || isDragging || Boolean(dockPosition && isDockPinned);
+  const isVisible = isDockPinned || isTempVisible;
 
   const surfaceClass =
     colorTheme === "dark"
-      ? "bg-slate-900/95 text-slate-100 border-slate-700"
+      ? "bg-slate-900/95 text-slate-100 border-slate-800"
       : colorTheme === "sepia"
-        ? "bg-[#fcf8ef]/95 text-[#251b10] border-[#d8cbb4]"
-        : "bg-white/95 text-slate-900 border-slate-300";
+        ? "bg-[#fcf8ef]/95 text-[#251b10] border-[#dfd3be]"
+        : "bg-white/95 text-slate-900 border-slate-200";
 
   const subBtnClass =
     colorTheme === "dark"
@@ -178,6 +93,13 @@ export default function ProjectorDock({
         ? "border-[#dfd3be] hover:bg-[#efe5d1] text-[#251b10]"
         : "border-slate-200 hover:bg-slate-100 text-slate-800";
 
+  const mutedText =
+    colorTheme === "dark"
+      ? "text-slate-400"
+      : colorTheme === "sepia"
+        ? "text-[#5f4b34]"
+        : "text-slate-500";
+
   const optionSurface =
     colorTheme === "dark" ? "bg-slate-900 text-slate-100" : "bg-white text-slate-900";
 
@@ -185,365 +107,320 @@ export default function ProjectorDock({
 
   return (
     <>
-      {/* Zona sensible en el borde izquierdo: pasar el cursor por el lado izquierdo abre los controles */}
+      {/* Zona sensible en el borde izquierdo (igual que el menú superior) */}
       {!isDockPinned && (
         <div
-          onMouseEnter={revealDock}
-          className="fixed top-14 bottom-0 left-0 w-7 z-30"
+          onMouseEnter={revealTemporarily}
+          className="fixed top-0 bottom-0 left-0 w-5 z-40"
           aria-hidden="true"
         />
       )}
 
-      {/* Pestaña discreta en la esquina inferior izquierda cuando la barra está oculta */}
+      {/* Pestaña discreta pegada al borde izquierdo cuando el menú lateral está oculto */}
       {!isVisible && (
         <button
           type="button"
-          onMouseEnter={revealDock}
-          onClick={revealDock}
-          className={`fixed bottom-3 left-3 z-40 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border shadow-md backdrop-blur-md transition-opacity opacity-85 hover:opacity-100 ${surfaceClass}`}
-          title="Mostrar controles de Modo Proyector (o pasa el cursor por el borde izquierdo)"
+          onMouseEnter={revealTemporarily}
+          onClick={revealTemporarily}
+          className={`fixed left-0 top-1/2 -translate-y-1/2 z-40 inline-flex flex-col items-center gap-1.5 px-2 py-3 rounded-r-xl border border-l-0 shadow-md backdrop-blur-md transition-opacity opacity-75 hover:opacity-100 ${surfaceClass}`}
+          title="Abrir menú de controles (pasa el cursor por el borde izquierdo)"
+          aria-label="Abrir controles"
         >
-          <SlidersHorizontal className="w-3.5 h-3.5" />
-          <span>Controles</span>
+          <SlidersHorizontal className="w-4 h-4" />
         </button>
       )}
 
-      <div
-        ref={dockRef}
-        style={positionStyle}
-        onMouseEnter={revealDock}
-        onMouseLeave={() => scheduleHideDock(1600)}
-        className={`fixed z-40 max-w-[min(470px,calc(100vw-24px))] lg:max-w-[min(470px,calc(43vw-20px))] transition-all duration-200 ${
+      {/* Menú lateral deslizable desde el borde izquierdo */}
+      <aside
+        ref={drawerRef}
+        onMouseEnter={clearHideTimer}
+        onMouseLeave={() => scheduleHide(1200)}
+        className={`fixed top-0 bottom-0 left-0 z-50 w-72 sm:w-80 border-r shadow-2xl backdrop-blur-md flex flex-col justify-between p-4 sm:p-5 overflow-y-auto transition-all duration-200 ${surfaceClass} ${
           isVisible
-            ? "translate-x-0 opacity-100 pointer-events-auto"
-            : "-translate-x-6 opacity-0 pointer-events-none"
-        } ${isDragging ? "shadow-2xl" : ""}`}
+            ? "translate-x-0 opacity-100"
+            : "-translate-x-full opacity-0 pointer-events-none"
+        }`}
+        aria-label="Controles de Modo Proyector"
       >
-        <div
-          className={`rounded-2xl shadow-xl border backdrop-blur-md px-2.5 py-2 text-xs ${surfaceClass}`}
-        >
-          {isDockMinimized ? (
+        <div className="space-y-5">
+          {/* Cabecera del menú lateral */}
+          <div className="flex items-center justify-between gap-2 pb-3 border-b border-black/10 dark:border-white/10">
+            <div className="flex items-center gap-2">
+              <SlidersHorizontal className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <span className="text-sm font-extrabold tracking-tight">Controles</span>
+            </div>
             <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                onPointerDown={handlePointerDown}
-                onDoubleClick={() => setDockPosition(null)}
-                title="Arrastra para mover (doble clic vuelve abajo a la izquierda)"
-                aria-label="Mover barra de controles"
-                className={`touch-none inline-flex items-center p-1 rounded-lg cursor-grab active:cursor-grabbing ${subBtnClass}`}
-              >
-                <GripVertical className="w-3.5 h-3.5 opacity-70" />
-              </button>
               <button
                 type="button"
                 onClick={(e) => {
                   e.currentTarget.blur();
-                  setIsDockMinimized(false);
+                  const next = !isDockPinned;
+                  setIsDockPinned(next);
+                  if (!next) setIsTempVisible(false);
                 }}
-                className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold border ${subBtnClass}`}
-                title="Expandir controles"
+                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold border transition-colors ${
+                  isDockPinned ? activePillClass : subBtnClass
+                }`}
+                title={isDockPinned ? "Auto-ocultar al quitar el cursor" : "Fijar menú lateral"}
               >
-                <SlidersHorizontal className="w-3.5 h-3.5" />
-                <span>Controles</span>
+                {isDockPinned ? <PinOff className="w-3.5 h-3.5" /> : <Pin className="w-3.5 h-3.5" />}
+                <span>{isDockPinned ? "Fijado" : "Fijar"}</span>
               </button>
-              {showReadingAids && (
+              {!isDockPinned && (
+                <button
+                  type="button"
+                  onClick={() => setIsTempVisible(false)}
+                  className={`p-1 rounded-lg border ${subBtnClass}`}
+                  title="Ocultar menú"
+                  aria-label="Ocultar menú"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Sección 1: Texto y contraste */}
+          <div className="space-y-3">
+            <p className={`text-[11px] font-bold uppercase tracking-wider ${mutedText}`}>
+              Texto y pantalla
+            </p>
+
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-xs font-semibold">Tamaño</span>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.currentTarget.blur();
+                    changeFontSize(-2);
+                  }}
+                  disabled={fontSizePx <= minPx}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold border disabled:opacity-35 ${subBtnClass}`}
+                  aria-label="Reducir tamaño de letra"
+                >
+                  A−
+                </button>
+                <span className="w-11 text-center font-mono font-bold tabular-nums text-xs">
+                  {fontSizePx}px
+                </span>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.currentTarget.blur();
+                    changeFontSize(2);
+                  }}
+                  disabled={fontSizePx >= maxPx}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold border disabled:opacity-35 ${subBtnClass}`}
+                  aria-label="Aumentar tamaño de letra"
+                >
+                  A+
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className={`text-xs font-semibold block ${mutedText}`}>Tipo de letra</label>
+              <select
+                value={fontFamily}
+                onChange={(e) => {
+                  setFontFamily(e.target.value);
+                  e.currentTarget.blur();
+                }}
+                aria-label="Tipo de letra"
+                className={`w-full px-2.5 py-2 rounded-xl text-xs font-semibold border cursor-pointer bg-transparent ${subBtnClass}`}
+              >
+                {FONT_OPTIONS.map((opt) => (
+                  <option key={opt.id} value={opt.id} className={optionSurface}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-1">
+              <label className={`text-xs font-semibold block ${mutedText}`}>Modo de pantalla</label>
+              <select
+                value={colorTheme}
+                onChange={(e) => {
+                  setColorTheme(e.target.value);
+                  e.currentTarget.blur();
+                }}
+                aria-label="Modo de pantalla"
+                className={`w-full px-2.5 py-2 rounded-xl text-xs font-semibold border cursor-pointer bg-transparent ${subBtnClass}`}
+              >
+                <option value="light" className={optionSurface}>☀ Pizarra (claro)</option>
+                <option value="sepia" className={optionSurface}>📖 Cálido (papel)</option>
+                <option value="dark" className={optionSurface}>🌙 Noche (oscuro)</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Sección 2: Lectura y Teleprompter */}
+          {showReadingAids && (
+            <div className="space-y-3 pt-4 border-t border-black/10 dark:border-white/10">
+              <p className={`text-[11px] font-bold uppercase tracking-wider ${mutedText}`}>
+                Lectura en aula
+              </p>
+
+              <div className="flex items-center gap-1.5">
                 <button
                   type="button"
                   onClick={(e) => {
                     e.currentTarget.blur();
                     onToggleTeleprompter?.();
                   }}
-                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold border ${
+                  className={`flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border ${
                     teleprompterActive ? activePillClass : subBtnClass
                   }`}
-                  title="Teleprompter (Espacio)"
                 >
                   {teleprompterActive ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                  <span>{teleprompterActive ? "Pausar Teleprompter" : "Teleprompter"}</span>
                 </button>
-              )}
-              <button
-                type="button"
-                onClick={() => setIsProjectorMode(false)}
-                className={`inline-flex items-center p-1 rounded-lg font-semibold border ${subBtnClass}`}
-                title="Salir de Modo Proyector (P)"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-1.5">
-              {/* Fila 1: Agarre + Tamaño + Fuente + Selector único de Tema + Pin/Min/Salir */}
-              <div className="flex flex-wrap items-center gap-1">
-                <button
-                  type="button"
-                  onPointerDown={handlePointerDown}
-                  onDoubleClick={() => setDockPosition(null)}
-                  title="Arrastra para mover (doble clic vuelve abajo a la izquierda)"
-                  aria-label="Mover barra de controles"
-                  className={`touch-none inline-flex items-center p-1 rounded-lg cursor-grab active:cursor-grabbing ${subBtnClass}`}
-                >
-                  <GripVertical className="w-3.5 h-3.5 opacity-70" />
-                </button>
-
-                {/* Tamaño en px */}
-                <div className="flex items-center gap-0.5">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.currentTarget.blur();
-                      changeFontSize(-2);
-                    }}
-                    disabled={fontSizePx <= minPx}
-                    className={`px-1.5 py-1 rounded-lg font-bold border disabled:opacity-35 ${subBtnClass}`}
-                    title="Reducir letra"
-                    aria-label="Reducir tamaño de letra"
-                  >
-                    A−
-                  </button>
-                  <span className="w-9 text-center font-mono font-bold tabular-nums text-[11px]">
-                    {fontSizePx}px
-                  </span>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.currentTarget.blur();
-                      changeFontSize(2);
-                    }}
-                    disabled={fontSizePx >= maxPx}
-                    className={`px-1.5 py-1 rounded-lg font-bold border disabled:opacity-35 ${subBtnClass}`}
-                    title="Aumentar letra"
-                    aria-label="Aumentar tamaño de letra"
-                  >
-                    A+
-                  </button>
-                </div>
-
-                {/* Fuente */}
                 <select
-                  value={fontFamily}
+                  value={teleprompterSpeed}
                   onChange={(e) => {
-                    setFontFamily(e.target.value);
+                    onChangeTeleprompterSpeed?.(Number(e.target.value));
                     e.currentTarget.blur();
                   }}
-                  aria-label="Tipo de letra"
-                  title="Tipo de letra"
-                  className={`px-1.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer bg-transparent max-w-[125px] ${subBtnClass}`}
+                  aria-label="Velocidad de teleprompter"
+                  className={`px-2 py-2 rounded-xl text-xs font-bold border cursor-pointer bg-transparent ${subBtnClass}`}
                 >
-                  {FONT_OPTIONS.map((opt) => (
-                    <option key={opt.id} value={opt.id} className={optionSurface}>
-                      {opt.label}
-                    </option>
-                  ))}
+                  <option value={18} className={optionSurface}>0.5×</option>
+                  <option value={32} className={optionSurface}>1×</option>
+                  <option value={50} className={optionSurface}>1.5×</option>
+                  <option value={68} className={optionSurface}>2×</option>
+                  <option value={88} className={optionSurface}>2.5×</option>
+                  <option value={110} className={optionSurface}>3×</option>
                 </select>
+              </div>
 
-                {/* Selector único de tema: Pizarra / Cálido / Noche */}
-                <select
-                  value={colorTheme}
-                  onChange={(e) => {
-                    setColorTheme(e.target.value);
-                    e.currentTarget.blur();
-                  }}
-                  aria-label="Tema de proyector"
-                  title="Tema de contraste"
-                  className={`px-1.5 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer bg-transparent ${subBtnClass}`}
-                >
-                  <option value="light" className={optionSurface}>☀ Pizarra</option>
-                  <option value="sepia" className={optionSurface}>📖 Cálido</option>
-                  <option value="dark" className={optionSurface}>🌙 Noche</option>
-                </select>
-
-                <div className="ml-auto flex items-center gap-1">
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     onClick={(e) => {
                       e.currentTarget.blur();
-                      setIsDockPinned((p) => !p);
+                      onToggleFocusMode?.();
                     }}
-                    title={isDockPinned ? "Auto-ocultar al salir del borde izquierdo" : "Fijar controles visibles siempre"}
-                    aria-label={isDockPinned ? "Auto-ocultar controles" : "Fijar controles"}
-                    className={`inline-flex items-center p-1 rounded-lg border ${
-                      isDockPinned ? activePillClass : subBtnClass
+                    className={`flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border ${
+                      focusMode ? activePillClass : subBtnClass
                     }`}
                   >
-                    {isDockPinned ? <PinOff className="w-3.5 h-3.5" /> : <Pin className="w-3.5 h-3.5" />}
+                    <Crosshair className="w-3.5 h-3.5" />
+                    <span>Foco manual</span>
                   </button>
-
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.currentTarget.blur();
-                      setIsDockMinimized(true);
-                    }}
-                    title="Minimizar barra"
-                    aria-label="Minimizar controles"
-                    className={`inline-flex items-center p-1 rounded-lg border ${subBtnClass}`}
-                  >
-                    <Minimize2 className="w-3.5 h-3.5" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setIsProjectorMode(false)}
-                    title="Salir de Modo Proyector (P)"
-                    className={`inline-flex items-center gap-0.5 px-2 py-1 rounded-lg font-bold border ${subBtnClass}`}
-                  >
-                    <X className="w-3.5 h-3.5" />
-                    <span>Salir</span>
-                  </button>
+                  {focusMode && onStepParagraph && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.currentTarget.blur();
+                          onStepParagraph(-1);
+                        }}
+                        title="Párrafo anterior (↑)"
+                        aria-label="Párrafo anterior"
+                        className={`p-2 rounded-xl border ${subBtnClass}`}
+                      >
+                        <ArrowUp className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.currentTarget.blur();
+                          onStepParagraph(1);
+                        }}
+                        title="Siguiente párrafo (↓)"
+                        aria-label="Siguiente párrafo"
+                        className={`p-2 rounded-xl border ${subBtnClass}`}
+                      >
+                        <ArrowDown className="w-3.5 h-3.5" />
+                      </button>
+                    </>
+                  )}
                 </div>
-              </div>
 
-              {/* Fila 2: Teleprompter + Foco manual + Foco auto + Regla + Pausa + Ayuda */}
-              <div className="flex flex-wrap items-center gap-1 pt-1 border-t border-black/10 dark:border-white/10">
-                {showReadingAids && (
-                  <>
-                    <div className="flex items-center gap-0.5">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.currentTarget.blur();
-                          onToggleTeleprompter?.();
-                        }}
-                        title="Teleprompter automático (Espacio)"
-                        className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold border ${
-                          teleprompterActive ? activePillClass : subBtnClass
-                        }`}
-                      >
-                        {teleprompterActive ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-                        <span>Tele</span>
-                      </button>
-                      <select
-                        value={teleprompterSpeed}
-                        onChange={(e) => {
-                          onChangeTeleprompterSpeed?.(Number(e.target.value));
-                          e.currentTarget.blur();
-                        }}
-                        aria-label="Velocidad de teleprompter"
-                        title="Velocidad de teleprompter"
-                        className={`px-1 py-1 rounded-lg text-[11px] font-semibold border cursor-pointer bg-transparent ${subBtnClass}`}
-                      >
-                        <option value={18} className={optionSurface}>0.5×</option>
-                        <option value={32} className={optionSurface}>1×</option>
-                        <option value={50} className={optionSurface}>1.5×</option>
-                        <option value={68} className={optionSurface}>2×</option>
-                        <option value={88} className={optionSurface}>2.5×</option>
-                        <option value={110} className={optionSurface}>3×</option>
-                      </select>
-                    </div>
-
-                    {/* Foco manual + Auto-seguimiento */}
-                    <div className="flex items-center gap-0.5">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.currentTarget.blur();
-                          onToggleFocusMode?.();
-                        }}
-                        title="Foco manual por párrafo (F)"
-                        className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg font-bold border ${
-                          focusMode ? activePillClass : subBtnClass
-                        }`}
-                      >
-                        <Crosshair className="w-3 h-3" />
-                        <span>Foco</span>
-                      </button>
-                      {focusMode && onStepParagraph && (
-                        <>
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.currentTarget.blur();
-                              onStepParagraph(-1);
-                            }}
-                            title="Párrafo anterior (↑)"
-                            aria-label="Párrafo anterior"
-                            className={`px-1.5 py-1 rounded-lg font-bold border ${subBtnClass}`}
-                          >
-                            ↑
-                          </button>
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.currentTarget.blur();
-                              onStepParagraph(1);
-                            }}
-                            title="Siguiente párrafo (↓)"
-                            aria-label="Siguiente párrafo"
-                            className={`px-1.5 py-1 rounded-lg font-bold border ${subBtnClass}`}
-                          >
-                            ↓
-                          </button>
-                        </>
-                      )}
-                      {onToggleAutoFocusSync && (
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.currentTarget.blur();
-                            onToggleAutoFocusSync();
-                          }}
-                          title="Auto-avanzar Foco cuando corre el Teleprompter"
-                          className={`inline-flex items-center gap-0.5 px-1.5 py-1 rounded-lg font-semibold border ${
-                            autoFocusSync && focusMode ? activePillClass : subBtnClass
-                          }`}
-                        >
-                          <Sparkles className="w-3 h-3" />
-                          <span>Auto</span>
-                        </button>
-                      )}
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.currentTarget.blur();
-                        onToggleRuler?.();
-                      }}
-                      title="Regla guía de lectura (R)"
-                      className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg font-semibold border ${
-                        rulerVisible ? activePillClass : subBtnClass
-                      }`}
-                    >
-                      <Ruler className="w-3 h-3" />
-                      <span>Regla</span>
-                    </button>
-                  </>
-                )}
-
-                {onToggleBlackout && (
+                {onToggleAutoFocusSync && (
                   <button
                     type="button"
                     onClick={(e) => {
                       e.currentTarget.blur();
-                      onToggleBlackout();
+                      onToggleAutoFocusSync();
                     }}
-                    title="Pausa en negro para conversar (B)"
-                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg font-semibold border ${subBtnClass}`}
+                    className={`w-full inline-flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold border ${
+                      autoFocusSync && focusMode ? activePillClass : subBtnClass
+                    }`}
                   >
-                    <MoonStar className="w-3 h-3" />
-                    <span>Pausa</span>
-                  </button>
-                )}
-
-                {onToggleHelp && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.currentTarget.blur();
-                      onToggleHelp();
-                    }}
-                    title="Atajos de teclado"
-                    aria-label="Atajos de teclado"
-                    className={`inline-flex items-center justify-center p-1 rounded-lg font-bold border ${subBtnClass}`}
-                  >
-                    <HelpCircle className="w-3.5 h-3.5" />
+                    <span className="inline-flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Foco automático al reproducir</span>
+                    </span>
+                    <span className="text-[11px] font-bold">
+                      {autoFocusSync && focusMode ? "Sí" : "No"}
+                    </span>
                   </button>
                 )}
               </div>
+
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.currentTarget.blur();
+                  onToggleRuler?.();
+                }}
+                className={`w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border ${
+                  rulerVisible ? activePillClass : subBtnClass
+                }`}
+              >
+                <Ruler className="w-3.5 h-3.5" />
+                <span>Regla guía de lectura</span>
+              </button>
             </div>
           )}
         </div>
-      </div>
+
+        {/* Pie del menú lateral */}
+        <div className="space-y-2 pt-4 mt-4 border-t border-black/10 dark:border-white/10">
+          <div className="flex items-center gap-1.5">
+            {onToggleBlackout && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.currentTarget.blur();
+                  onToggleBlackout();
+                }}
+                className={`flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border ${subBtnClass}`}
+              >
+                <MoonStar className="w-3.5 h-3.5" />
+                <span>Pausa (B)</span>
+              </button>
+            )}
+            {onToggleHelp && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.currentTarget.blur();
+                  onToggleHelp();
+                }}
+                className={`inline-flex items-center justify-center gap-1 px-3 py-2 rounded-xl text-xs font-bold border ${subBtnClass}`}
+                title="Atajos de teclado"
+              >
+                <HelpCircle className="w-3.5 h-3.5" />
+                <span>Atajos</span>
+              </button>
+            )}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsProjectorMode(false)}
+            className={`w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border ${subBtnClass}`}
+          >
+            <X className="w-3.5 h-3.5" />
+            <span>Salir de Modo Proyector</span>
+          </button>
+        </div>
+      </aside>
     </>
   );
 }
