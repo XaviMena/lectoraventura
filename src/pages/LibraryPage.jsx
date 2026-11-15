@@ -4,7 +4,7 @@ import { getCatalogReadings } from "../data/readings";
 
 export default function LibraryPage() {
   const readings = getCatalogReadings();
-  const genreOrder = ["Aventura", "Leyenda", "Mito", "Ciencia ficción"];
+  const genreOrder = ["Aventura", "Leyenda", "Mito", "Ciencia ficción", "Novela"];
   const genres = useMemo(() => {
     const present = new Set(readings.map((reading) => reading.genre));
     return ["Todos", ...genreOrder.filter((name) => present.has(name))];

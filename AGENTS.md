@@ -26,7 +26,7 @@ Seguir la guía completa del skill local [`.agents/skills/nueva-lectura/SKILL.md
 1. Generar 1 o 2 ilustraciones 16:9 por capítulo según su extensión (cada una única y representativa). La primera del capítulo 1 es la portada (`cover`). Personajes canónicos primero; el resto con `image_edit`.
 2. Guardar en `public/images/`.
 3. Añadir el objeto en `src/data/readings.js` (usando `image` para 1 escena o `images` con `fromParagraph` para 2 escenas).
-4. `genre` solo: **Aventura**, **Leyenda**, **Mito** o **Ciencia ficción**. El lugar va en `subtitle`.
+4. `genre` solo: **Aventura**, **Leyenda**, **Mito**, **Ciencia ficción** o **Novela**. El lugar va en `subtitle`.
 5. `status`: `available`.
 6. Capítulos ágiles (referencia 5–11 párrafos por capítulo) + cinco preguntas (`literal`, `vocabulario`, `inferencial`, `analisis`, `reflexion`).
 7. PDF: el generador de `src/lib/storyPdf.js` sirve para todas; no hacer un script por título.

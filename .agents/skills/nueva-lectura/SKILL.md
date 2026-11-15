@@ -77,11 +77,12 @@ Añadir el objeto al arreglo `readings` en `src/data/readings.js` respetando exa
 - `estimatedMinutes`: número entero aproximado de minutos de lectura.
 - `recommendedAge`: `"Básica superior"`.
 - `author`: autor real o tradición (nunca autoadjudicar).
-- `genre`: **solo uno de estos cuatro valores exactos**:
+- `genre`: **solo uno de estos cinco valores exactos**:
   - `"Aventura"`
   - `"Leyenda"`
   - `"Mito"`
   - `"Ciencia ficción"`
+  - `"Novela"`
 - `status`: `"available"`.
 - `isNew`: `true` para estrenos recientes (opcional).
 - `cover`: ruta desde raíz pública (ej. `"/images/ejemplo_cap1.jpg"`).

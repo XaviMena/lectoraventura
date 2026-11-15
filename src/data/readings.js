@@ -1358,6 +1358,228 @@ export const readings = [
         explanation: "El fatal destino de Jaime sirve de lección para los noctámbulos sobre los peligros de la vanidad y la imprudencia en la noche solitaria."
       }
     ]
+  },
+  {
+    id: "romeo-y-julieta",
+    title: "Romeo y Julieta",
+    subtitle: "Tragedia clásica · Adaptada a Guaranda",
+    estimatedMinutes: 15,
+    recommendedAge: "Básica superior",
+    author: "William Shakespeare · Adaptación de nombres y lugares al medio ecuatoriano",
+    genre: "Novela",
+    status: "available",
+    isNew: true,
+    cover: "/images/romeo_julieta_cap1_a.jpg",
+    tags: ["Shakespeare", "Guaranda", "tragedia", "clásico"],
+    skills: ["Literal", "Vocabulario", "Inferencia", "Análisis", "Reflexión"],
+    synopsis: "En Guaranda, el odio antiguo entre los Montesco y los Capuleto desata peleas a muerte en las calles. En medio de esa guerra familiar, Romeo y Julieta se enamoran sin saber el apellido del otro y desatan una tragedia imposible de frenar.",
+    chapters: [
+      {
+        id: 1,
+        title: "Capítulo 1: Un odio que parte a Guaranda en dos",
+        images: [
+          {
+            src: "/images/romeo_julieta_cap1_a.jpg",
+            alt: "Benjamín Montesco y Tomás Capuleto chocan sus espadas en medio de la plaza empedrada de Guaranda",
+            caption: "Figura 1: El odio entre Montesco y Capuleto volvía a estallar en plena plaza del mercado."
+          },
+          {
+            src: "/images/romeo_julieta_cap1_b.jpg",
+            alt: "El Gobernador ordena bajar las armas en la plaza mientras Benjamín conversa con Romeo bajo los portales",
+            caption: "Figura 2: El Gobernador amenazó con la muerte a quien volviera a provocar otro pleito.",
+            fromParagraph: 6
+          }
+        ],
+        content: [
+          "En la antigua Guaranda nadie recordaba cuándo empezó la pelea, pero todos sabían cómo terminaba: con sangre en las piedras. Los Montesco y los Capuleto eran las dos familias más fuertes de la ciudad y se odiaban a muerte desde hacía generaciones.",
+          "Bastaba que dos muchachos de cada casa se cruzaran en el mercado para que saltaran los insultos y salieran las espadas. Las vendedoras recogían sus canastos a las carreras y la gente corría a esconderse bajo los portales apenas escuchaba el primer choque de acero.",
+          "Ese mediodía, una burla entre criados encendió la plaza entera. Benjamín Montesco, que siempre buscaba calmar las aguas, sacó su espada solo para empujar hacia abajo las hojas de los demás.",
+          "—¡Suéltenlas! —gritó Benjamín entre el polvo—. No saben lo que hacen.",
+          "Pero Tomás Capuleto apareció por la esquina con la capa roja al viento y una sonrisa dura. Detestaba hasta la sombra de cualquier Montesco y se lanzó de frente contra Benjamín, desatando una pelea feroz frente a toda la ciudad.",
+          "Los golpes de campana y los gritos hicieron llegar al Gobernador de Guaranda con su guardia armada. El Gobernador se plantó en mitad de la plaza, con el rostro encendido de rabia, y obligó a ambos bandos a soltar las armas.",
+          "—¡Tres veces ya han manchado estas calles con su odio! —sentenció el Gobernador señalando a los dos jefes de familia—. Si vuelven a alterar la paz de Guaranda, lo pagarán con su propia vida.",
+          "Cuando la plaza quedó en silencio, Benjamín encontró a su primo Romeo Montesco apoyado contra un pilar de piedra, lejos del pleito. Romeo llevaba días encerrado en sus pensamientos por un amor que ni siquiera le correspondía.",
+          "—Olvídate de ella y despeja la cabeza —le dijo Benjamín palmeándole el hombro—. Esta noche los Capuleto hacen un gran baile. Nos ponemos máscaras, entramos sin que nadie nos reconozca y te distraes un rato."
+        ]
+      },
+      {
+        id: 2,
+        title: "Capítulo 2: Máscaras en la casa enemiga",
+        images: [
+          {
+            src: "/images/romeo_julieta_cap2_a.jpg",
+            alt: "Romeo con antifaz en la mano observa deslumbrado a Julieta en el salón iluminado de los Capuleto",
+            caption: "Figura 3: Entre velas y máscaras, Romeo vio a Julieta por primera vez sin saber su apellido."
+          },
+          {
+            src: "/images/romeo_julieta_cap2_b.jpg",
+            alt: "El señor Capuleto sujeta del brazo a un furioso Tomás mientras Romeo y Julieta conversan junto al arco",
+            caption: "Figura 4: Tomás quiso atacar a Romeo en la fiesta, mientras los dos jóvenes descubrían su verdad.",
+            fromParagraph: 5
+          }
+        ],
+        content: [
+          "Esa noche la casona de los Capuleto brillaba con cientos de velas y música de violines. Romeo entró junto a Benjamín y su amigo Marcos, ocultando el rostro detrás de un antifaz oscuro para no despertar sospechas.",
+          "Al principio Romeo se quedó apartado junto a una columna. Pero al cruzar la vista por el salón lleno de invitados, vio a una muchacha de vestido blanco con bordados rojos que caminaba despacio entre la gente. Se llamaba Julieta Capuleto, aunque él todavía no lo sabía.",
+          "Para Romeo, todo el ruido de la fiesta se apagó de golpe. Sin pensarlo dos veces, se quitó la máscara para respirar mejor y avanzó entre las parejas hasta quedar frente a ella.",
+          "Empezaron a hablar en voz baja, como si estuvieran solos en mitad del salón. Bastaron unas cuantas palabras para que entre los dos naciera una cercanía inmediata y sin miedo.",
+          "No muy lejos de ahí, Tomás Capuleto escuchó reír a Romeo y reconoció su voz al instante. La sangre se le subió a la cabeza y llevó la mano derecha al mango de su espada.",
+          "—¡Ese es un Montesco! —rugió Tomás—. Vino a burlarse de nuestra casa. ¡No pienso dejarlo salir vivo!",
+          "El señor Capuleto, dueño de la casa, lo agarró con fuerza del brazo antes de que desenfundara. Le ordenó callarse y no arruinar la fiesta delante de toda la ciudad, aunque Tomás se tragó la furia jurando que ese insulto no quedaría así.",
+          "Al final del baile, Romeo y Julieta se despidieron con un beso rápido junto a un arco de piedra. Cuando Romeo preguntó a una empleada quién era la muchacha, sintió un golpe frío en el pecho: era la hija única de su peor enemigo.",
+          "Minutos después, Doña Rosa, la mujer que había criado a Julieta desde niña, le dijo el nombre del joven. Julieta miró hacia la puerta vacía y murmuró con angustia que había entregado su corazón al único hombre al que debía odiar."
+        ]
+      },
+      {
+        id: 3,
+        title: "Capítulo 3: El balcón y la boda en secreto",
+        images: [
+          {
+            src: "/images/romeo_julieta_cap3_a.jpg",
+            alt: "Julieta asomada en el balcón colonial de madera bajo la luna habla con Romeo escondido en el patio",
+            caption: "Figura 5: Bajo la luna de Guaranda, Julieta y Romeo juraron dejar atrás el peso de sus apellidos."
+          },
+          {
+            src: "/images/romeo_julieta_cap3_b.jpg",
+            alt: "El Padre Lorenzo une las manos de Romeo y Julieta en matrimonio secreto mientras Doña Rosa vigila la puerta",
+            caption: "Figura 6: El Padre Lorenzo los casó en secreto con la esperanza de frenar el odio entre ambas casas.",
+            fromParagraph: 6
+          }
+        ],
+        content: [
+          "Romeo no volvió a su casa después del baile. Prefirió saltar el muro alto del jardín de los Capuleto y esconderse entre las sombras del patio, con las montañas heladas de Guaranda brillando bajo la luna llena.",
+          "De pronto se abrió una ventana del segundo piso y Julieta salió al balcón de madera tallada. Creyendo que nadie la escuchaba, empezó a hablar en voz alta sobre la injusticia de haber nacido en familias enemigas.",
+          "—¡Ay, Romeo, Romeo! —suspiró mirando el cielo—. Reniega de tu apellido o, si no quieres, júrame lealtad y yo dejaré de llamarme Capuleto.",
+          "Romeo dio un paso adelante y salió de detrás de la columna. Julieta se sobresaltó al verlo abajo, sabiendo que si los guardias de su padre lo encontraban en ese patio, lo matarían sin hacer preguntas.",
+          "Hablaron rápido, con el corazón en la garganta. Antes de que aclarara el cielo, tomaron una decisión arriesgada: si de verdad estaban dispuestos a todo, se casarían al día siguiente en secreto.",
+          "Al amanecer, Romeo corrió a la iglesia de piedra donde servía el Padre Lorenzo, un sacerdote mayor que conocía bien las hierbas de la sierra y los rencores de la ciudad.",
+          "Al principio el Padre Lorenzo dudó de tanta prisa, pero luego pensó que esa boda secreta podía lograr lo que ni las leyes ni las espadas habían conseguido: unir por fin a los Montesco y a los Capuleto.",
+          "Julieta envió a Doña Rosa como mensajera para confirmar la hora. Esa misma tarde, dentro de la capilla silenciosa iluminada apenas por velas de cera, el Padre Lorenzo juntó las manos de los dos jóvenes y los declaró marido y mujer mientras Doña Rosa vigilaba la puerta.",
+          "Salieron por caminos separados para no levantar sospechas, convencidos de que muy pronto podrían decir la verdad frente a toda Guaranda. Ninguno imaginaba que apenas unas horas más tarde la muerte volvería a cruzarse en la plaza."
+        ]
+      },
+      {
+        id: 4,
+        title: "Capítulo 4: Sangre en la plaza y destierro",
+        images: [
+          {
+            src: "/images/romeo_julieta_cap4_a.jpg",
+            alt: "Tomás Capuleto hiere mortalmente a Marcos con su espada cuando Romeo intenta separarlos en la plaza",
+            caption: "Figura 7: Al meterse Romeo en medio para evitar la pelea, Tomás atravesó a Marcos por debajo de su brazo."
+          },
+          {
+            src: "/images/romeo_julieta_cap4_b.jpg",
+            alt: "Romeo y Julieta se abrazan desconsolados en el balcón al amanecer antes de su partida al destierro en Riobamba",
+            caption: "Figura 8: Al alba se despidieron en el balcón antes de que Romeo huyera desterrado hacia Riobamba.",
+            fromParagraph: 6
+          }
+        ],
+        content: [
+          "Esa misma tarde, Tomás Capuleto encontró a Romeo en la plaza buscando pelea por lo ocurrido en el baile. Como Romeo acababa de casarse con Julieta y ahora veía a Tomás como parte de su propia familia, tragó orgullo y se negó a sacar la espada.",
+          "Marcos, el mejor amigo de Romeo, no soportó verlo retroceder ante un Capuleto. Indignado por lo que le pareció una humillación, sacó su propia espada y retó a Tomás en lugar de su amigo.",
+          "Los dos empezaron a atacarse con furia sobre los adoquines. Desesperado por detener la sangre, Romeo se metió en el medio con los brazos abiertos, tratando de bajar ambas armas.",
+          "Tomás aprovechó ese segundo en que Romeo le tapaba la vista a Marcos y lanzó una estocada limpia por debajo del brazo de Romeo. La hoja entró en el costado de Marcos, que soltó su espada y cayó de rodillas agarrándose la herida.",
+          "—¡Maldita sea una y otra casa! —alcanzó a gritar Marcos antes de quedarse quieto en el suelo—. Por culpa de sus peleas me han dejado como comida de gusanos.",
+          "Al ver muerto a su amigo por haber intentado poner paz, la paciencia de Romeo se rompió en pedazos. Persiguió a Tomás cuando regresó a la plaza, lo enfrentó sin piedad y le atravesó el pecho hasta verlo caer sin vida.",
+          "El Gobernador llegó minutos después y perdonó a Romeo la pena de muerte porque Tomás había matado primero a Marcos. Sin embargo, dictó una orden dura: Romeo quedaba desterrado de Guaranda para siempre; si volvía a pisar la ciudad, lo matarían en el acto.",
+          "Esa noche, Romeo subió por última vez al cuarto de Julieta antes de partir hacia Riobamba. Se abrazaron hasta que la neblina fría de la madrugada cubrió los cerros y el caballo de escape esperó en el portón.",
+          "—Si alguna vez vuelvo a verte —alcanzó a decir Julieta viéndolo bajar— pareces ya un hombre pálido en el fondo de una tumba.",
+          "Apenas salió Romeo, llegó un golpe peor: el padre de Julieta, sin saber de la boda secreta, le ordenó casarse en tres días con un caballero llamado Patricio. Cuando ella suplicó que esperaran, su padre la amenazó con echarla a morirse de hambre en la calle si lo desobedecía."
+        ]
+      },
+      {
+        id: 5,
+        title: "Capítulo 5: La pócima, la cripta y el silencio final",
+        images: [
+          {
+            src: "/images/romeo_julieta_cap5_a.jpg",
+            alt: "Julieta sentada en la oscuridad de su cuarto observa un frasco pequeño con la pócima a la luz de una vela",
+            caption: "Figura 9: Sola en su cuarto, Julieta decidió beber la pócima para escapar de la boda forzada."
+          },
+          {
+            src: "/images/romeo_julieta_cap5_b.jpg",
+            alt: "Julieta sostiene una daga junto al cuerpo sin vida de Romeo en la cripta de piedra mientras llegan guardias con antorchas",
+            caption: "Figura 10: Al despertar y hallar muerto a Romeo, Julieta empuñó la daga antes de que entraran los guardias.",
+            fromParagraph: 6
+          }
+        ],
+        content: [
+          "Acorralada y sin salida, Julieta corrió donde el Padre Lorenzo y le dijo que prefería clavarse un cuchillo antes que traicionar su matrimonio. El sacerdote buscó un último recurso desesperado en un frasco de vidrio oscuro.",
+          "—Bebe esta pócima esta noche —le explicó en voz baja—. Tu pulso y tu respiración se detendrán por cuarenta y dos horas. Creerán que moriste, te llevarán a la cripta de piedra de los Capuleto y, cuando despiertes, Romeo y yo estaremos allí para sacarte rumbo a Riobamba.",
+          "El Padre Lorenzo escribió una carta urgente explicando todo el plan y se la entregó al Padre Juan para que galopara de inmediato hasta Riobamba. Pero el plan falló por una desgracia fuera de control: las autoridades cerraron las puertas de una casa donde había brotado una fiebre contagiosa y dejaron en cuarentena al mensajero sin que la carta pudiera salir.",
+          "Aquella madrugada, temblando de miedo ante la idea de despertar sola entre cadáveres, Julieta bebió el frasco de un solo trago y cayó desplomada sobre su cama.",
+          "A la mañana siguiente, cuando Doña Rosa entró a vestirla para la boda con Patricio, la encontró fría y sin pulso. Los preparativos de fiesta se convirtieron en llanto, y los Capuleto llevaron a Julieta envuelta en flores hasta la cripta de piedra de la familia.",
+          "La noticia voló más rápido que la carta del fraile. Gabriel, el hombre de confianza de Romeo, cabalgó hasta Riobamba y le contó con lágrimas que había visto enterrar a Julieta.",
+          "Romeo no esperó explicaciones ni buscó al sacerdote. Fue a la tienda pobre de un boticario, compró con oro un frasco de veneno mortal y cabalgó sin descanso de vuelta a Guaranda decidido a morir junto a su esposa.",
+          "Llegó de noche al panteón y rompió la puerta de hierro. En la entrada se topó con Patricio, que había ido a dejar flores; Patricio intentó detenerlo creyendo que venía a profanar la tumba, sacaron las espadas y Romeo lo mató en el umbral.",
+          "Con el alma rota, Romeo bajó las gradas de piedra iluminadas por antorchas y vio a Julieta tendida en el sepulcro, todavía con un color suave en los labios. La abrazó por última vez, destapó el veneno, lo bebió hasta la última gota y cayó muerto sobre las losas.",
+          "Segundos más tarde, cuando el Padre Lorenzo entraba corriendo al panteón tras saber que su carta nunca llegó, Julieta abrió los ojos. Vio el cuerpo inmóvil de Romeo, el frasco vacío en el suelo y escuchó los pasos y antorchas de la guardia que se acercaba por el túnel.",
+          "Se negó a huir y a seguir viviendo en un mundo que se lo había quitado todo. Tomó la daga de acero del cinto de Romeo, se la clavó con firmeza en el pecho y cayó sobre su cuerpo. Minutos después, frente a los cadáveres de sus hijos en esa cripta helada, los padres de Montesco y Capuleto se estrecharon las manos en silencio: demasiado tarde comprendieron el precio real de su odio."
+        ]
+      }
+    ],
+    quiz: [
+      {
+        id: "q1",
+        question: "¿Qué castigo amenaza el Gobernador de Guaranda si los Montesco y los Capuleto vuelven a pelear en la calle?",
+        type: "literal",
+        options: [
+          { id: "a", text: "Que deberán entregar todas sus tierras al convento de la ciudad.", isCorrect: false },
+          { id: "b", text: "Que perderán la vida si vuelven a alterar la paz de Guaranda.", isCorrect: true },
+          { id: "c", text: "Que quedarán encerrados un mes entero en el calabozo del mercado.", isCorrect: false },
+          { id: "d", text: "Que tendrán que mudarse todos a vivir en Riobamba.", isCorrect: false }
+        ],
+        explanation: "Tras el tercer pleito en la plaza, el Gobernador advierte frente a ambos jefes de familia que la próxima pelea en la calle se pagará con la propia vida."
+      },
+      {
+        id: "q2",
+        question: "En el capítulo 5, Romeo acude a un boticario antes de regresar a Guaranda. Según la escena, ¿qué vende o prepara un boticario?",
+        type: "vocabulario",
+        options: [
+          { id: "a", text: "Espadas, escudos y armaduras de hierro.", isCorrect: false },
+          { id: "b", text: "Máscaras de tela y vestidos de fiesta.", isCorrect: false },
+          { id: "c", text: "Sustancias medicinales, preparados químicos y venenos.", isCorrect: true },
+          { id: "d", text: "Cartas selladas y permisos de viaje entre ciudades.", isCorrect: false }
+        ],
+        explanation: "Romeo va a la tienda pobre de un boticario y le compra con oro un frasco de veneno mortal, lo que muestra que allí se preparan y venden sustancias."
+      },
+      {
+        id: "q3",
+        question: "¿Por qué fracasa el plan que el Padre Lorenzo había armado para reunir a Romeo y Julieta?",
+        type: "inferencial",
+        options: [
+          { id: "a", text: "Porque Doña Rosa delató el matrimonio secreto ante el señor Capuleto.", isCorrect: false },
+          { id: "b", text: "Porque la pócima no durmió a Julieta las horas suficientes y despertó en su cuarto.", isCorrect: false },
+          { id: "c", text: "Porque una cuarentena detuvo la carta del Padre Juan y a Romeo le llegó primero la noticia de que Julieta había muerto.", isCorrect: true },
+          { id: "d", text: "Porque Patricio interceptó al Padre Lorenzo camino a Riobamba.", isCorrect: false }
+        ],
+        explanation: "Al quedar retenido el mensajero por una fiebre contagiosa, Romeo nunca se entera de que la muerte es fingida y actúa desesperado con la noticia de Gabriel."
+      },
+      {
+        id: "q4",
+        question: "¿Por qué Tomás Capuleto logra herir de muerte a Marcos en la plaza?",
+        type: "analisis",
+        options: [
+          { id: "a", text: "Porque Romeo intentó separarlos metiéndose en el medio y le tapó la vista a Marcos.", isCorrect: true },
+          { id: "b", text: "Porque Marcos había perdido su espada en el baile de la noche anterior.", isCorrect: false },
+          { id: "c", text: "Porque los guardias del Gobernador sujetaron a Marcos por la espalda.", isCorrect: false },
+          { id: "d", text: "Porque Benjamín convenció a Marcos de rendirse frente a Tomás.", isCorrect: false }
+        ],
+        explanation: "Romeo, ya casado en secreto con Julieta, intenta frenar el duelo entre los brazos abiertos; Tomás aprovecha ese instante para lanzar la estocada por debajo de su brazo."
+      },
+      {
+        id: "q5",
+        question: "Cuando los jefes de los Montesco y los Capuleto se dan la mano en la cripta, ¿qué deja en evidencia el final de la historia?",
+        type: "reflexion",
+        options: [
+          { id: "a", text: "Que las peleas callejeras se resuelven rápido cuando interviene un sacerdote.", isCorrect: false },
+          { id: "b", text: "Que la reconciliación llegó demasiado tarde, después de que el orgullo y el odio destruyeran a sus propios hijos.", isCorrect: true },
+          { id: "c", text: "Que el Gobernador nunca debió desterrar a Romeo a otra ciudad.", isCorrect: false },
+          { id: "d", text: "Que los jóvenes debieron haberse quedado callados y aceptar la boda con Patricio.", isCorrect: false }
+        ],
+        explanation: "La paz final sobre los cuerpos de Romeo, Julieta, Marcos, Tomás y Patricio muestra que el odio heredado de ambas familias destruyó precisamente a quienes decían defender."
+      }
+    ]
   }
 ];
 
