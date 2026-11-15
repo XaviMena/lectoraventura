@@ -330,8 +330,10 @@ export default function ProjectorDock({
                   >
                     <option value={18} className={colorTheme === "dark" ? "bg-slate-900" : "bg-white"}>0.5×</option>
                     <option value={32} className={colorTheme === "dark" ? "bg-slate-900" : "bg-white"}>1×</option>
-                    <option value={52} className={colorTheme === "dark" ? "bg-slate-900" : "bg-white"}>1.5×</option>
-                    <option value={78} className={colorTheme === "dark" ? "bg-slate-900" : "bg-white"}>2×</option>
+                    <option value={50} className={colorTheme === "dark" ? "bg-slate-900" : "bg-white"}>1.5×</option>
+                    <option value={68} className={colorTheme === "dark" ? "bg-slate-900" : "bg-white"}>2×</option>
+                    <option value={88} className={colorTheme === "dark" ? "bg-slate-900" : "bg-white"}>2.5×</option>
+                    <option value={110} className={colorTheme === "dark" ? "bg-slate-900" : "bg-white"}>3×</option>
                   </select>
                 </div>
 
@@ -371,7 +373,7 @@ export default function ProjectorDock({
                           e.currentTarget.blur();
                           onStepParagraph(1);
                         }}
-                        title="Siguiente párrafo (↓ o Espacio)"
+                        title="Siguiente párrafo (↓)"
                         aria-label="Siguiente párrafo"
                         className={`px-1.5 py-1 rounded-lg text-xs font-bold border ${subBtnClass}`}
                       >

@@ -44,7 +44,7 @@ export default function ReaderView({
   // Estados exclusivos del Modo Proyector
   const [teleprompterActive, setTeleprompterActive] = useState(false);
   const [teleprompterSpeed, setTeleprompterSpeed] = useState(32);
-  const [focusMode, setFocusMode] = useState(false);
+  const [focusMode, setFocusMode] = useState(true);
   const [focusedParagraphIdx, setFocusedParagraphIdx] = useState(0);
   const [rulerVisible, setRulerVisible] = useState(false);
   const [rulerTopPct, setRulerTopPct] = useState(38);
@@ -57,6 +57,8 @@ export default function ReaderView({
   const rafRef = useRef(null);
   const lastTsRef = useRef(null);
   const remainderRef = useRef(0);
+  const focusedIdxRef = useRef(0);
+  focusedIdxRef.current = focusedParagraphIdx;
 
   const currentChapter = reading.chapters[currentChapterIdx];
   const isLastChapter = currentChapterIdx === reading.chapters.length - 1;
@@ -101,9 +103,60 @@ export default function ReaderView({
   useEffect(() => {
     stopTeleprompter();
     setFocusedParagraphIdx(0);
+    focusedIdxRef.current = 0;
   }, [currentChapterIdx, isProjectorMode, stopTeleprompter]);
 
   useEffect(() => () => stopTeleprompter(), [stopTeleprompter]);
+
+  const syncFocusToScroll = useCallback(() => {
+    if (!focusMode || !paragraphs.length) return;
+    const pane = scrollPaneRef.current;
+    if (!pane) return;
+
+    if (pane.scrollTop <= 16) {
+      if (focusedIdxRef.current !== 0) {
+        focusedIdxRef.current = 0;
+        setFocusedParagraphIdx(0);
+      }
+      return;
+    }
+
+    if (pane.scrollTop + pane.clientHeight >= pane.scrollHeight - 24) {
+      const lastIdx = paragraphs.length - 1;
+      if (focusedIdxRef.current !== lastIdx) {
+        focusedIdxRef.current = lastIdx;
+        setFocusedParagraphIdx(lastIdx);
+      }
+      return;
+    }
+
+    const paneRect = pane.getBoundingClientRect();
+    const focalY = paneRect.top + pane.clientHeight * 0.36;
+    let bestIdx = focusedIdxRef.current;
+    let bestDist = Infinity;
+
+    for (let i = 0; i < paragraphs.length; i += 1) {
+      const el = document.getElementById(`proj-para-${i}`);
+      if (!el) continue;
+      const r = el.getBoundingClientRect();
+      if (r.top <= focalY && r.bottom >= focalY) {
+        bestIdx = i;
+        bestDist = 0;
+        break;
+      }
+      const center = (r.top + r.bottom) / 2;
+      const dist = Math.abs(center - focalY);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestIdx = i;
+      }
+    }
+
+    if (bestIdx !== focusedIdxRef.current) {
+      focusedIdxRef.current = bestIdx;
+      setFocusedParagraphIdx(bestIdx);
+    }
+  }, [focusMode, paragraphs.length]);
 
   useEffect(() => {
     if (!teleprompterActive || !isProjectorMode) return;
@@ -121,8 +174,10 @@ export default function ReaderView({
         remainderRef.current = dy - whole;
         if (whole > 0) {
           pane.scrollTop += whole;
+          syncFocusToScroll();
         }
         if (pane.scrollTop + pane.clientHeight >= pane.scrollHeight - 2) {
+          syncFocusToScroll();
           stopTeleprompter();
           return;
         }
@@ -135,7 +190,7 @@ export default function ReaderView({
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [teleprompterActive, teleprompterSpeed, isProjectorMode, stopTeleprompter]);
+  }, [teleprompterActive, teleprompterSpeed, isProjectorMode, stopTeleprompter, syncFocusToScroll]);
 
   const scrollToParagraph = useCallback((idx) => {
     const pane = scrollPaneRef.current;
@@ -155,11 +210,10 @@ export default function ReaderView({
   const stepParagraph = useCallback(
     (delta) => {
       if (!paragraphs.length) return;
-      setFocusedParagraphIdx((prev) => {
-        const next = Math.min(Math.max(0, prev + delta), paragraphs.length - 1);
-        requestAnimationFrame(() => scrollToParagraph(next));
-        return next;
-      });
+      const next = Math.min(Math.max(0, focusedIdxRef.current + delta), paragraphs.length - 1);
+      focusedIdxRef.current = next;
+      setFocusedParagraphIdx(next);
+      requestAnimationFrame(() => scrollToParagraph(next));
     },
     [paragraphs.length, scrollToParagraph]
   );
@@ -168,11 +222,11 @@ export default function ReaderView({
     setFocusMode((prev) => {
       const next = !prev;
       if (next) {
-        requestAnimationFrame(() => scrollToParagraph(focusedParagraphIdx));
+        requestAnimationFrame(() => scrollToParagraph(focusedIdxRef.current));
       }
       return next;
     });
-  }, [focusedParagraphIdx, scrollToParagraph]);
+  }, [scrollToParagraph]);
 
   // Atajos de teclado para el docente
   useEffect(() => {
@@ -221,11 +275,7 @@ export default function ReaderView({
       } else if (e.code === "Space") {
         e.preventDefault();
         if (tag === "BUTTON") activeEl.blur();
-        if (focusMode && !teleprompterActive) {
-          stepParagraph(1);
-        } else {
-          setTeleprompterActive((prev) => !prev);
-        }
+        setTeleprompterActive((prev) => !prev);
       } else if (e.key === "ArrowDown" && focusMode) {
         e.preventDefault();
         stepParagraph(1);
@@ -249,7 +299,6 @@ export default function ReaderView({
     isBlackoutOpen,
     isHelpOpen,
     focusMode,
-    teleprompterActive,
     currentChapter,
     currentChapterIdx,
     reading.chapters.length,
@@ -534,6 +583,7 @@ export default function ReaderView({
                         id={`proj-para-${pIdx}`}
                         onClick={() => {
                           if (!focusMode) return;
+                          focusedIdxRef.current = pIdx;
                           setFocusedParagraphIdx(pIdx);
                           scrollToParagraph(pIdx);
                         }}
