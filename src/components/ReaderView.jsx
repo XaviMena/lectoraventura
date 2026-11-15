@@ -582,39 +582,6 @@ export default function ReaderView({
                     );
                   })}
                 </div>
-
-                {/* Cierre del capítulo */}
-                <div className="mt-12 pt-8 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-4">
-                  <button
-                    type="button"
-                    onClick={() => setCurrentChapterIdx((prev) => Math.max(0, prev - 1))}
-                    disabled={currentChapterIdx === 0}
-                    className={`inline-flex items-center gap-2 px-5 py-3 rounded-xl text-base font-bold border disabled:opacity-30 ${cardBg}`}
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                    <span>Capítulo anterior</span>
-                  </button>
-
-                  {!isLastChapter ? (
-                    <button
-                      type="button"
-                      onClick={() => setCurrentChapterIdx((prev) => prev + 1)}
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-base font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-md"
-                    >
-                      <span>Siguiente capítulo</span>
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={onGoToQuiz}
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-base font-bold bg-emerald-600 text-white hover:bg-emerald-700 shadow-md"
-                    >
-                      <span>Ir a Evaluación</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
               </div>
             </div>
           </section>
