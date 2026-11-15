@@ -34,6 +34,7 @@ const DEFAULT_SETTINGS = {
   projectorFontFamily: "atkinson",
   colorTheme: "light",
   isDockMinimized: false,
+  isDockPinned: false,
   dockPosition: null,
 };
 
@@ -70,6 +71,7 @@ function loadSavedSettings() {
       projectorFontFamily: validFont(parsed.projectorFontFamily, DEFAULT_SETTINGS.projectorFontFamily),
       colorTheme: validTheme,
       isDockMinimized: Boolean(parsed.isDockMinimized),
+      isDockPinned: Boolean(parsed.isDockPinned),
       dockPosition: validPos,
     };
   } catch {
@@ -157,6 +159,13 @@ export function SettingsProvider({ children }) {
     }));
   };
 
+  const setIsDockPinned = (nextVal) => {
+    setSettings((prev) => ({
+      ...prev,
+      isDockPinned: typeof nextVal === "function" ? nextVal(prev.isDockPinned) : Boolean(nextVal),
+    }));
+  };
+
   const setDockPosition = (pos) => {
     setSettings((prev) => ({ ...prev, dockPosition: pos }));
   };
@@ -191,6 +200,8 @@ export function SettingsProvider({ children }) {
       setColorTheme,
       isDockMinimized: settings.isDockMinimized,
       setIsDockMinimized,
+      isDockPinned: settings.isDockPinned,
+      setIsDockPinned,
       dockPosition: settings.dockPosition,
       setDockPosition,
       themeClass: themeMap[settings.colorTheme] || themeMap.light,
