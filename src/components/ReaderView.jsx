@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   ChevronRight,
   ChevronLeft,
@@ -15,6 +15,7 @@ import DownloadStoryButton from "./DownloadStoryButton";
 import ProjectorTopBar from "./ProjectorTopBar";
 import ProjectorDock from "./ProjectorDock";
 import { assetUrl } from "../lib/assetUrl";
+import { getActiveImageIdxForParagraph, getChapterImages } from "../lib/chapterImages";
 import { saveProgress } from "../lib/readingProgress";
 import { useSettings } from "../context/SettingsContext";
 
@@ -47,6 +48,7 @@ export default function ReaderView({
   const [focusMode, setFocusMode] = useState(true);
   const [autoFocusSync, setAutoFocusSync] = useState(true);
   const [focusedParagraphIdx, setFocusedParagraphIdx] = useState(0);
+  const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [rulerVisible, setRulerVisible] = useState(false);
   const [rulerTopPct, setRulerTopPct] = useState(38);
   const [isImageZoomOpen, setIsImageZoomOpen] = useState(false);
@@ -59,11 +61,15 @@ export default function ReaderView({
   const lastTsRef = useRef(null);
   const remainderRef = useRef(0);
   const focusedIdxRef = useRef(0);
+  const lastAutoImageIdxRef = useRef(0);
+  const suppressScrollImgSyncUntilRef = useRef(0);
   focusedIdxRef.current = focusedParagraphIdx;
 
   const currentChapter = reading.chapters[currentChapterIdx];
   const isLastChapter = currentChapterIdx === reading.chapters.length - 1;
   const paragraphs = currentChapter?.content || [];
+  const chapterImages = useMemo(() => getChapterImages(currentChapter), [currentChapter]);
+  const activeChapterImage = chapterImages[activeImageIdx] || chapterImages[0] || null;
 
   useEffect(() => {
     saveProgress({
@@ -105,30 +111,21 @@ export default function ReaderView({
     stopTeleprompter();
     setFocusedParagraphIdx(0);
     focusedIdxRef.current = 0;
+    setActiveImageIdx(0);
+    lastAutoImageIdxRef.current = 0;
+    suppressScrollImgSyncUntilRef.current = 0;
   }, [currentChapterIdx, isProjectorMode, stopTeleprompter]);
 
   useEffect(() => () => stopTeleprompter(), [stopTeleprompter]);
 
-  const syncFocusToScroll = useCallback(() => {
-    if (!focusMode || !autoFocusSync || !paragraphs.length) return;
+  const detectVisibleParagraphIdx = useCallback(() => {
+    if (!paragraphs.length) return 0;
     const pane = scrollPaneRef.current;
-    if (!pane) return;
+    if (!pane) return focusedIdxRef.current;
 
-    if (pane.scrollTop <= 16) {
-      if (focusedIdxRef.current !== 0) {
-        focusedIdxRef.current = 0;
-        setFocusedParagraphIdx(0);
-      }
-      return;
-    }
-
+    if (pane.scrollTop <= 16) return 0;
     if (pane.scrollTop + pane.clientHeight >= pane.scrollHeight - 24) {
-      const lastIdx = paragraphs.length - 1;
-      if (focusedIdxRef.current !== lastIdx) {
-        focusedIdxRef.current = lastIdx;
-        setFocusedParagraphIdx(lastIdx);
-      }
-      return;
+      return paragraphs.length - 1;
     }
 
     const paneRect = pane.getBoundingClientRect();
@@ -141,9 +138,7 @@ export default function ReaderView({
       if (!el) continue;
       const r = el.getBoundingClientRect();
       if (r.top <= focalY && r.bottom >= focalY) {
-        bestIdx = i;
-        bestDist = 0;
-        break;
+        return i;
       }
       const center = (r.top + r.bottom) / 2;
       const dist = Math.abs(center - focalY);
@@ -152,12 +147,28 @@ export default function ReaderView({
         bestIdx = i;
       }
     }
+    return bestIdx;
+  }, [paragraphs.length]);
 
+  const syncImageToScroll = useCallback(() => {
+    if (chapterImages.length <= 1) return;
+    if (performance.now() < suppressScrollImgSyncUntilRef.current) return;
+    const visibleIdx = detectVisibleParagraphIdx();
+    const nextAutoImg = getActiveImageIdxForParagraph(chapterImages, visibleIdx);
+    if (nextAutoImg !== lastAutoImageIdxRef.current) {
+      lastAutoImageIdxRef.current = nextAutoImg;
+      setActiveImageIdx(nextAutoImg);
+    }
+  }, [chapterImages, detectVisibleParagraphIdx]);
+
+  const syncFocusToScroll = useCallback(() => {
+    if (!focusMode || !autoFocusSync || !paragraphs.length) return;
+    const bestIdx = detectVisibleParagraphIdx();
     if (bestIdx !== focusedIdxRef.current) {
       focusedIdxRef.current = bestIdx;
       setFocusedParagraphIdx(bestIdx);
     }
-  }, [focusMode, autoFocusSync, paragraphs.length]);
+  }, [focusMode, autoFocusSync, paragraphs.length, detectVisibleParagraphIdx]);
 
   useEffect(() => {
     if (!teleprompterActive || !isProjectorMode) return;
@@ -176,9 +187,11 @@ export default function ReaderView({
         if (whole > 0) {
           pane.scrollTop += whole;
           syncFocusToScroll();
+          syncImageToScroll();
         }
         if (pane.scrollTop + pane.clientHeight >= pane.scrollHeight - 2) {
           syncFocusToScroll();
+          syncImageToScroll();
           stopTeleprompter();
           return;
         }
@@ -191,12 +204,20 @@ export default function ReaderView({
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [teleprompterActive, teleprompterSpeed, isProjectorMode, stopTeleprompter, syncFocusToScroll]);
+  }, [
+    teleprompterActive,
+    teleprompterSpeed,
+    isProjectorMode,
+    stopTeleprompter,
+    syncFocusToScroll,
+    syncImageToScroll,
+  ]);
 
   const scrollToParagraph = useCallback((idx) => {
     const pane = scrollPaneRef.current;
     const el = document.getElementById(`proj-para-${idx}`);
     if (!pane || !el) return;
+    suppressScrollImgSyncUntilRef.current = performance.now() + 450;
     if (idx === 0) {
       pane.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -208,15 +229,26 @@ export default function ReaderView({
     pane.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
   }, []);
 
+  const syncImageToParagraph = useCallback(
+    (pIdx) => {
+      if (chapterImages.length <= 1) return;
+      const nextImg = getActiveImageIdxForParagraph(chapterImages, pIdx);
+      lastAutoImageIdxRef.current = nextImg;
+      setActiveImageIdx(nextImg);
+    },
+    [chapterImages]
+  );
+
   const stepParagraph = useCallback(
     (delta) => {
       if (!paragraphs.length) return;
       const next = Math.min(Math.max(0, focusedIdxRef.current + delta), paragraphs.length - 1);
       focusedIdxRef.current = next;
       setFocusedParagraphIdx(next);
+      syncImageToParagraph(next);
       requestAnimationFrame(() => scrollToParagraph(next));
     },
-    [paragraphs.length, scrollToParagraph]
+    [paragraphs.length, scrollToParagraph, syncImageToParagraph]
   );
 
   const toggleFocusMode = useCallback(() => {
@@ -260,7 +292,7 @@ export default function ReaderView({
 
       if (!isProjectorMode) return;
 
-      if (key === "z" && currentChapter?.image) {
+      if (key === "z" && chapterImages.length > 0) {
         e.preventDefault();
         setIsImageZoomOpen((prev) => !prev);
       } else if (key === "f") {
@@ -390,7 +422,7 @@ export default function ReaderView({
 
               <div className="flex items-center gap-2 shrink-0">
                 <DownloadStoryButton reading={reading} />
-                {currentChapter?.image && (
+                {chapterImages.length > 0 && (
                   <button
                     type="button"
                     onClick={() => setIsImageZoomOpen(true)}
@@ -405,7 +437,7 @@ export default function ReaderView({
             </div>
 
             <div className="flex-1 flex flex-col items-center justify-center my-3 lg:my-4 min-h-0">
-              {currentChapter?.image ? (
+              {activeChapterImage ? (
                 <figure className="w-full flex flex-col items-center">
                   <button
                     type="button"
@@ -413,18 +445,55 @@ export default function ReaderView({
                     className="w-full rounded-2xl overflow-hidden shadow-lg border border-black/10 dark:border-white/10 bg-black/5 cursor-zoom-in block"
                     title="Clic para ampliar ilustración"
                   >
-                    <img
-                      src={assetUrl(currentChapter.image.src)}
-                      alt={currentChapter.image.alt}
-                      className="w-full aspect-video object-contain block"
-                      loading="eager"
-                    />
+                    <div className="relative w-full aspect-video">
+                      {chapterImages.map((img, idx) => (
+                        <img
+                          key={img.src}
+                          src={assetUrl(img.src)}
+                          alt={img.alt}
+                          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ease-in-out ${
+                            idx === activeImageIdx ? "opacity-100" : "opacity-0 pointer-events-none"
+                          }`}
+                          loading="eager"
+                        />
+                      ))}
+                    </div>
                   </button>
-                  <figcaption
-                    className={`mt-3 text-sm sm:text-base text-center leading-snug max-w-xl text-pretty ${mutedColor}`}
-                  >
-                    {currentChapter.image.caption}
-                  </figcaption>
+
+                  {chapterImages.length > 1 && (
+                    <div className="mt-2.5 flex items-center justify-center gap-1.5">
+                      <span className={`text-[11px] font-semibold mr-1 ${mutedColor}`}>
+                        Escena {activeImageIdx + 1} de {chapterImages.length}
+                      </span>
+                      {chapterImages.map((img, idx) => (
+                        <button
+                          key={img.src}
+                          type="button"
+                          onClick={(e) => {
+                            e.currentTarget.blur();
+                            setActiveImageIdx(idx);
+                          }}
+                          className={`w-7 h-6 rounded-md text-xs font-bold border transition-colors ${
+                            idx === activeImageIdx
+                              ? "bg-blue-600 text-white border-blue-600"
+                              : `${cardBg} opacity-75 hover:opacity-100`
+                          }`}
+                          title={`Ver escena ${idx + 1}`}
+                          aria-label={`Ver escena ${idx + 1}`}
+                        >
+                          {idx + 1}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {activeChapterImage.caption && (
+                    <figcaption
+                      className={`mt-2.5 text-sm sm:text-base text-center leading-snug max-w-xl text-pretty ${mutedColor}`}
+                    >
+                      {activeChapterImage.caption}
+                    </figcaption>
+                  )}
                 </figure>
               ) : (
                 <div
@@ -560,6 +629,7 @@ export default function ReaderView({
 
             <div
               ref={scrollPaneRef}
+              onScroll={syncImageToScroll}
               className="h-full overflow-y-auto reading-scroll px-6 sm:px-10 xl:px-14 pt-14 sm:pt-16 pb-20"
             >
               <div className="max-w-[44ch] mx-auto">
@@ -586,6 +656,7 @@ export default function ReaderView({
                           if (!focusMode) return;
                           focusedIdxRef.current = pIdx;
                           setFocusedParagraphIdx(pIdx);
+                          syncImageToParagraph(pIdx);
                           scrollToParagraph(pIdx);
                         }}
                         className={`projector-para transition-all duration-200 ${
@@ -635,7 +706,7 @@ export default function ReaderView({
           </section>
         </div>
 
-        {/* Barra flotante movible y minimizable (nunca bloquea el texto) */}
+        {/* Riel lateral izquierdo de controles */}
         <ProjectorDock
           showReadingAids
           teleprompterActive={teleprompterActive}
@@ -657,7 +728,7 @@ export default function ReaderView({
         />
 
         {/* Modal de escena ampliada */}
-        {isImageZoomOpen && currentChapter?.image && (
+        {isImageZoomOpen && activeChapterImage && (
           <div
             className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-4 sm:p-8"
             onClick={() => setIsImageZoomOpen(false)}
@@ -666,26 +737,49 @@ export default function ReaderView({
               className="w-full max-w-6xl flex flex-col items-center gap-4"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="w-full flex items-center justify-between text-white/90 text-sm">
-                <span className="font-bold">
+              <div className="w-full flex items-center justify-between gap-3 text-white/90 text-sm">
+                <span className="font-bold truncate">
                   {reading.title} · {currentChapter.title}
                 </span>
-                <button
-                  type="button"
-                  onClick={() => setIsImageZoomOpen(false)}
-                  className="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white font-semibold"
-                >
-                  Cerrar (Esc)
-                </button>
+                <div className="flex items-center gap-2 shrink-0">
+                  {chapterImages.length > 1 && (
+                    <div className="flex items-center gap-1 mr-1">
+                      {chapterImages.map((img, idx) => (
+                        <button
+                          key={img.src}
+                          type="button"
+                          onClick={() => setActiveImageIdx(idx)}
+                          className={`w-7 h-7 rounded-lg text-xs font-bold transition-colors ${
+                            idx === activeImageIdx
+                              ? "bg-blue-600 text-white"
+                              : "bg-white/15 hover:bg-white/25 text-white"
+                          }`}
+                          title={`Ver escena ${idx + 1}`}
+                        >
+                          {idx + 1}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setIsImageZoomOpen(false)}
+                    className="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white font-semibold"
+                  >
+                    Cerrar (Esc)
+                  </button>
+                </div>
               </div>
               <img
-                src={assetUrl(currentChapter.image.src)}
-                alt={currentChapter.image.alt}
+                src={assetUrl(activeChapterImage.src)}
+                alt={activeChapterImage.alt}
                 className="max-h-[78dvh] w-auto max-w-full rounded-2xl shadow-2xl object-contain"
               />
-              <p className="text-center text-white/85 text-base sm:text-lg max-w-3xl leading-relaxed">
-                {currentChapter.image.caption}
-              </p>
+              {activeChapterImage.caption && (
+                <p className="text-center text-white/85 text-base sm:text-lg max-w-3xl leading-relaxed">
+                  {activeChapterImage.caption}
+                </p>
+              )}
             </div>
           </div>
         )}
@@ -899,27 +993,54 @@ export default function ReaderView({
               {currentChapter.title}
             </h2>
 
-            {currentChapter.image && (
-              <figure className="my-6 sm:my-8 -mx-4 sm:mx-0">
-                <img
-                  src={assetUrl(currentChapter.image.src)}
-                  alt={currentChapter.image.alt}
-                  className="w-full h-auto mx-auto sm:rounded-xl"
-                  loading="eager"
-                />
-                <figcaption className="mt-3 px-4 sm:px-0 text-sm text-center text-slate-400 dark:text-slate-500 text-pretty">
-                  {currentChapter.image.caption}
-                </figcaption>
-              </figure>
-            )}
+            {chapterImages
+              .filter((img) => img.fromParagraph <= 1)
+              .map((img) => (
+                <figure key={img.src} className="my-6 sm:my-8 -mx-4 sm:mx-0">
+                  <img
+                    src={assetUrl(img.src)}
+                    alt={img.alt}
+                    className="w-full h-auto mx-auto sm:rounded-xl"
+                    loading="eager"
+                  />
+                  {img.caption && (
+                    <figcaption className="mt-3 px-4 sm:px-0 text-sm text-center text-slate-400 dark:text-slate-500 text-pretty">
+                      {img.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              ))}
 
             <div
               className={`space-y-6 reading-text ${fontFamilyClass}`}
               style={{ fontSize: `${fontSizePx}px`, lineHeight: 1.78 }}
             >
-              {currentChapter.content.map((paragraph, pIdx) => (
-                <p key={pIdx}>{paragraph}</p>
-              ))}
+              {currentChapter.content.map((paragraph, pIdx) => {
+                const pNum = pIdx + 1;
+                const inlineImgs = chapterImages.filter(
+                  (img) => img.fromParagraph === pNum && img.fromParagraph > 1
+                );
+                return (
+                  <React.Fragment key={pIdx}>
+                    {inlineImgs.map((img) => (
+                      <figure key={img.src} className="my-6 sm:my-8 -mx-4 sm:mx-0">
+                        <img
+                          src={assetUrl(img.src)}
+                          alt={img.alt}
+                          className="w-full h-auto mx-auto sm:rounded-xl"
+                          loading="lazy"
+                        />
+                        {img.caption && (
+                          <figcaption className="mt-3 px-4 sm:px-0 text-sm text-center text-slate-400 dark:text-slate-500 text-pretty">
+                            {img.caption}
+                          </figcaption>
+                        )}
+                      </figure>
+                    ))}
+                    <p>{paragraph}</p>
+                  </React.Fragment>
+                );
+              })}
             </div>
           </article>
 
@@ -957,43 +1078,73 @@ export default function ReaderView({
       {/* LECTURA CONTINUA */}
       {viewMode === "continuous" && (
         <div className="space-y-12 animate-fade-in">
-          {reading.chapters.map((chapter, idx) => (
-            <article
-              key={chapter.id}
-              id={`capitulo-${chapter.id}`}
-              className="scroll-mt-28 sm:scroll-mt-32"
-            >
-              <p className="text-[11px] tracking-[0.16em] uppercase text-slate-400 mb-2">
-                Capítulo {idx + 1}
-              </p>
-              <h2 className="text-xl sm:text-[1.85rem] font-semibold text-slate-900 dark:text-white mb-6 font-reading tracking-tight text-balance">
-                {chapter.title}
-              </h2>
-
-              {chapter.image && (
-                <figure className="my-6 sm:my-8 -mx-4 sm:mx-0">
-                  <img
-                    src={assetUrl(chapter.image.src)}
-                    alt={chapter.image.alt}
-                    className="w-full h-auto mx-auto sm:rounded-xl"
-                    loading="lazy"
-                  />
-                  <figcaption className="mt-3 px-4 sm:px-0 text-sm text-center text-slate-400 dark:text-slate-500 text-pretty">
-                    {chapter.image.caption}
-                  </figcaption>
-                </figure>
-              )}
-
-              <div
-                className={`space-y-6 reading-text ${fontFamilyClass}`}
-                style={{ fontSize: `${fontSizePx}px`, lineHeight: 1.78 }}
+          {reading.chapters.map((chapter, idx) => {
+            const imgs = getChapterImages(chapter);
+            return (
+              <article
+                key={chapter.id}
+                id={`capitulo-${chapter.id}`}
+                className="scroll-mt-28 sm:scroll-mt-32"
               >
-                {chapter.content.map((paragraph, pIdx) => (
-                  <p key={pIdx}>{paragraph}</p>
-                ))}
-              </div>
-            </article>
-          ))}
+                <p className="text-[11px] tracking-[0.16em] uppercase text-slate-400 mb-2">
+                  Capítulo {idx + 1}
+                </p>
+                <h2 className="text-xl sm:text-[1.85rem] font-semibold text-slate-900 dark:text-white mb-6 font-reading tracking-tight text-balance">
+                  {chapter.title}
+                </h2>
+
+                {imgs
+                  .filter((img) => img.fromParagraph <= 1)
+                  .map((img) => (
+                    <figure key={img.src} className="my-6 sm:my-8 -mx-4 sm:mx-0">
+                      <img
+                        src={assetUrl(img.src)}
+                        alt={img.alt}
+                        className="w-full h-auto mx-auto sm:rounded-xl"
+                        loading="lazy"
+                      />
+                      {img.caption && (
+                        <figcaption className="mt-3 px-4 sm:px-0 text-sm text-center text-slate-400 dark:text-slate-500 text-pretty">
+                          {img.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ))}
+
+                <div
+                  className={`space-y-6 reading-text ${fontFamilyClass}`}
+                  style={{ fontSize: `${fontSizePx}px`, lineHeight: 1.78 }}
+                >
+                  {chapter.content.map((paragraph, pIdx) => {
+                    const pNum = pIdx + 1;
+                    const inlineImgs = imgs.filter(
+                      (img) => img.fromParagraph === pNum && img.fromParagraph > 1
+                    );
+                    return (
+                      <React.Fragment key={pIdx}>
+                        {inlineImgs.map((img) => (
+                          <figure key={img.src} className="my-6 sm:my-8 -mx-4 sm:mx-0">
+                            <img
+                              src={assetUrl(img.src)}
+                              alt={img.alt}
+                              className="w-full h-auto mx-auto sm:rounded-xl"
+                              loading="lazy"
+                            />
+                            {img.caption && (
+                              <figcaption className="mt-3 px-4 sm:px-0 text-sm text-center text-slate-400 dark:text-slate-500 text-pretty">
+                                {img.caption}
+                              </figcaption>
+                            )}
+                          </figure>
+                        ))}
+                        <p>{paragraph}</p>
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+              </article>
+            );
+          })}
 
           <div className="py-8 border-t border-slate-200/80 dark:border-slate-800">
             <button
@@ -1048,7 +1199,7 @@ export default function ReaderView({
                     </span>
                     <span className="text-sm text-pretty">{ch.title}</span>
                   </div>
-                  {ch.image && (
+                  {getChapterImages(ch).length > 0 && (
                     <span className="shrink-0 text-emerald-600 dark:text-emerald-400" title="Contiene ilustración">
                       <ImageIcon className="w-4 h-4" />
                     </span>

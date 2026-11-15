@@ -1,6 +1,7 @@
 import { jsPDF } from "jspdf";
 import { site } from "../data/site";
 import { assetUrl } from "./assetUrl";
+import { getChapterImages } from "./chapterImages";
 
 // Generador único para todas las lecturas.
 // Toma el objeto de src/data/readings.js (título, capítulos, imágenes)
@@ -153,7 +154,8 @@ function wrap(doc, text, font, style, size, width) {
 export async function downloadStoryPdf(reading) {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   const images = {};
-  const coverSrc = reading.cover || reading.chapters.find((ch) => ch.image)?.image?.src;
+  const firstWithImage = reading.chapters.find((ch) => getChapterImages(ch).length > 0);
+  const coverSrc = reading.cover || getChapterImages(firstWithImage)[0]?.src;
   if (coverSrc) {
     try {
       images.cover = await loadImage(coverSrc);
@@ -162,11 +164,13 @@ export async function downloadStoryPdf(reading) {
     }
   }
   for (const chapter of reading.chapters) {
-    if (chapter.image?.src) {
+    const chImgs = getChapterImages(chapter);
+    for (let i = 0; i < chImgs.length; i += 1) {
+      const key = `${chapter.id}-${i}`;
       try {
-        images[chapter.id] = await loadImage(chapter.image.src);
+        images[key] = await loadImage(chImgs[i].src);
       } catch {
-        images[chapter.id] = null;
+        images[key] = null;
       }
     }
   }
@@ -290,16 +294,17 @@ export async function downloadStoryPdf(reading) {
     ornament(doc, y);
     y += 8;
 
-    const chapterImage = images[chapter.id];
-    if (chapterImage) {
+    const chImgs = getChapterImages(chapter);
+    const drawPdfIllustration = (meta, loaded) => {
+      if (!loaded) return;
       y = ensure(88, y);
-      const imgH = imageBox(doc, chapterImage, MARGIN, y, CONTENT_W, 86);
+      const imgH = imageBox(doc, loaded, MARGIN, y, CONTENT_W, 86);
       y += imgH + 4;
-      if (chapter.image?.caption) {
+      if (meta?.caption) {
         doc.setFont("times", "italic");
         doc.setFontSize(9);
         doc.setTextColor(...INK_SOFT);
-        const cap = wrap(doc, chapter.image.caption, "times", "italic", 9, CONTENT_W);
+        const cap = wrap(doc, meta.caption, "times", "italic", 9, CONTENT_W);
         cap.forEach((line) => {
           y = ensure(5, y);
           doc.text(line, PAGE.w / 2, y, { align: "center" });
@@ -307,9 +312,23 @@ export async function downloadStoryPdf(reading) {
         });
         y += 3;
       }
-    }
+    };
+
+    chImgs.forEach((meta, imgIdx) => {
+      if (meta.fromParagraph <= 1) {
+        drawPdfIllustration(meta, images[`${chapter.id}-${imgIdx}`]);
+      }
+    });
 
     (chapter.content || []).forEach((paragraph, pIdx) => {
+      const pNum = pIdx + 1;
+      chImgs.forEach((meta, imgIdx) => {
+        if (meta.fromParagraph === pNum && meta.fromParagraph > 1) {
+          y += 2;
+          drawPdfIllustration(meta, images[`${chapter.id}-${imgIdx}`]);
+        }
+      });
+
       const looksQuoted = paragraph.trim().startsWith("«");
       y = writeParagraph(paragraph, y, {
         indent: pIdx > 0,
