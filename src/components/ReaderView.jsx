@@ -505,54 +505,102 @@ export default function ReaderView({
               )}
             </div>
 
-            {/* Navegación rápida de capítulos al pie de la lámina */}
-            <div className="hidden lg:flex items-center justify-between gap-2 pt-3 border-t border-black/10 dark:border-white/10 text-xs">
-              <button
-                type="button"
-                onClick={() => setCurrentChapterIdx((prev) => Math.max(0, prev - 1))}
-                disabled={currentChapterIdx === 0}
-                className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg font-semibold border disabled:opacity-30 ${cardBg}`}
-              >
-                <ChevronLeft className="w-3.5 h-3.5" />
-                <span>Cap. anterior</span>
-              </button>
+            {/* Navegación rápida de capítulos y párrafos al pie de la lámina */}
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-black/10 dark:border-white/10 text-xs">
+              <div className="flex items-center gap-1 min-w-0">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.currentTarget.blur();
+                    setCurrentChapterIdx((prev) => Math.max(0, prev - 1));
+                  }}
+                  disabled={currentChapterIdx === 0}
+                  className={`inline-flex items-center justify-center w-7 h-7 rounded-lg font-semibold border disabled:opacity-30 ${cardBg}`}
+                  title="Capítulo anterior"
+                  aria-label="Capítulo anterior"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
 
-              <div className="flex items-center gap-1 overflow-x-auto scrollbar-none max-w-[55%] px-1">
-                {reading.chapters.map((ch, idx) => (
+                <div className="flex items-center gap-1 overflow-x-auto scrollbar-none max-w-[200px] px-0.5">
+                  {reading.chapters.map((ch, idx) => (
+                    <button
+                      key={ch.id}
+                      type="button"
+                      onClick={(e) => {
+                        e.currentTarget.blur();
+                        setCurrentChapterIdx(idx);
+                      }}
+                      className={`shrink-0 w-7 h-7 rounded-lg font-bold transition-colors ${
+                        idx === currentChapterIdx
+                          ? "bg-blue-600 text-white"
+                          : `${cardBg} opacity-80 hover:opacity-100 border`
+                      }`}
+                      title={ch.title}
+                    >
+                      {idx + 1}
+                    </button>
+                  ))}
+                </div>
+
+                {!isLastChapter ? (
                   <button
-                    key={ch.id}
                     type="button"
-                    onClick={() => setCurrentChapterIdx(idx)}
-                    className={`shrink-0 w-7 h-7 rounded-lg font-bold transition-colors ${
-                      idx === currentChapterIdx
-                        ? "bg-blue-600 text-white"
-                        : `${cardBg} opacity-80 hover:opacity-100`
-                    }`}
-                    title={ch.title}
+                    onClick={(e) => {
+                      e.currentTarget.blur();
+                      setCurrentChapterIdx((prev) => prev + 1);
+                    }}
+                    className="inline-flex items-center justify-center w-7 h-7 rounded-lg font-bold bg-blue-600 text-white hover:bg-blue-700"
+                    title="Siguiente capítulo"
+                    aria-label="Siguiente capítulo"
                   >
-                    {idx + 1}
+                    <ChevronRight className="w-3.5 h-3.5" />
                   </button>
-                ))}
+                ) : (
+                  <button
+                    type="button"
+                    onClick={onGoToQuiz}
+                    className="inline-flex items-center gap-1 h-7 px-2.5 rounded-lg font-bold bg-emerald-600 text-white hover:bg-emerald-700"
+                    title="Ir a Evaluación"
+                  >
+                    <span>Evaluación</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
 
-              {!isLastChapter ? (
-                <button
-                  type="button"
-                  onClick={() => setCurrentChapterIdx((prev) => prev + 1)}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg font-bold bg-blue-600 text-white hover:bg-blue-700"
-                >
-                  <span>Siguiente</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={onGoToQuiz}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg font-bold bg-emerald-600 text-white hover:bg-emerald-700"
-                >
-                  <span>Evaluación</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+              {focusMode && paragraphs.length > 0 && (
+                <div className={`flex items-center gap-1 px-2 py-1 rounded-lg border ${cardBg}`}>
+                  <span className={`font-semibold tabular-nums mr-0.5 ${mutedColor}`}>
+                    Párrafo {focusedParagraphIdx + 1}/{paragraphs.length}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.currentTarget.blur();
+                      stepParagraph(-1);
+                    }}
+                    disabled={focusedParagraphIdx === 0}
+                    className="inline-flex items-center justify-center w-6 h-6 rounded border border-current/15 disabled:opacity-30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                    title="Párrafo anterior (↑)"
+                    aria-label="Párrafo anterior"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.currentTarget.blur();
+                      stepParagraph(1);
+                    }}
+                    disabled={focusedParagraphIdx >= paragraphs.length - 1}
+                    className="inline-flex items-center justify-center w-6 h-6 rounded border border-current/15 disabled:opacity-30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                    title="Siguiente párrafo (↓)"
+                    aria-label="Siguiente párrafo"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               )}
             </div>
           </aside>
@@ -591,46 +639,10 @@ export default function ReaderView({
               </div>
             )}
 
-            {focusMode && (
-              <div
-                className={`absolute top-3 left-4 sm:left-6 z-20 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border shadow-sm text-xs font-bold ${cardBg}`}
-              >
-                <span className={mutedColor}>
-                  Párrafo {focusedParagraphIdx + 1}/{paragraphs.length}
-                </span>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.currentTarget.blur();
-                    stepParagraph(-1);
-                  }}
-                  disabled={focusedParagraphIdx === 0}
-                  className="p-1 rounded border border-current/15 disabled:opacity-30"
-                  title="Párrafo anterior (↑)"
-                  aria-label="Párrafo anterior"
-                >
-                  <ArrowUp className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.currentTarget.blur();
-                    stepParagraph(1);
-                  }}
-                  disabled={focusedParagraphIdx >= paragraphs.length - 1}
-                  className="p-1 rounded border border-current/15 disabled:opacity-30"
-                  title="Siguiente párrafo (↓ o Espacio)"
-                  aria-label="Siguiente párrafo"
-                >
-                  <ArrowDown className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            )}
-
             <div
               ref={scrollPaneRef}
               onScroll={syncImageToScroll}
-              className="h-full overflow-y-auto reading-scroll px-6 sm:px-10 xl:px-14 pt-14 sm:pt-16 pb-20"
+              className="h-full overflow-y-auto reading-scroll px-6 sm:px-10 xl:px-14 pt-10 sm:pt-12 pb-20"
             >
               <div className="max-w-[44ch] mx-auto">
                 <h2
