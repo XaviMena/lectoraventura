@@ -25,6 +25,7 @@ export default function ProjectorDock({
   onChangeTeleprompterSpeed,
   focusMode = false,
   onToggleFocusMode,
+  onStepParagraph,
   rulerVisible = false,
   onToggleRuler,
   onToggleBlackout,
@@ -305,7 +306,10 @@ export default function ProjectorDock({
                 <div className="flex items-center gap-1">
                   <button
                     type="button"
-                    onClick={onToggleTeleprompter}
+                    onClick={(e) => {
+                      e.currentTarget.blur();
+                      onToggleTeleprompter?.();
+                    }}
                     title="Teleprompter automático (Espacio)"
                     className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold border ${
                       teleprompterActive ? activePillClass : subBtnClass
@@ -316,7 +320,10 @@ export default function ProjectorDock({
                   </button>
                   <select
                     value={teleprompterSpeed}
-                    onChange={(e) => onChangeTeleprompterSpeed?.(Number(e.target.value))}
+                    onChange={(e) => {
+                      onChangeTeleprompterSpeed?.(Number(e.target.value));
+                      e.currentTarget.blur();
+                    }}
                     aria-label="Velocidad de teleprompter"
                     title="Velocidad de teleprompter"
                     className={`px-1.5 py-1 rounded-lg text-xs font-semibold border cursor-pointer bg-transparent ${subBtnClass}`}
@@ -328,22 +335,58 @@ export default function ProjectorDock({
                   </select>
                 </div>
 
-                {/* Foco por párrafo, Regla guía */}
-                <button
-                  type="button"
-                  onClick={onToggleFocusMode}
-                  title="Foco por párrafo (F)"
-                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold border ${
-                    focusMode ? activePillClass : subBtnClass
-                  }`}
-                >
-                  <Crosshair className="w-3.5 h-3.5" />
-                  <span className="hidden md:inline">Foco</span>
-                </button>
+                {/* Foco por párrafo + flechas rápidas */}
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.currentTarget.blur();
+                      onToggleFocusMode?.();
+                    }}
+                    title="Foco por párrafo (F)"
+                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold border ${
+                      focusMode ? activePillClass : subBtnClass
+                    }`}
+                  >
+                    <Crosshair className="w-3.5 h-3.5" />
+                    <span className="hidden md:inline">Foco</span>
+                  </button>
+                  {focusMode && onStepParagraph && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.currentTarget.blur();
+                          onStepParagraph(-1);
+                        }}
+                        title="Párrafo anterior (↑)"
+                        aria-label="Párrafo anterior"
+                        className={`px-1.5 py-1 rounded-lg text-xs font-bold border ${subBtnClass}`}
+                      >
+                        ↑
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.currentTarget.blur();
+                          onStepParagraph(1);
+                        }}
+                        title="Siguiente párrafo (↓ o Espacio)"
+                        aria-label="Siguiente párrafo"
+                        className={`px-1.5 py-1 rounded-lg text-xs font-bold border ${subBtnClass}`}
+                      >
+                        ↓
+                      </button>
+                    </>
+                  )}
+                </div>
 
                 <button
                   type="button"
-                  onClick={onToggleRuler}
+                  onClick={(e) => {
+                    e.currentTarget.blur();
+                    onToggleRuler?.();
+                  }}
                   title="Regla guía de lectura (R)"
                   className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-semibold border ${
                     rulerVisible ? activePillClass : subBtnClass
@@ -360,7 +403,10 @@ export default function ProjectorDock({
             {onToggleBlackout && (
               <button
                 type="button"
-                onClick={onToggleBlackout}
+                onClick={(e) => {
+                  e.currentTarget.blur();
+                  onToggleBlackout();
+                }}
                 title="Pausa en negro para conversar (B)"
                 className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-semibold border ${subBtnClass}`}
               >

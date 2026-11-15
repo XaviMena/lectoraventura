@@ -141,7 +141,14 @@ export default function ReaderView({
     const pane = scrollPaneRef.current;
     const el = document.getElementById(`proj-para-${idx}`);
     if (!pane || !el) return;
-    const targetTop = el.offsetTop - pane.clientHeight * 0.28;
+    if (idx === 0) {
+      pane.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    const paneRect = pane.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const desiredTopOffset = Math.max(68, (pane.clientHeight - elRect.height) * 0.32);
+    const targetTop = pane.scrollTop + (elRect.top - paneRect.top) - desiredTopOffset;
     pane.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
   }, []);
 
@@ -170,7 +177,8 @@ export default function ReaderView({
   // Atajos de teclado para el docente
   useEffect(() => {
     const onKeyDown = (e) => {
-      const tag = document.activeElement?.tagName;
+      const activeEl = document.activeElement;
+      const tag = activeEl?.tagName;
       if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return;
 
       if (e.key === "Escape") {
@@ -212,6 +220,7 @@ export default function ReaderView({
         setIsBlackoutOpen((prev) => !prev);
       } else if (e.code === "Space") {
         e.preventDefault();
+        if (tag === "BUTTON") activeEl.blur();
         if (focusMode && !teleprompterActive) {
           stepParagraph(1);
         } else {
@@ -465,14 +474,17 @@ export default function ReaderView({
 
             {focusMode && (
               <div
-                className={`absolute top-3 right-4 z-20 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border shadow-sm text-xs font-bold ${cardBg}`}
+                className={`absolute top-3 left-4 sm:left-6 z-20 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border shadow-sm text-xs font-bold ${cardBg}`}
               >
                 <span className={mutedColor}>
                   Párrafo {focusedParagraphIdx + 1}/{paragraphs.length}
                 </span>
                 <button
                   type="button"
-                  onClick={() => stepParagraph(-1)}
+                  onClick={(e) => {
+                    e.currentTarget.blur();
+                    stepParagraph(-1);
+                  }}
                   disabled={focusedParagraphIdx === 0}
                   className="p-1 rounded border border-current/15 disabled:opacity-30"
                   title="Párrafo anterior (↑)"
@@ -482,7 +494,10 @@ export default function ReaderView({
                 </button>
                 <button
                   type="button"
-                  onClick={() => stepParagraph(1)}
+                  onClick={(e) => {
+                    e.currentTarget.blur();
+                    stepParagraph(1);
+                  }}
                   disabled={focusedParagraphIdx >= paragraphs.length - 1}
                   className="p-1 rounded border border-current/15 disabled:opacity-30"
                   title="Siguiente párrafo (↓ o Espacio)"
@@ -495,7 +510,7 @@ export default function ReaderView({
 
             <div
               ref={scrollPaneRef}
-              className="h-full overflow-y-auto reading-scroll px-6 sm:px-10 xl:px-14 pt-10 sm:pt-12 pb-44"
+              className="h-full overflow-y-auto reading-scroll px-6 sm:px-10 xl:px-14 pt-14 sm:pt-16 pb-44"
             >
               <div className="max-w-[44ch] mx-auto">
                 <h2
@@ -578,6 +593,7 @@ export default function ReaderView({
           onChangeTeleprompterSpeed={setTeleprompterSpeed}
           focusMode={focusMode}
           onToggleFocusMode={toggleFocusMode}
+          onStepParagraph={stepParagraph}
           rulerVisible={rulerVisible}
           onToggleRuler={() => setRulerVisible((prev) => !prev)}
           onToggleBlackout={() => {

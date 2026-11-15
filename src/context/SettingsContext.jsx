@@ -79,6 +79,8 @@ function loadSavedSettings() {
 
 export function SettingsProvider({ children }) {
   const [settings, setSettings] = useState(loadSavedSettings);
+  const isProjectorRef = React.useRef(settings.isProjectorMode);
+  isProjectorRef.current = settings.isProjectorMode;
 
   useEffect(() => {
     const root = document.documentElement;
@@ -95,14 +97,25 @@ export function SettingsProvider({ children }) {
   }, [settings]);
 
   const setIsProjectorMode = (nextValue) => {
-    setSettings((prev) => {
-      const next = typeof nextValue === "function" ? nextValue(prev.isProjectorMode) : Boolean(nextValue);
-      return {
-        ...prev,
-        isProjectorMode: next,
-        projectorFontSizePx: next ? Math.max(28, prev.projectorFontSizePx) : prev.projectorFontSizePx,
-      };
-    });
+    const next =
+      typeof nextValue === "function"
+        ? Boolean(nextValue(isProjectorRef.current))
+        : Boolean(nextValue);
+    isProjectorRef.current = next;
+
+    if (typeof document !== "undefined") {
+      if (next && !document.fullscreenElement && document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else if (!next && document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    setSettings((prev) => ({
+      ...prev,
+      isProjectorMode: next,
+      projectorFontSizePx: next ? Math.max(28, prev.projectorFontSizePx) : prev.projectorFontSizePx,
+    }));
   };
 
   const fontSizePx = settings.isProjectorMode ? settings.projectorFontSizePx : settings.normalFontSizePx;
