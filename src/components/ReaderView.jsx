@@ -31,6 +31,7 @@ export default function ReaderView({
     fontSizePx,
     fontFamilyClass,
     colorTheme,
+    isDockPinned,
   } = useSettings();
 
   const lastChapter = Math.max(0, reading.chapters.length - 1);
@@ -504,105 +505,6 @@ export default function ReaderView({
                 </div>
               )}
             </div>
-
-            {/* Navegación rápida de capítulos y párrafos al pie de la lámina */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-black/10 dark:border-white/10 text-xs">
-              <div className="flex items-center gap-1 min-w-0">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.currentTarget.blur();
-                    setCurrentChapterIdx((prev) => Math.max(0, prev - 1));
-                  }}
-                  disabled={currentChapterIdx === 0}
-                  className={`inline-flex items-center justify-center w-7 h-7 rounded-lg font-semibold border disabled:opacity-30 ${cardBg}`}
-                  title="Capítulo anterior"
-                  aria-label="Capítulo anterior"
-                >
-                  <ChevronLeft className="w-3.5 h-3.5" />
-                </button>
-
-                <div className="flex items-center gap-1 overflow-x-auto scrollbar-none max-w-[200px] px-0.5">
-                  {reading.chapters.map((ch, idx) => (
-                    <button
-                      key={ch.id}
-                      type="button"
-                      onClick={(e) => {
-                        e.currentTarget.blur();
-                        setCurrentChapterIdx(idx);
-                      }}
-                      className={`shrink-0 w-7 h-7 rounded-lg font-bold transition-colors ${
-                        idx === currentChapterIdx
-                          ? "bg-blue-600 text-white"
-                          : `${cardBg} opacity-80 hover:opacity-100 border`
-                      }`}
-                      title={ch.title}
-                    >
-                      {idx + 1}
-                    </button>
-                  ))}
-                </div>
-
-                {!isLastChapter ? (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.currentTarget.blur();
-                      setCurrentChapterIdx((prev) => prev + 1);
-                    }}
-                    className="inline-flex items-center justify-center w-7 h-7 rounded-lg font-bold bg-blue-600 text-white hover:bg-blue-700"
-                    title="Siguiente capítulo"
-                    aria-label="Siguiente capítulo"
-                  >
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={onGoToQuiz}
-                    className="inline-flex items-center gap-1 h-7 px-2.5 rounded-lg font-bold bg-emerald-600 text-white hover:bg-emerald-700"
-                    title="Ir a Evaluación"
-                  >
-                    <span>Evaluación</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                )}
-              </div>
-
-              {focusMode && paragraphs.length > 0 && (
-                <div className={`flex items-center gap-1 px-2 py-1 rounded-lg border ${cardBg}`}>
-                  <span className={`font-semibold tabular-nums mr-0.5 ${mutedColor}`}>
-                    Párrafo {focusedParagraphIdx + 1}/{paragraphs.length}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.currentTarget.blur();
-                      stepParagraph(-1);
-                    }}
-                    disabled={focusedParagraphIdx === 0}
-                    className="inline-flex items-center justify-center w-6 h-6 rounded border border-current/15 disabled:opacity-30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-                    title="Párrafo anterior (↑)"
-                    aria-label="Párrafo anterior"
-                  >
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.currentTarget.blur();
-                      stepParagraph(1);
-                    }}
-                    disabled={focusedParagraphIdx >= paragraphs.length - 1}
-                    className="inline-flex items-center justify-center w-6 h-6 rounded border border-current/15 disabled:opacity-30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-                    title="Siguiente párrafo (↓)"
-                    aria-label="Siguiente párrafo"
-                  >
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              )}
-            </div>
           </aside>
 
           {/* COLUMNA DERECHA INDEPENDIENTE: Lectura amplia / Teleprompter / Foco */}
@@ -717,6 +619,112 @@ export default function ReaderView({
             </div>
           </section>
         </div>
+
+        {/* Barra inferior unificada: capítulos + párrafos */}
+        <footer
+          className={`shrink-0 border-t py-2 pr-4 sm:pr-6 ${
+            isDockPinned ? "pl-16" : "pl-4 sm:pl-6"
+          } flex flex-wrap items-center justify-between gap-2.5 text-xs transition-[padding] duration-200 ${panelBg}`}
+        >
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.currentTarget.blur();
+                setCurrentChapterIdx((prev) => Math.max(0, prev - 1));
+              }}
+              disabled={currentChapterIdx === 0}
+              className={`inline-flex items-center gap-1 h-8 px-2.5 rounded-lg font-semibold border disabled:opacity-35 hover:opacity-85 transition-opacity ${cardBg}`}
+              title="Capítulo anterior"
+              aria-label="Capítulo anterior"
+            >
+              <ChevronLeft className="w-3.5 h-3.5 shrink-0" />
+              <span>Cap. ant.</span>
+            </button>
+
+            <div className="flex items-center gap-1 overflow-x-auto scrollbar-none max-w-full px-0.5">
+              {reading.chapters.map((ch, idx) => (
+                <button
+                  key={ch.id}
+                  type="button"
+                  onClick={(e) => {
+                    e.currentTarget.blur();
+                    setCurrentChapterIdx(idx);
+                  }}
+                  className={`shrink-0 w-7 h-8 rounded-lg font-bold transition-colors ${
+                    idx === currentChapterIdx
+                      ? "bg-blue-600 text-white"
+                      : `${cardBg} opacity-80 hover:opacity-100 border`
+                  }`}
+                  title={ch.title}
+                >
+                  {idx + 1}
+                </button>
+              ))}
+            </div>
+
+            {!isLastChapter ? (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.currentTarget.blur();
+                  setCurrentChapterIdx((prev) => prev + 1);
+                }}
+                className="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg font-bold bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                title="Siguiente capítulo"
+                aria-label="Siguiente capítulo"
+              >
+                <span>Cap. sig.</span>
+                <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={onGoToQuiz}
+                className="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg font-bold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+                title="Ir a Evaluación"
+              >
+                <span>Evaluación</span>
+                <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+              </button>
+            )}
+          </div>
+
+          {focusMode && paragraphs.length > 0 && (
+            <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border ${cardBg}`}>
+              <span className={`font-semibold ${mutedColor}`}>Párrafo</span>
+              <span className="font-bold tabular-nums mr-0.5">
+                {focusedParagraphIdx + 1}/{paragraphs.length}
+              </span>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.currentTarget.blur();
+                  stepParagraph(-1);
+                }}
+                disabled={focusedParagraphIdx === 0}
+                className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-current/15 disabled:opacity-30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                title="Párrafo anterior (↑)"
+                aria-label="Párrafo anterior"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.currentTarget.blur();
+                  stepParagraph(1);
+                }}
+                disabled={focusedParagraphIdx >= paragraphs.length - 1}
+                className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-current/15 disabled:opacity-30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                title="Siguiente párrafo (↓)"
+                aria-label="Siguiente párrafo"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+        </footer>
 
         {/* Riel lateral izquierdo de controles */}
         <ProjectorDock
