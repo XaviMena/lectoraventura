@@ -156,10 +156,10 @@ export default function ProjectorDock({
 
   const railSurface =
     colorTheme === "dark"
-      ? "bg-slate-900/95 text-slate-100 border-slate-800"
+      ? "bg-slate-900 text-slate-100 border-slate-800"
       : colorTheme === "sepia"
-        ? "bg-[#fcf8ef]/95 text-[#251b10] border-[#dfd3be]"
-        : "bg-white/95 text-slate-800 border-slate-200";
+        ? "bg-[#fcf8ef] text-[#251b10] border-[#dfd3be]"
+        : "bg-white text-slate-800 border-slate-200";
 
   const iconDefaultClass =
     colorTheme === "dark"
@@ -179,10 +179,10 @@ export default function ProjectorDock({
 
   const flyoutSurface =
     colorTheme === "dark"
-      ? "bg-slate-900/98 text-slate-100 border-slate-700"
+      ? "bg-slate-900 text-slate-100 border-slate-700"
       : colorTheme === "sepia"
-        ? "bg-[#fcf8ef]/98 text-[#251b10] border-[#d8cbb4]"
-        : "bg-white/98 text-slate-900 border-slate-200";
+        ? "bg-[#fcf8ef] text-[#251b10] border-[#d8cbb4]"
+        : "bg-white text-slate-900 border-slate-200";
 
   const flyoutItemDefault =
     colorTheme === "dark"
