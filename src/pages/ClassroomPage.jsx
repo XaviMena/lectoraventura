@@ -21,23 +21,23 @@ export default function ClassroomPage() {
       <section className="grid sm:grid-cols-3 gap-4 mb-12">
         <div className="rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
           <MonitorPlay className="w-6 h-6 text-amber-500 mb-3" />
-          <h2 className="font-extrabold text-slate-900 dark:text-white">Modo proyector</h2>
+          <h2 className="font-extrabold text-slate-900 dark:text-white">Modo Proyector</h2>
           <p className="text-sm text-slate-600 dark:text-slate-300 mt-2">
-            Actívalo para subir el contraste y ampliar la letra. Combínalo con pantalla completa.
+            Muestra la ilustración fija a la izquierda y el texto a la derecha, ampliando automáticamente la letra con barra movible.
           </p>
         </div>
         <div className="rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
           <Type className="w-6 h-6 text-blue-600 mb-3" />
-          <h2 className="font-extrabold text-slate-900 dark:text-white">Tamaño de texto</h2>
+          <h2 className="font-extrabold text-slate-900 dark:text-white">Teleprompter y Foco</h2>
           <p className="text-sm text-slate-600 dark:text-slate-300 mt-2">
-            Ajusta la lectura según la distancia del grupo y el tamaño de la pizarra digital.
+            Elige fuentes claras para pizarra, activa el desplazamiento automático, resalta párrafos o usa la regla guía.
           </p>
         </div>
         <div className="rounded-3xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
           <Sun className="w-6 h-6 text-indigo-500 mb-3" />
           <h2 className="font-extrabold text-slate-900 dark:text-white">Temas de contraste</h2>
           <p className="text-sm text-slate-600 dark:text-slate-300 mt-2">
-            Claro, sepia (tipo libro) u oscuro, según la luz del aula.
+            Pizarra clara, papel cálido o noche proyector, según la luz del aula.
           </p>
         </div>
       </section>

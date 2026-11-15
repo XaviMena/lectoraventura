@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import ScrollToTop from "./ScrollToTop";
@@ -7,6 +7,9 @@ import { useSettings } from "../../context/SettingsContext";
 
 export default function AppLayout() {
   const { colorTheme, themeClass, isProjectorMode, setIsProjectorMode } = useSettings();
+  const location = useLocation();
+  const isReadingRoute = location.pathname.startsWith("/lectura/");
+  const isImmersiveProjector = isProjectorMode && isReadingRoute;
 
   return (
     <div
@@ -24,26 +27,27 @@ export default function AppLayout() {
         Saltar al contenido
       </a>
 
-      <Navbar />
+      {!isImmersiveProjector && <Navbar />}
 
-      {isProjectorMode && (
+      {isProjectorMode && !isReadingRoute && (
         <div className="border-b border-slate-200 dark:border-slate-800 text-xs text-center py-1.5 px-4 text-slate-500 flex items-center justify-center gap-2">
-          <span>Modo proyector activo</span>
+          <span>Modo Proyector preparado (abre cualquier lectura para ver en pantalla dividida)</span>
           <button
             type="button"
             onClick={() => setIsProjectorMode(false)}
-            className="text-slate-800 dark:text-slate-200 hover:underline"
+            className="text-slate-800 dark:text-slate-200 font-semibold hover:underline"
           >
             Salir
           </button>
         </div>
       )}
 
-      <main id="contenido" className="flex-1 flex flex-col">
+      <main id="contenido" className="flex-1 flex flex-col min-h-0">
         <Outlet />
       </main>
 
-      <Footer />
+      {!isImmersiveProjector && <Footer />}
     </div>
   );
 }
+

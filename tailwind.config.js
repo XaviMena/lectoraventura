@@ -8,6 +8,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        atkinson: ['"Atkinson Hyperlegible"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        lexend: ['"Lexend"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         reading: ['"Lora"', 'Georgia', 'serif'],
         sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
       },

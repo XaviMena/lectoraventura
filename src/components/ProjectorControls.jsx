@@ -4,8 +4,8 @@ import { Maximize2, ZoomIn, ZoomOut, Sun, Moon, BookOpen, Monitor } from "lucide
 export default function ProjectorControls({
   isProjectorMode,
   setIsProjectorMode,
-  fontSize,
-  setFontSize,
+  fontSizePx,
+  changeFontSize,
   colorTheme,
   setColorTheme,
 }) {
@@ -19,19 +19,8 @@ export default function ProjectorControls({
     }
   };
 
-  const increaseFont = () => {
-    if (fontSize === "base") setFontSize("lg");
-    else if (fontSize === "lg") setFontSize("xl");
-    else if (fontSize === "xl") setFontSize("2xl");
-    else if (fontSize === "2xl") setFontSize("3xl");
-  };
-
-  const decreaseFont = () => {
-    if (fontSize === "3xl") setFontSize("2xl");
-    else if (fontSize === "2xl") setFontSize("xl");
-    else if (fontSize === "xl") setFontSize("lg");
-    else if (fontSize === "lg") setFontSize("base");
-  };
+  const minPx = isProjectorMode ? 22 : 15;
+  const maxPx = isProjectorMode ? 44 : 28;
 
   const iconBtn = (active) =>
     `inline-flex items-center justify-center min-h-11 min-w-11 sm:min-h-0 sm:min-w-0 p-2.5 sm:p-1.5 rounded-md transition-colors ${
@@ -41,11 +30,11 @@ export default function ProjectorControls({
     }`;
 
   return (
-    <div className="flex flex-wrap items-center gap-0.5 text-slate-400">
+    <div className="flex flex-wrap items-center gap-1 text-slate-400">
       <button
         type="button"
-        onClick={decreaseFont}
-        disabled={fontSize === "base"}
+        onClick={() => changeFontSize(-2)}
+        disabled={fontSizePx <= minPx}
         title="Reducir texto"
         className={`${iconBtn(false)} disabled:opacity-30`}
         aria-label="Reducir tamaño de letra"
@@ -54,8 +43,8 @@ export default function ProjectorControls({
       </button>
       <button
         type="button"
-        onClick={increaseFont}
-        disabled={fontSize === "3xl"}
+        onClick={() => changeFontSize(2)}
+        disabled={fontSizePx >= maxPx}
         title="Aumentar texto"
         className={`${iconBtn(false)} disabled:opacity-30`}
         aria-label="Aumentar tamaño de letra"
@@ -63,7 +52,7 @@ export default function ProjectorControls({
         <ZoomIn className="w-4 h-4" />
       </button>
 
-      <span className="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1.5" />
+      <span className="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1" />
 
       <button type="button" onClick={() => setColorTheme("light")} title="Tema claro" className={iconBtn(colorTheme === "light")} aria-label="Tema claro">
         <Sun className="w-4 h-4" />
@@ -75,31 +64,26 @@ export default function ProjectorControls({
         <Moon className="w-4 h-4" />
       </button>
 
-      <span className="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1.5" />
+      <span className="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1" />
 
       <button type="button" onClick={toggleFullscreen} title="Pantalla completa" className={`${iconBtn(false)} hidden sm:inline-flex`} aria-label="Pantalla completa">
         <Maximize2 className="w-4 h-4" />
       </button>
       <button
         type="button"
-        onClick={() => {
-          const next = !isProjectorMode;
-          setIsProjectorMode(next);
-          if (next && (fontSize === "base" || fontSize === "lg")) {
-            setFontSize("xl");
-          }
-        }}
-        title="Modo proyector"
-        className={`inline-flex items-center gap-1.5 px-1.5 py-1 text-sm transition-colors ${
+        onClick={() => setIsProjectorMode((prev) => !prev)}
+        title="Modo Proyector"
+        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-colors ${
           isProjectorMode
-            ? "text-slate-900 dark:text-white"
-            : "text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+            ? "bg-blue-600 text-white hover:bg-blue-700"
+            : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700"
         }`}
         aria-pressed={isProjectorMode}
       >
         <Monitor className="w-4 h-4" />
-        <span className="hidden xl:inline">Proyector</span>
+        <span>Modo Proyector</span>
       </button>
     </div>
   );
 }
+

@@ -43,12 +43,33 @@
 /* Clases de apoyo para modo proyección y lectura */
 .reading-text {
   text-wrap: pretty;
-  line-height: 1.85;
+  line-height: 1.8;
 }
 
 /* Modo proyector con alto contraste */
 .projector-mode {
   letter-spacing: 0.015em;
+}
+
+.projector-focus-active .projector-para:not(.projector-para-focused) {
+  opacity: 0.28;
+}
+
+.projector-focus-active .projector-para.projector-para-focused {
+  opacity: 1;
+}
+
+.reading-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.reading-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.reading-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
 }
 
 /* Animaciones suaves */

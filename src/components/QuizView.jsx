@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import confetti from 'canvas-confetti';
 import { CheckCircle, XCircle, Award, RotateCcw, BookOpen, ChevronRight, HelpCircle, Sparkles } from 'lucide-react';
+import ProjectorTopBar from './ProjectorTopBar';
+import ProjectorDock from './ProjectorDock';
 import { saveProgress } from '../lib/readingProgress';
+import { useSettings } from '../context/SettingsContext';
 
 export default function QuizView({
   reading,
   onBackToReading,
-  fontSize,
-  isProjectorMode,
   initialQuestionIndex = 0,
   initialAnswers = [],
 }) {
+  const {
+    isProjectorMode,
+    setIsProjectorMode,
+    fontSizePx,
+    fontFamilyClass,
+    colorTheme,
+  } = useSettings();
+
   const questions = reading.quiz;
   const [currentQIdx, setCurrentQIdx] = useState(() =>
     Math.min(Math.max(0, initialQuestionIndex), Math.max(0, questions.length - 1))
@@ -21,6 +30,7 @@ export default function QuizView({
     Array.isArray(initialAnswers) ? initialAnswers : []
   );
   const [isFinished, setIsFinished] = useState(false);
+  const [isBlackoutOpen, setIsBlackoutOpen] = useState(false);
 
   const currentQ = questions[currentQIdx];
 
@@ -42,8 +52,28 @@ export default function QuizView({
     });
   }, [reading.id, reading.chapters.length, currentQIdx, isFinished, answersHistory]);
 
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      const tag = document.activeElement?.tagName;
+      if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return;
+      if (e.key === "Escape" && isBlackoutOpen) {
+        setIsBlackoutOpen(false);
+        return;
+      }
+      if (e.key.toLowerCase() === "p") {
+        e.preventDefault();
+        setIsProjectorMode((prev) => !prev);
+      } else if (e.key.toLowerCase() === "b" && isProjectorMode) {
+        e.preventDefault();
+        setIsBlackoutOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isProjectorMode, isBlackoutOpen, setIsProjectorMode]);
+
   const handleSelectOption = (optionId) => {
-    if (isAnswerSubmitted) return; // Ya respondió esta pregunta
+    if (isAnswerSubmitted) return;
     setSelectedOptionId(optionId);
   };
 
@@ -66,7 +96,6 @@ export default function QuizView({
     ]);
 
     if (isCorrect) {
-      // Pequeño estallido de confeti por acierto
       confetti({
         particleCount: 40,
         spread: 60,
@@ -81,11 +110,9 @@ export default function QuizView({
       setSelectedOptionId(null);
       setIsAnswerSubmitted(false);
     } else {
-      // Fin del cuestionario
       setIsFinished(true);
       const totalCorrect = answersHistory.filter((a) => a.isCorrect).length;
       if (totalCorrect >= 4) {
-        // Gran celebración de confeti
         confetti({
           particleCount: 120,
           spread: 90,
@@ -106,222 +133,263 @@ export default function QuizView({
   const totalScore = answersHistory.filter((a) => a.isCorrect).length;
   const percentage = Math.round((totalScore / questions.length) * 100);
 
-  // Escala de fuentes adaptada
-  const fontSizes = {
-    base: 'text-lg',
-    lg: 'text-xl',
-    xl: 'text-xl sm:text-2xl',
-    '2xl': 'text-2xl sm:text-3xl',
-    '3xl': 'text-2xl sm:text-4xl'
-  };
-  const qFont = fontSizes[fontSize] || fontSizes.xl;
+  const qSizePx = isProjectorMode ? Math.max(24, fontSizePx) : Math.max(20, fontSizePx + 3);
+  const optSizePx = isProjectorMode ? Math.max(19, Math.round(fontSizePx * 0.72)) : Math.max(16, fontSizePx - 1);
+
+  const cardSurface =
+    isProjectorMode && colorTheme === "sepia"
+      ? "bg-[#fcf8ef] border-[#dfd3be] text-[#251b10]"
+      : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700";
+
+  const optionDefaultSurface =
+    isProjectorMode && colorTheme === "sepia"
+      ? "border-[#dfd3be] bg-[#f8f1e3] hover:border-amber-600 text-[#251b10]"
+      : "border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/60 hover:border-blue-300 text-slate-800 dark:text-slate-100";
 
   return (
-    <div className={`w-full max-w-3xl mx-auto px-4 sm:px-6 py-5 sm:py-10 pb-8 ${
-      isProjectorMode ? 'max-w-4xl' : ''
-    }`}>
-      
-      {!isFinished ? (
-        <div className="space-y-6 animate-fade-in">
-          
-          {/* Barra de Progreso Superior */}
-          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xs p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
-            <div className="flex items-center justify-between text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 mb-2">
-              <span className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
-                <HelpCircle className="w-4 h-4" />
-                Pregunta {currentQIdx + 1} de {questions.length}
-              </span>
-              <span>Aciertos: {answersHistory.filter(a => a.isCorrect).length}</span>
-            </div>
-            <div className="w-full bg-slate-100 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
-              <div
-                className="bg-gradient-to-r from-blue-500 to-indigo-600 h-full rounded-full transition-all duration-300"
-                style={{ width: `${((currentQIdx) / questions.length) * 100}%` }}
-              ></div>
-            </div>
-          </div>
-
-          {/* Tarjeta de Pregunta */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-10 border border-slate-200 dark:border-slate-700 shadow-md">
-            
-            {/* Categoría de la pregunta */}
-            <div className="mb-4">
-              <span className="px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-xs font-extrabold uppercase tracking-wider">
-                {currentQ.type === 'literal' && 'Comprensión Literal'}
-                {currentQ.type === 'vocabulario' && 'Vocabulario en Contexto'}
-                {currentQ.type === 'inferencial' && 'Deducción e Inferencia'}
-                {currentQ.type === 'analisis' && 'Análisis de Personajes'}
-                {currentQ.type === 'reflexion' && 'Reflexión y Sentido Crítico'}
-              </span>
-            </div>
-
-            {/* Enunciado de la Pregunta */}
-            <h2 className={`${qFont} font-extrabold text-slate-900 dark:text-white leading-snug mb-8 font-reading text-pretty`}>
-              {currentQ.question}
-            </h2>
-
-            {/* Opciones de Respuesta */}
-            <div className="space-y-3.5">
-              {currentQ.options.map((opt) => {
-                const isSelected = selectedOptionId === opt.id;
-                let btnStyle = 'border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/60 hover:border-blue-300 text-slate-800 dark:text-slate-100';
-
-                if (isAnswerSubmitted) {
-                  if (opt.isCorrect) {
-                    btnStyle = 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200 ring-2 ring-emerald-500';
-                  } else if (isSelected && !opt.isCorrect) {
-                    btnStyle = 'border-rose-500 bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200 ring-2 ring-rose-500';
-                  } else {
-                    btnStyle = 'opacity-40 border-slate-200 dark:border-slate-800';
-                  }
-                } else if (isSelected) {
-                  btnStyle = 'border-blue-600 bg-blue-50 dark:bg-blue-950/50 text-blue-900 dark:text-blue-200 ring-2 ring-blue-500';
-                }
-
-                return (
-                  <button
-                    key={opt.id}
-                    onClick={() => handleSelectOption(opt.id)}
-                    disabled={isAnswerSubmitted}
-                    className={`w-full text-left p-3.5 sm:p-5 rounded-2xl border-2 transition-all flex items-start gap-3 sm:gap-4 min-h-14 ${btnStyle}`}
-                  >
-                    <span className={`w-8 h-8 rounded-xl font-bold flex items-center justify-center shrink-0 text-sm ${
-                      isSelected
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
-                    }`}>
-                      {opt.id.toUpperCase()}
-                    </span>
-                    <span className="text-[15px] sm:text-lg font-medium leading-snug pt-0.5">
-                      {opt.text}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Retroalimentación Explicativa Didáctica */}
-            {isAnswerSubmitted && (
-              <div className="mt-8 p-5 sm:p-6 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/80 animate-fade-in">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-xl bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300 shrink-0">
-                    <Sparkles className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-extrabold text-sm sm:text-base text-amber-900 dark:text-amber-200 mb-1">
-                      {currentQ.options.find(o => o.id === selectedOptionId)?.isCorrect
-                        ? '¡Excelente deducción!'
-                        : '¡Casi! Revisemos la clave del texto:'}
-                    </h4>
-                    <p className="text-sm sm:text-base text-amber-800 dark:text-amber-300/90 leading-relaxed font-reading">
-                      {currentQ.explanation}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Botón de Acción Inferior */}
-            <div className="mt-8 flex justify-end">
-              {!isAnswerSubmitted ? (
-                <button
-                  onClick={handleConfirmAnswer}
-                  disabled={!selectedOptionId}
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-2xl font-extrabold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-md shadow-blue-500/25 transition-all min-h-12"
-                >
-                  Comprobar
-                </button>
-              ) : (
-                <button
-                  onClick={handleNextQuestion}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 sm:px-9 py-3.5 rounded-2xl font-extrabold text-white bg-emerald-600 hover:bg-emerald-500 shadow-md shadow-emerald-500/25 transition-all min-h-12"
-                >
-                  <span>{currentQIdx < questions.length - 1 ? 'Siguiente' : 'Ver resultados'}</span>
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              )}
-            </div>
-
-          </div>
-        </div>
-      ) : (
-        /* PANTALLA DE RESULTADOS FINALES */
-        <div className="bg-white dark:bg-slate-800 rounded-2xl sm:rounded-3xl p-5 sm:p-10 border border-slate-200 dark:border-slate-700 shadow-xl text-center space-y-8 animate-fade-in">
-          
-          <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-amber-400 to-amber-600 flex items-center justify-center text-white shadow-xl shadow-amber-500/30">
-            <Award className="w-10 h-10" />
-          </div>
-
-          <div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-2 text-balance">
-              {percentage === 100 && '¡Misión Cumplida, Gran Detective!'}
-              {percentage >= 80 && percentage < 100 && '¡Excelente Comprensión Lectora!'}
-              {percentage >= 60 && percentage < 80 && '¡Buen Trabajo en Equipo!'}
-              {percentage < 60 && '¡Buen Intento! La práctica hace al maestro'}
-            </h2>
-            <p className="text-slate-600 dark:text-slate-300 max-w-md mx-auto text-base">
-              Has completado las preguntas sobre <strong>{reading.title}</strong>.
-            </p>
-          </div>
-
-          {/* Tarjeta de Puntuación */}
-          <div className="max-w-xs mx-auto p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
-            <div className="text-5xl font-extrabold text-blue-600 dark:text-blue-400 mb-1">
-              {totalScore} / {questions.length}
-            </div>
-            <div className="text-sm font-bold text-slate-500 dark:text-slate-400">
-              {percentage}% de aciertos
-            </div>
-          </div>
-
-          {/* Desglose de Respuestas */}
-          <div className="text-left max-w-xl mx-auto space-y-3 pt-4 border-t border-slate-200 dark:border-slate-700">
-            <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
-              Resumen de la investigación:
-            </h3>
-            {answersHistory.map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 text-sm"
-              >
-                {item.isCorrect ? (
-                  <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                ) : (
-                  <XCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
-                )}
-                <div className="flex-1">
-                  <p className="font-semibold text-slate-800 dark:text-slate-200">
-                    {idx + 1}. {item.questionText}
-                  </p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    {item.explanation}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Botones de Acción */}
-          <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 pt-4">
-            <button
-              onClick={handleRestartQuiz}
-              className="inline-flex items-center justify-center gap-2 min-h-12 px-6 py-3 rounded-2xl font-bold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600 transition-all"
-            >
-              <RotateCcw className="w-4 h-4" />
-              <span>Reintentar</span>
-            </button>
-            <button
-              onClick={onBackToReading}
-              className="inline-flex items-center justify-center gap-2 min-h-12 px-7 py-3 rounded-2xl font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/25 transition-all"
-            >
-              <BookOpen className="w-4 h-4" />
-              <span>Volver a la lectura</span>
-            </button>
-          </div>
-
-        </div>
+    <div className={isProjectorMode ? "h-dvh w-full flex flex-col overflow-hidden" : "w-full"}>
+      {isProjectorMode && (
+        <ProjectorTopBar
+          reading={reading}
+          activeScreen="quiz"
+          onBackToReading={onBackToReading}
+        />
       )}
 
+      <div className={isProjectorMode ? "flex-1 min-h-0 overflow-y-auto reading-scroll" : ""}>
+        <div
+          className={`w-full mx-auto px-4 sm:px-6 ${
+            isProjectorMode ? "max-w-4xl py-8 sm:py-12 pb-44" : "max-w-3xl py-5 sm:py-10 pb-8"
+          }`}
+        >
+          {!isFinished ? (
+            <div className="space-y-6 animate-fade-in">
+              {/* Barra de Progreso Superior */}
+              <div className={`backdrop-blur-xs p-4 sm:p-5 rounded-2xl border shadow-sm ${cardSurface}`}>
+                <div className="flex items-center justify-between text-xs sm:text-sm font-bold mb-2">
+                  <span className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
+                    <HelpCircle className="w-4 h-4" />
+                    Pregunta {currentQIdx + 1} de {questions.length}
+                  </span>
+                  <span>Aciertos: {answersHistory.filter(a => a.isCorrect).length}</span>
+                </div>
+                <div className="w-full bg-slate-200/70 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
+                  <div
+                    className="bg-gradient-to-r from-blue-500 to-indigo-600 h-full rounded-full transition-all duration-300"
+                    style={{ width: `${((currentQIdx + 1) / questions.length) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+
+              {/* Tarjeta de Pregunta */}
+              <div className={`rounded-2xl sm:rounded-3xl p-5 sm:p-10 border shadow-md ${cardSurface}`}>
+                <div className="mb-4">
+                  <span className="px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-xs font-extrabold uppercase tracking-wider">
+                    {currentQ.type === 'literal' && 'Comprensión Literal'}
+                    {currentQ.type === 'vocabulario' && 'Vocabulario en Contexto'}
+                    {currentQ.type === 'inferencial' && 'Deducción e Inferencia'}
+                    {currentQ.type === 'analisis' && 'Análisis de Personajes'}
+                    {currentQ.type === 'reflexion' && 'Reflexión y Sentido Crítico'}
+                  </span>
+                </div>
+
+                <h2
+                  className={`font-extrabold leading-snug mb-8 text-pretty ${fontFamilyClass}`}
+                  style={{ fontSize: `${qSizePx}px` }}
+                >
+                  {currentQ.question}
+                </h2>
+
+                <div className="space-y-3.5">
+                  {currentQ.options.map((opt) => {
+                    const isSelected = selectedOptionId === opt.id;
+                    let btnStyle = optionDefaultSurface;
+
+                    if (isAnswerSubmitted) {
+                      if (opt.isCorrect) {
+                        btnStyle = 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200 ring-2 ring-emerald-500';
+                      } else if (isSelected && !opt.isCorrect) {
+                        btnStyle = 'border-rose-500 bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200 ring-2 ring-rose-500';
+                      } else {
+                        btnStyle = 'opacity-40 border-slate-200 dark:border-slate-800';
+                      }
+                    } else if (isSelected) {
+                      btnStyle = 'border-blue-600 bg-blue-50 dark:bg-blue-950/50 text-blue-900 dark:text-blue-200 ring-2 ring-blue-500';
+                    }
+
+                    return (
+                      <button
+                        key={opt.id}
+                        onClick={() => handleSelectOption(opt.id)}
+                        disabled={isAnswerSubmitted}
+                        className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition-all flex items-start gap-3 sm:gap-4 min-h-14 ${btnStyle}`}
+                      >
+                        <span className={`w-9 h-9 rounded-xl font-bold flex items-center justify-center shrink-0 text-sm ${
+                          isSelected
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
+                        }`}>
+                          {opt.id.toUpperCase()}
+                        </span>
+                        <span
+                          className={`font-medium leading-snug pt-0.5 ${fontFamilyClass}`}
+                          style={{ fontSize: `${optSizePx}px` }}
+                        >
+                          {opt.text}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {isAnswerSubmitted && (
+                  <div className="mt-8 p-5 sm:p-6 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/80 animate-fade-in">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-xl bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300 shrink-0">
+                        <Sparkles className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-extrabold text-sm sm:text-base text-amber-900 dark:text-amber-200 mb-1">
+                          {currentQ.options.find(o => o.id === selectedOptionId)?.isCorrect
+                            ? '¡Excelente deducción!'
+                            : '¡Casi! Revisemos la clave del texto:'}
+                        </h4>
+                        <p
+                          className={`text-amber-800 dark:text-amber-300/90 leading-relaxed ${fontFamilyClass}`}
+                          style={{ fontSize: `${Math.max(15, optSizePx - 2)}px` }}
+                        >
+                          {currentQ.explanation}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="mt-8 flex justify-end">
+                  {!isAnswerSubmitted ? (
+                    <button
+                      onClick={handleConfirmAnswer}
+                      disabled={!selectedOptionId}
+                      className="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-2xl font-extrabold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed shadow-md shadow-blue-500/25 transition-all min-h-12"
+                    >
+                      Comprobar
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleNextQuestion}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 sm:px-9 py-3.5 rounded-2xl font-extrabold text-white bg-emerald-600 hover:bg-emerald-500 shadow-md shadow-emerald-500/25 transition-all min-h-12"
+                    >
+                      <span>{currentQIdx < questions.length - 1 ? 'Siguiente' : 'Ver resultados'}</span>
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className={`rounded-2xl sm:rounded-3xl p-5 sm:p-10 border shadow-xl text-center space-y-8 animate-fade-in ${cardSurface}`}>
+              <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-amber-400 to-amber-600 flex items-center justify-center text-white shadow-xl shadow-amber-500/30">
+                <Award className="w-10 h-10" />
+              </div>
+
+              <div>
+                <h2 className="text-2xl sm:text-4xl font-extrabold mb-2 text-balance">
+                  {percentage === 100 && '¡Misión Cumplida, Gran Detective!'}
+                  {percentage >= 80 && percentage < 100 && '¡Excelente Comprensión Lectora!'}
+                  {percentage >= 60 && percentage < 80 && '¡Buen Trabajo en Equipo!'}
+                  {percentage < 60 && '¡Buen Intento! La práctica hace al maestro'}
+                </h2>
+                <p className="opacity-80 max-w-md mx-auto text-base">
+                  Has completado las preguntas sobre <strong>{reading.title}</strong>.
+                </p>
+              </div>
+
+              <div className="max-w-xs mx-auto p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+                <div className="text-5xl font-extrabold text-blue-600 dark:text-blue-400 mb-1">
+                  {totalScore} / {questions.length}
+                </div>
+                <div className="text-sm font-bold text-slate-500 dark:text-slate-400">
+                  {percentage}% de aciertos
+                </div>
+              </div>
+
+              <div className="text-left max-w-xl mx-auto space-y-3 pt-4 border-t border-slate-200 dark:border-slate-700">
+                <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                  Resumen de la investigación:
+                </h3>
+                {answersHistory.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 text-sm"
+                  >
+                    {item.isCorrect ? (
+                      <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                    ) : (
+                      <XCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
+                    )}
+                    <div className="flex-1">
+                      <p className="font-semibold text-slate-800 dark:text-slate-200">
+                        {idx + 1}. {item.questionText}
+                      </p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                        {item.explanation}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 pt-4">
+                <button
+                  onClick={handleRestartQuiz}
+                  className="inline-flex items-center justify-center gap-2 min-h-12 px-6 py-3 rounded-2xl font-bold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600 transition-all"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                  <span>Reintentar</span>
+                </button>
+                <button
+                  onClick={() => onBackToReading?.()}
+                  className="inline-flex items-center justify-center gap-2 min-h-12 px-7 py-3 rounded-2xl font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/25 transition-all"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  <span>Volver a la lectura</span>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {isProjectorMode && (
+        <ProjectorDock
+          showReadingAids={false}
+          onToggleBlackout={() => setIsBlackoutOpen((prev) => !prev)}
+        />
+      )}
+
+      {isBlackoutOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black text-white flex flex-col items-center justify-center p-6 text-center cursor-pointer"
+          onClick={() => setIsBlackoutOpen(false)}
+        >
+          <div className="max-w-lg space-y-4">
+            <div className="text-sm uppercase tracking-widest text-slate-400 font-semibold">
+              Pausa en clase
+            </div>
+            <div className="text-2xl sm:text-3xl font-bold">
+              Proyector en reposo para dialogar
+            </div>
+            <p className="text-slate-400 text-base">
+              Haz clic en cualquier lugar o presiona{" "}
+              <kbd className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">B</kbd>{" "}
+              /{" "}
+              <kbd className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">Esc</kbd>{" "}
+              para volver a la evaluación.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
