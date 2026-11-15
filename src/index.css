@@ -52,7 +52,7 @@
 }
 
 .projector-focus-active .projector-para:not(.projector-para-focused) {
-  opacity: 0.28;
+  opacity: 0.68;
 }
 
 .projector-focus-active .projector-para.projector-para-focused {
